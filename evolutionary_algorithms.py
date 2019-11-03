@@ -1,7 +1,8 @@
 import numpy as np
 from chromosome import Chromosome
 import random
-import json
+import datetime
+import pickle
 
 '''
 Random Gene Generator Algorithms, RGGA
@@ -154,12 +155,14 @@ def default_stop_condition(generation, max_generation):
         return False
     return True
 
+
 best_chromosome_fitness_in_total = -1
 best_phenotype = [1]
 
-class GeneticAlgorithms:
+
+class EvolutionaryAlgorithm:
     def __init__(self,
-                 max_generation=1000,
+                 max_generation=100,
                  n=8,
                  n_parent=40,
                  m=160,
@@ -209,7 +212,7 @@ class GeneticAlgorithms:
             log=False,
             save_log=True,
             save_log_path='./log_files/'):
-        file_name = ''
+        file_name = str(datetime.datetime.now())
         print('EA algorithms Running . . . ')
         self._initial_population()
         self._generation_counter = 1
@@ -225,10 +228,12 @@ class GeneticAlgorithms:
             self._log.append(self._save_current_log(avg_per_generation, variance_per_generation, best_chromosome))
             if log:
                 print(self._log[-1])
-        file_name += '.txt'
+
+        file_name += '.pickle'
+        print('yes')
         if save_log:
-            with open(save_log_path + file_name, 'w') as file:
-                json.dump(self._log, file)
+            with open(save_log_path + file_name, 'wb') as file:
+                pickle.dump(self._log, file)
             print('log file successfully saved!')
 
     def _save_current_log(self, avg_fitness_per_generation, variance_per_generation, best_chromosome):
@@ -283,5 +288,5 @@ class GeneticAlgorithms:
 
 
 if __name__ == '__main__':
-    ga = GeneticAlgorithms()
+    ga = EvolutionaryAlgorithm()
     ga.run()
