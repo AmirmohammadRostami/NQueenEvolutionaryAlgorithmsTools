@@ -157,14 +157,14 @@ app.layout = html.Div([
         ],
         style={'margin-top': '100px'}
     ),
-    dcc.Interval(id='interval', interval=2 * 1000),
+    dcc.Interval(id='interval', interval=1 * 1000),
 
 ], style={'align': 'center', 'background-image': './back_ground_img.png'})
 
 
 @app.callback(Output(component_id='parent-selection-div', component_property='children'),
               [Input(component_id='parents-selection-dropdown', component_property='value')])
-def mutation_drop_down(input):
+def parent_selection_drop_down(input):
     if input is None:
         return [
             html.Span('Parents Selection Algorithms'),
@@ -184,7 +184,7 @@ def mutation_drop_down(input):
 
 @app.callback(Output(component_id='cross-over-div', component_property='children'),
               [Input(component_id='cross-over-dropdown', component_property='value')])
-def mutation_drop_down(input):
+def cross_over_drop_down(input):
     if input is None:
         return [
             html.Span('Cross over Algorithms'),
@@ -212,7 +212,7 @@ def mutation_drop_down(input):
                          value=None),
 
             html.Span('Probability', style={'display': 'None'}),
-            dcc.Input(id='mutation-probability', value='0.05',style={'display': 'None'}),
+            dcc.Input(id='mutation-probability', value='0.05', style={'display': 'None'}),
         ]
     elif input == 0:
         return [
@@ -227,7 +227,7 @@ def mutation_drop_down(input):
 
 @app.callback(Output(component_id='stop-condition-div', component_property='children'),
               [Input(component_id='stop-condition-dropdown', component_property='value')])
-def mutation_drop_down(input):
+def stop_condition_drop_down(input):
     if input is None:
         return [
             html.Span('Stop condition'),
@@ -302,10 +302,10 @@ def update_best_solution_graph(_, n_clicks):
     [Input(component_id='interval', component_property='n_intervals'),
      Input(component_id='log-dropdown', component_property='value'), ]
 )
-def update_fittness_graph(_, log_dropdown_value):
+def update_fitness_graph(_, log_dropdown_value):
     global avg_fitness_per_generation
     global variance_per_generation
-    print(log_dropdown_value)
+
     data_fit = [{'x': np.arange(0, len(avg_fitness_per_generation)),
                  'y': avg_fitness_per_generation,
                  'type': 'line',
@@ -352,15 +352,17 @@ def update_fittness_graph(_, log_dropdown_value):
 
 @app.callback(
     Output(component_id='log-div', component_property='children'),
-    [Input(component_id='interval', component_property='n_intervals'), ]
+    [Input(component_id='interval', component_property='n_intervals'),
+     Input(component_id='log-dropdown', component_property='value'),]
 )
-def update_logs_data(_):
+def update_logs_data(_, value):
     read_logs()
     return [
         html.Span('select logs for show'),
         dcc.Dropdown(
             id='log-dropdown',
             options=drop_down_logs,
+            value = value,
             multi=True
         ),
         html.Div(id='output-container')

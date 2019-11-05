@@ -171,7 +171,9 @@ def default_population_selection(parents, children, n, parameters=None):
 
 
 '''
+-------------------------------------
 Stop Conditions, SC
+-------------------------------------
 input: parameters (dictionary of algorithm parameterss key: parameters name, value: parameters value)
 return-> boolean (True as stop and False as keep on)
 '''

@@ -10,7 +10,7 @@ best_phenotype = [1]
 
 class EvolutionaryAlgorithm:
     def __init__(self,
-                 max_generation=500,
+                 max_generation=50,
                  n=8,
                  n_parent=40,
                  m=160,
