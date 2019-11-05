@@ -15,6 +15,8 @@ from evolutionary_algorithms_functions import *
 '''
 variables
 '''
+x_axis_thick_number = 15
+y_axis_thick_number = 10
 avg_fitness_per_generation = []
 variance_per_generation = []
 best_chromosome = [[0]]
@@ -54,16 +56,16 @@ def read_logs():
                 con = False
                 break
         if file.endswith('.pickle') and con:
-            print(file)
+            # print(file)
             p = pickle.load(open('./log_files/' + file, 'rb'))
-            avg_var = []
+            var_fit = []
             avg_fit = []
             for data in p:
-                avg_var.append(data['var_fitness'])
+                var_fit.append(data['var_fitness'])
                 avg_fit.append((data['avg_fitness']))
 
             drop_down_logs.append({'label': file[:-7], 'value': len(logs)})
-            logs.append({'name': file[:-7], 'avg_var': avg_var, 'avg_fit': avg_fit})
+            logs.append({'name': file[:-7], 'var_fit': var_fit, 'avg_fit': avg_fit})
     # print(logs)
 
 
@@ -305,7 +307,6 @@ def update_best_solution_graph(_, n_clicks):
 def update_fitness_graph(_, log_dropdown_value):
     global avg_fitness_per_generation
     global variance_per_generation
-
     data_fit = [{'x': np.arange(0, len(avg_fitness_per_generation)),
                  'y': avg_fitness_per_generation,
                  'type': 'line',
@@ -314,6 +315,19 @@ def update_fitness_graph(_, log_dropdown_value):
                  'y': variance_per_generation,
                  'type': 'line',
                  'name': 'Avg. variance'}]
+    x_max_value = len(avg_fitness_per_generation) + 1
+
+    if len(avg_fitness_per_generation) > 0:
+        y_avg_max_value = np.max(avg_fitness_per_generation)
+        y_var_max_value = np.max(variance_per_generation)
+        y_avg_min_value = np.min(avg_fitness_per_generation)
+        y_var_min_value = np.min(variance_per_generation)
+    else:
+        y_avg_max_value = 0
+        y_var_max_value = 0
+        y_avg_min_value = 0
+        y_var_min_value = 0
+
     if log_dropdown_value:
         for i in log_dropdown_value:
             data_fit.append(
@@ -323,18 +337,37 @@ def update_fitness_graph(_, log_dropdown_value):
                  'name': logs[i]['name']}
             )
             data_var.append(
-                {'x': np.arange(0, len(logs[i]['avg_var'])),
-                 'y': logs[i]['avg_var'],
+                {'x': np.arange(0, len(logs[i]['var_fit'])),
+                 'y': logs[i]['var_fit'],
                  'type': 'line',
                  'name': logs[i]['name']}
             )
+            if len(logs[i]['avg_fit']) > x_max_value:
+                x_max_value = len(logs[i]['avg_fit']) + 1
+            if y_var_max_value < np.max(logs[i]['var_fit']):
+                y_var_max_value = np.max(logs[i]['var_fit'])
+            if y_avg_max_value < np.max(logs[i]['avg_fit']):
+                y_avg_max_value = np.max(logs[i]['avg_fit'])
+            if y_var_min_value > np.min(logs[i]['var_fit']):
+                y_var_min_value = np.min(logs[i]['var_fit'])
+            if y_avg_min_value > np.min(logs[i]['avg_fit']):
+                y_avg_min_value = np.min(logs[i]['avg_fit'])
+
     return [
         dcc.Graph(
             id='fitness-graph-plot',
             figure={
                 'data': data_fit,
                 'layout': {
-                    'title': ' Average Fitness per generation',
+                    'title': ' Average Fitness (AF) plot',
+                    'xaxis': {
+                        'title': 'Generation',
+                        'range': [0, x_max_value],
+                    },
+                    'yaxis': {
+                        'title': 'Average Fitness',
+                        'range': [y_avg_min_value-0.1*y_avg_min_value, y_avg_max_value+0.1*y_avg_max_value],
+                    }
                 }
             },
         ),
@@ -343,7 +376,16 @@ def update_fitness_graph(_, log_dropdown_value):
             figure={
                 'data': data_var,
                 'layout': {
-                    'title': ' variance Fitness per generation',
+                    'title': ' Variance Fitness (VF) plot',
+                    'xaxis': {
+                        'title': 'Generation',
+                        'range': [0, x_max_value],
+                    },
+                    'yaxis': {
+                        'title': 'Variance Fitness',
+                        'range': [y_var_min_value-0.1*y_var_min_value, y_var_max_value+0.1*y_var_max_value],
+                    }
+
                 }
             },
         ),
@@ -353,7 +395,7 @@ def update_fitness_graph(_, log_dropdown_value):
 @app.callback(
     Output(component_id='log-div', component_property='children'),
     [Input(component_id='interval', component_property='n_intervals'),
-     Input(component_id='log-dropdown', component_property='value'),]
+     Input(component_id='log-dropdown', component_property='value'), ]
 )
 def update_logs_data(_, value):
     read_logs()
@@ -362,7 +404,7 @@ def update_logs_data(_, value):
         dcc.Dropdown(
             id='log-dropdown',
             options=drop_down_logs,
-            value = value,
+            value=value,
             multi=True
         ),
         html.Div(id='output-container')
