@@ -27,7 +27,7 @@ class EvolutionaryAlgorithm:
         :param n: Number of Queens, maybe power of two!, Integer
         :param n_parent: Number of Parent, Integer
         :param m: Mu (number of population), number of population, Integer
-        :param y: Lambda (number of childs), number of children, Integer
+        :param y: Lambda (number of children), number of children, Integer
         :param mutation: Mutation algorithm, Function
         :param cross_over: Cross over algorithm, Function
         :param parent_selection: Selection algorithm for parents, Function
@@ -72,8 +72,8 @@ class EvolutionaryAlgorithm:
             self._generation_counter += 1
             print(self._generation_counter)
             parents = self._parent_selection(self._population, self._n_parent)
-            childs = self._new_childs(parents)
-            self._population = self._remaining_population_selection(self._population, childs, self._m)
+            children = self._new_children(parents)
+            self._population = self._remaining_population_selection(self._population, children, self._m)
             self._log.append(self._save_current_log(avg_per_generation, variance_per_generation, best_chromosome))
             if log:
                 print(self._log[-1])
@@ -109,17 +109,17 @@ class EvolutionaryAlgorithm:
                 'best_fitness': self._population[best_phenotype_index].fitness,
                 }
 
-    def _new_childs(self, parents):
-        childs = []
+    def _new_children(self, parents):
+        children = []
         random.shuffle(parents)
         for i in range(0, len(parents) - 1, 2):
             chromosome1, chromosome2 = self._cross_over(parents[i], parents[i + 1])
             chromosome1.fitness = self._evaluator(chromosome1)
             chromosome2.fitness = self._evaluator(chromosome2)
-            childs += [chromosome1, chromosome2]
-            if len(childs) >= self._y:
+            children += [chromosome1, chromosome2]
+            if len(children) >= self._y:
                 break
-        return childs[:self._y]
+        return children[:self._y]
 
     def _best_gen(self):
         best = self._population[0]
