@@ -1,5 +1,6 @@
 import numpy as np
 
+## milad!
 
 class Chromosome:
     def __init__(self, genotype, fitness):
