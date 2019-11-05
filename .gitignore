@@ -39,3 +39,4 @@ Thumbs.db
 __pycache__/
 log_files/*
 
+!log_files/.gitkeep
