@@ -12,10 +12,10 @@ return-> np.array (genotype of chromosome)
 '''
 
 
-def default_random_gene_generator(number_of_queen, parameters):
+def default_random_gene_generator(number_of_queen, parameters=None):
     """
     :param number_of_queen: Number of Queen, Integer
-    :param parameters: dictionary of parameters that key = parameter name and value = parameter value 
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
     :return: return np.array with  with len number of queen for each row
     """
     gen = np.zeros(number_of_queen)
@@ -59,7 +59,7 @@ Mutation Algorithms, MA
 -------------------------------------
 inputs: single chromosome
         and parameters( dictionary of algorithm parameterss, key: parameters name, value: parameters value)
-return-> 
+return->
 '''
 
 
@@ -82,7 +82,7 @@ def default_mutation(chromosome, parameters={'prob': 0.05}):
 -------------------------------------
 Cross Over  Algorithms, COA
 -------------------------------------
-inputs: parent1, parent2 as two chromosomes and parameters( dictionary of algorithm parameterss, key: parameters name, value: parameters value) 
+inputs: parent1, parent2 as two chromosomes and parameters( dictionary of algorithm parameterss, key: parameters name, value: parameters value)
 return-> two chromosomes as childes
 '''
 
@@ -118,7 +118,7 @@ Parent Selection Algorithms, PaSA
 -------------------------------------
 inputs:  population (current population chromosomes list),
          n (number of selected items)
-         and parameters( dictionary of algorithm parameterss key: parameters name, value: parameters value) 
+         and parameters( dictionary of algorithm parameterss key: parameters name, value: parameters value)
 return-> list of selected chromosomes
 '''
 
@@ -147,8 +147,8 @@ Population Selection Algorithms, PoSA
 inputs:  parents (list of parents chromosome),
          childes (list of children chromosome),
          n (number of selected items)
-         and parameters (dictionary of algorithm parameterss key: parameters name, value: parameters value) 
-return-> list of selected 
+         and parameters (dictionary of algorithm parameterss key: parameters name, value: parameters value)
+return-> list of selected
 '''
 
 
