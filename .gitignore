@@ -37,4 +37,5 @@ ehthumbs.db
 Thumbs.db
 .idea/
 __pycache__/
-log_files/
+log_files/*
+
