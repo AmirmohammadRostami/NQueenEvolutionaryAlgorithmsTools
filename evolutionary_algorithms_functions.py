@@ -5,6 +5,86 @@ import warnings
 
 '''
 -------------------------------------
+Selection Algorithms, (SA)
+-------------------------------------
+input: parameters (dictionary of algorithm parameterss key: parameters name, value: parameters value)
+return-> selected items as array
+'''
+
+
+def warning_data_type_check_selection_algorithms(items, probs):
+    """
+    :param items: (for check) Items that want to choose from them, np.array or list
+    :param probs: (for check) Probabilities of each item, np.array or list
+    :return: fixed items and probs
+    """
+    if type(items) == list:
+        items = np.array(items)
+    if type(probs) == list:
+        probs = np.array(probs)
+    if len(probs) != len(items):
+        raise ValueError(
+            "Length of probs and items must be equal! probs length = {} and items length = {}".format(len(probs),
+                                                                                                      len(items)))
+    if type(probs) != np.ndarray or type(items) != np.ndarray:
+        raise ValueError(
+            "Type of items and probs must be list or np.array, items type = {} and probs type = {}".format(type(items),
+                                                                                                           type(probs)))
+    if np.min(probs) < 0:
+        raise ValueError("Probabilities can not contain negative values")
+
+    if np.sum(probs) != 1:
+        warnings.warn(
+            'Sum of Probabilities array must be 1 but it is = {}, and we normalize it to reach sum equal 1'.format(
+                np.sum(probs)), stacklevel=4)
+        probs = probs / np.sum(probs)
+    return items, probs
+
+
+def roulette_wheel_selection(items, probs, n):
+    """
+    :param items:  Items that want to choose from them, np.array or list
+    :param probs:  Probabilities of each item, np.array or list
+    :param n: number of selected item(s), Integer
+    :return: array of selected Items, np.array
+    """
+    if n == 0:
+        return np.array([])
+    items, probs = warning_data_type_check_selection_algorithms(items, probs)
+    rnds = np.random.random(size=n)
+    inds = np.zeros(n, dtype=np.int)
+    cum_sum = np.cumsum(probs)
+    for i, rnd in enumerate(rnds):
+        inds[i] = np.argmax(cum_sum >= rnd)
+    return items[inds]
+
+
+def stochastic_universal_selection(items, probs, n):
+    """
+    :param items:  Items that want to choose from them, np.array or list
+    :param probs:  Probabilities of each item, np.array or list
+    :param n: number of selected item(s), Integer
+    :return:
+    """
+    items, probs = warning_data_type_check_selection_algorithms(items, probs)
+    index = np.arange(len(items))
+    np.random.shuffle(index)
+    items = items[index]
+    probs = probs[index]
+    start_index = np.random.uniform(0, 1 / n, 1)
+    index_of_choose = np.linspace(0, (n - 1) / n, n) + start_index
+    cum_sum = np.cumsum(probs)
+    selected_items = []
+    items_pointer = 0
+    for index in index_of_choose:
+        while cum_sum[items_pointer] < index:
+            items_pointer += 1
+        selected_items.append(items[items_pointer])
+    return np.array(selected_items)
+
+
+'''
+-------------------------------------
 Random Gene Generator Algorithms, RGGA
 -------------------------------------
 inputs: number_of_queen (n of n-Queen problem)
@@ -173,32 +253,6 @@ def default_population_selection(parents, children, n, parameters=None):
 
 '''
 -------------------------------------
-Roulette Wheel Selection(RWS)
--------------------------------------
-input: parameters (dictionary of algorithm parameterss key: parameters name, value: parameters value)
-return-> selected items
-'''
-
-def roulette_wheel_selection(items, probs, n):
-    if np.min(probs) < 0:
-        raise ValueError("probs can not contain negative values")
-
-    if np.sum(probs) != 1:
-        probs = probs / np.sum(probs)
-        warnings.warn('sum of probs array must be 1', stacklevel=3)
-
-    rnds = np.random.random(size=n)
-    inds = np.zeros(n, dtype=np.int)
-    for i, rnd in enumerate(rnds):
-        inds[i] = np.argmax(np.cumsum(probs) >= rnd)
-    return items[inds]
-
-
-def stochastic_universal_selection():
-    pass
-
-'''
--------------------------------------
 Stop Conditions, SC
 -------------------------------------
 input: parameters (dictionary of algorithm parameterss key: parameters name, value: parameters value)
@@ -217,5 +271,10 @@ def default_stop_condition(generation, max_generation, parameters=None):
         return False
     return True
 
+
 if __name__ == '__main__':
-    print(roulette_wheel_selection(np.array(['a', 'b', 'c']), np.array([2/3, 1/6, 1/6]), n=2))
+    items = ['a', 'b', 'c', 'd', 'e']
+    probs = [0.5, 0.2, 0.1, 0.1, 0.1]
+    n = 1
+    print('RW', roulette_wheel_selection(items, probs, n))
+    print('SUS', stochastic_universal_selection(items, probs, n))
