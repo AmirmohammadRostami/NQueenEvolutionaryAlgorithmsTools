@@ -1,6 +1,7 @@
 import random
 import numpy as np
 from chromosome import Chromosome
+import warnings
 
 '''
 -------------------------------------
@@ -172,6 +173,32 @@ def default_population_selection(parents, children, n, parameters=None):
 
 '''
 -------------------------------------
+Roulette Wheel Selection(RWS)
+-------------------------------------
+input: parameters (dictionary of algorithm parameterss key: parameters name, value: parameters value)
+return-> selected items
+'''
+
+def roulette_wheel_selection(items, probs, n):
+    if np.min(probs) < 0:
+        raise ValueError("probs can not contain negative values")
+
+    if np.sum(probs) != 1:
+        probs = probs / np.sum(probs)
+        warnings.warn('sum of probs array must be 1', stacklevel=3)
+
+    rnds = np.random.random(size=n)
+    inds = np.zeros(n, dtype=np.int)
+    for i, rnd in enumerate(rnds):
+        inds[i] = np.argmax(np.cumsum(probs) >= rnd)
+    return items[inds]
+
+
+def stochastic_universal_selection():
+    pass
+
+'''
+-------------------------------------
 Stop Conditions, SC
 -------------------------------------
 input: parameters (dictionary of algorithm parameterss key: parameters name, value: parameters value)
@@ -189,3 +216,6 @@ def default_stop_condition(generation, max_generation, parameters=None):
     if generation < max_generation:
         return False
     return True
+
+if __name__ == '__main__':
+    print(roulette_wheel_selection(np.array(['a', 'b', 'c']), np.array([2/3, 1/6, 1/6]), n=2))
