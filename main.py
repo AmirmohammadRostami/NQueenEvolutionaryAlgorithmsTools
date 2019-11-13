@@ -1,8 +1,7 @@
 import dash
-from dash.dependencies import Output, Input
+from dash.dependencies import Output, Input, State
 import dash_core_components as dcc
 import dash_html_components as html
-import plotly
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
@@ -15,6 +14,17 @@ from evolutionary_algorithms_functions import *
 '''
 variables
 '''
+data_fit = []
+data_var = []
+x_max_value = 1
+y_avg_max_value = 0
+y_var_max_value = 0
+y_avg_min_value = 0
+y_var_min_value = 0
+
+interval_counter = 0
+running = False
+log_value = []
 x_axis_thick_number = 15
 y_axis_thick_number = 10
 avg_fitness_per_generation = []
@@ -63,7 +73,6 @@ def read_logs():
             for data in p:
                 var_fit.append(data['var_fitness'])
                 avg_fit.append((data['avg_fitness']))
-
             drop_down_logs.append({'label': file[:-7], 'value': len(logs)})
             logs.append({'name': file[:-7], 'var_fit': var_fit, 'avg_fit': avg_fit})
     # print(logs)
@@ -258,8 +267,10 @@ def stop_condition_drop_down(input):
      Input(component_id='queen-number-input', component_property='value')],
 )
 def run_btn(n_clicks, name, generation, children, population, queen_number):
-    global avg_fitness_per_generation, variance_per_generation, best_chromosome
-    if n_clicks > 0:
+    global avg_fitness_per_generation, variance_per_generation, best_chromosome, running
+    if n_clicks > 0 and not running:
+        running = True
+        # print(running)
         avg_fitness_per_generation = []
         variance_per_generation = []
         best_chromosome = [[0]]
@@ -274,6 +285,10 @@ def run_btn(n_clicks, name, generation, children, population, queen_number):
                variance_per_generation,
                avg_fitness_per_generation,
                best_chromosome)
+        running = False
+        # print(running)
+    elif running:
+        print('wait until current EA algorithm be finished!')
     return 'RUN'
 
 
@@ -282,8 +297,9 @@ def run_btn(n_clicks, name, generation, children, population, queen_number):
     [Input(component_id='interval', component_property='n_intervals'),
      Input(component_id='run-btn', component_property='n_clicks')],
 )
-def update_best_solution_graph(_, n_clicks):
+def update_best_solution_graph(interval, n_clicks):
     global best_chromosome
+    global interval_counter
     # print(n_clicks)
     if n_clicks == 0:
         return
@@ -299,7 +315,7 @@ def update_best_solution_graph(_, n_clicks):
             ],
             showscale=False,
         ))
-    fig.update_layout(title='-----Best Chromosome',
+    fig.update_layout(title='--------Best Chromosome',
                       )
     return dcc.Graph(
         id='fitness-graph-plot',
@@ -309,58 +325,82 @@ def update_best_solution_graph(_, n_clicks):
 
 @app.callback(
     Output(component_id='avg_graph', component_property='children'),
-    [Input(component_id='interval', component_property='n_intervals'),
-     Input(component_id='log-dropdown', component_property='value'), ]
+    [Input(component_id='interval', component_property='n_intervals'), ],
+    [State(component_id='log-dropdown', component_property='value'),
+     State(component_id='name-input', component_property='value'),]
 )
-def update_fitness_graph(_, log_dropdown_value):
+def update_fitness_graph(_, log_dropdown_value, name):
     global avg_fitness_per_generation
     global variance_per_generation
-    data_fit = [{'x': np.arange(0, len(avg_fitness_per_generation)),
-                 'y': avg_fitness_per_generation,
-                 'type': 'line',
-                 'name': 'Avg. fitness'}]
-    data_var = [{'x': np.arange(0, len(variance_per_generation)),
-                 'y': variance_per_generation,
-                 'type': 'line',
-                 'name': 'Avg. variance'}]
-    x_max_value = len(avg_fitness_per_generation) + 1
-
-    if len(avg_fitness_per_generation) > 0:
-        y_avg_max_value = np.max(avg_fitness_per_generation)
-        y_var_max_value = np.max(variance_per_generation)
-        y_avg_min_value = np.min(avg_fitness_per_generation)
-        y_var_min_value = np.min(variance_per_generation)
+    global log_value
+    global data_fit
+    global data_var
+    global y_var_max_value, y_avg_max_value, y_var_min_value, y_avg_min_value, x_max_value
+    # print(len(data_fit))
+    if name is None:
+        name = 'Current'
+    new_log = False
+    if log_dropdown_value is None:
+        log_dropdown_value = []
+    # print(log_dropdown_value, log_value)
+    if log_dropdown_value != log_value:
+        log_value = log_dropdown_value
+        # print(log_dropdown_value, log_value)
+        new_log = True
+    # print(running, new_log)
+    # print(running)
+    if not running and not new_log:
+        # print('pass')
+        pass
     else:
-        y_avg_max_value = 0
-        y_var_max_value = 0
-        y_avg_min_value = 0
-        y_var_min_value = 0
+        # print('update')
+        # print(avg_fitness_per_generation)
+        data_fit = []
+        data_var = []
+        data_fit = [{'x': np.arange(0, len(avg_fitness_per_generation)),
+                     'y': avg_fitness_per_generation,
+                     'type': 'line',
+                     'name': name+' Avg. fitness'}]
+        data_var = [{'x': np.arange(0, len(variance_per_generation)),
+                     'y': variance_per_generation,
+                     'type': 'line',
+                     'name': name+' Avg. variance'}]
+        x_max_value = len(avg_fitness_per_generation) + 1
 
-    if log_dropdown_value:
+        if len(avg_fitness_per_generation) > 0:
+            y_avg_max_value = np.max(avg_fitness_per_generation)
+            y_var_max_value = np.max(variance_per_generation)
+            y_avg_min_value = np.min(avg_fitness_per_generation)
+            y_var_min_value = np.min(variance_per_generation)
+        else:
+            y_avg_max_value = 0
+            y_var_max_value = 0
+            y_avg_min_value = 0
+            y_var_min_value = 0
+
         for i in log_dropdown_value:
-            data_fit.append(
-                {'x': np.arange(0, len(logs[i]['avg_fit'])),
-                 'y': logs[i]['avg_fit'],
-                 'type': 'line',
-                 'name': logs[i]['name']}
-            )
-            data_var.append(
-                {'x': np.arange(0, len(logs[i]['var_fit'])),
-                 'y': logs[i]['var_fit'],
-                 'type': 'line',
-                 'name': logs[i]['name']}
-            )
-            if len(logs[i]['avg_fit']) > x_max_value:
-                x_max_value = len(logs[i]['avg_fit']) + 1
-            if y_var_max_value < np.max(logs[i]['var_fit']):
-                y_var_max_value = np.max(logs[i]['var_fit'])
-            if y_avg_max_value < np.max(logs[i]['avg_fit']):
-                y_avg_max_value = np.max(logs[i]['avg_fit'])
-            if y_var_min_value > np.min(logs[i]['var_fit']):
-                y_var_min_value = np.min(logs[i]['var_fit'])
-            if y_avg_min_value > np.min(logs[i]['avg_fit']):
-                y_avg_min_value = np.min(logs[i]['avg_fit'])
-
+                data_fit.append(
+                    {'x': np.arange(0, len(logs[i]['avg_fit'])),
+                     'y': logs[i]['avg_fit'],
+                     'type': 'line',
+                     'name': logs[i]['name']}
+                )
+                data_var.append(
+                    {'x': np.arange(0, len(logs[i]['var_fit'])),
+                     'y': logs[i]['var_fit'],
+                     'type': 'line',
+                     'name': logs[i]['name']}
+                )
+                if len(logs[i]['avg_fit']) > x_max_value:
+                    x_max_value = len(logs[i]['avg_fit']) + 1
+                if y_var_max_value < np.max(logs[i]['var_fit']):
+                    y_var_max_value = np.max(logs[i]['var_fit'])
+                if y_avg_max_value < np.max(logs[i]['avg_fit']):
+                    y_avg_max_value = np.max(logs[i]['avg_fit'])
+                if y_var_min_value > np.min(logs[i]['var_fit']):
+                    y_var_min_value = np.min(logs[i]['var_fit'])
+                if y_avg_min_value > np.min(logs[i]['avg_fit']):
+                    y_avg_min_value = np.min(logs[i]['avg_fit'])
     return [
         dcc.Graph(
             id='fitness-graph-plot',

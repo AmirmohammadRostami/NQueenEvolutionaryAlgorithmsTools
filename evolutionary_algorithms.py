@@ -59,26 +59,27 @@ class EvolutionaryAlgorithm:
             variance_per_generation=[],
             avg_per_generation=[],
             best_chromosome=[1],
-            log=False,
+            verbose=False,
             save_log=True,
             save_log_path='./log_files/'):
         file_name = name
-        print('EA algorithms Running . . . ')
+        if verbose:
+            print('EA algorithms Running . . . ')
         self._initial_population()
         self._generation_counter = 1
         self._log.append(self._save_current_log(avg_per_generation, variance_per_generation, best_chromosome))
-        if log:
+        if verbose:
             print(self._log[-1])
         while not self._stop_condition(self._generation_counter, self._max_generation):
             self._generation_counter += 1
-            print(self._generation_counter)
+            if verbose:
+                print(self._generation_counter)
             parents = self._parent_selection(self._population, self._n_parent)
             children = self._new_children(parents)
             self._population = self._remaining_population_selection(self._population, children, self._m)
             self._log.append(self._save_current_log(avg_per_generation, variance_per_generation, best_chromosome))
-            if log:
+            if verbose:
                 print(self._log[-1])
-
         file_name += '.pickle'
         print('yes')
         if save_log:
