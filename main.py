@@ -133,14 +133,14 @@ app.layout = html.Div([
     ),
 
     html.Div([
-        html.Span('Parents'),
-        dcc.Input(id='parents-input', value='0'),
+        html.Span('Generation'),
+        dcc.Input(id='generation-input', value='750'),
         html.Span('Population'),
-        dcc.Input(id='population-input', value='0'),
+        dcc.Input(id='population-input', value='500'),
         html.Span('Children'),
-        dcc.Input(id='children-input', value='0'),
+        dcc.Input(id='children-input', value='100'),
         html.Span('Number of Queen'),
-        dcc.Input(id='queen-number-input', value='0')
+        dcc.Input(id='queen-number-input', value='8')
 
     ], style={'width': '100%', 'align': 'right', 'display': 'inline-block', 'margin': '10px'}),
     html.Div([
@@ -251,17 +251,25 @@ def stop_condition_drop_down(input):
 @app.callback(
     Output(component_id='run-btn', component_property='children'),
     [Input(component_id='run-btn', component_property='n_clicks'),
-     Input(component_id='name-input', component_property='value')],
+     Input(component_id='name-input', component_property='value'),
+     Input(component_id='generation-input', component_property='value'),
+     Input(component_id='children-input', component_property='value'),
+     Input(component_id='population-input', component_property='value'),
+     Input(component_id='queen-number-input', component_property='value')],
 )
-def run_btn(n_clicks, name):
+def run_btn(n_clicks, name, generation, children, population, queen_number):
     global avg_fitness_per_generation, variance_per_generation, best_chromosome
     if n_clicks > 0:
         avg_fitness_per_generation = []
         variance_per_generation = []
         best_chromosome = [[0]]
-        if name == '' or name == None:
+        if name == '' or name is None:
             name = str(datetime.datetime.now())
-        ea = evolutionary_algorithms.EvolutionaryAlgorithm()
+        ea = evolutionary_algorithms.EvolutionaryAlgorithm(n=int(queen_number),
+                                                           max_generation=int(generation),
+                                                           m=int(population),
+                                                           y=int(children),
+                                                           )
         ea.run(name,
                variance_per_generation,
                avg_fitness_per_generation,
@@ -366,7 +374,7 @@ def update_fitness_graph(_, log_dropdown_value):
                     },
                     'yaxis': {
                         'title': 'Average Fitness',
-                        'range': [y_avg_min_value-0.1*y_avg_min_value, y_avg_max_value+0.1*y_avg_max_value],
+                        'range': [y_avg_min_value - 0.1 * y_avg_min_value, y_avg_max_value + 0.1 * y_avg_max_value],
                     }
                 }
             },
@@ -383,7 +391,7 @@ def update_fitness_graph(_, log_dropdown_value):
                     },
                     'yaxis': {
                         'title': 'Variance Fitness',
-                        'range': [y_var_min_value-0.1*y_var_min_value, y_var_max_value+0.1*y_var_max_value],
+                        'range': [y_var_min_value - 0.1 * y_var_min_value, y_var_max_value + 0.1 * y_var_max_value],
                     }
 
                 }

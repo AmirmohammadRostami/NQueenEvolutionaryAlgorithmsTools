@@ -12,7 +12,6 @@ class EvolutionaryAlgorithm:
     def __init__(self,
                  max_generation=200,
                  n=8,
-                 n_parent=40,
                  m=160,
                  y=80,
                  mutation=default_mutation,
@@ -25,7 +24,6 @@ class EvolutionaryAlgorithm:
         '''
         :param max_generation: Max number of generation, Integer
         :param n: Number of Queens, maybe power of two!, Integer
-        :param n_parent: Number of Parent, Integer
         :param m: Mu (number of population), number of population, Integer
         :param y: Lambda (number of children), number of children, Integer
         :param mutation: Mutation algorithm, Function
@@ -36,15 +34,16 @@ class EvolutionaryAlgorithm:
         :param random_gene_generator: Random algorithm for initial population, Function
         :param stop_condition: Stop condition function, Function
         '''
-
+        global best_chromosome_fitness_in_total
+        global best_phenotype
         self._max_generation = max_generation
         self._generation_counter = 0
         self._cross_over = cross_over
         self._population = []
         self._m = m
         self._n = n
-        self._n_parent = n_parent
         self._y = y
+        self._n_parent = y
         self._mutation = mutation
         self._remaining_population_selection = remaining_population_selection
         self._parent_selection = parent_selection
@@ -52,6 +51,8 @@ class EvolutionaryAlgorithm:
         self._evaluator = evaluator
         self._stop_condition = stop_condition
         self._log = []
+        best_chromosome_fitness_in_total = -1
+        best_phenotype = [1]
 
     def run(self,
             name,
@@ -86,14 +87,14 @@ class EvolutionaryAlgorithm:
             print('log file successfully saved!')
 
     def _save_current_log(self, avg_fitness_per_generation, variance_per_generation, best_chromosome):
-        fittness = []
+        fitness = []
         best_phenotype_index = 0
         for i in range(1, len(self._population)):
             if self._population[i].fitness > self._population[best_phenotype_index].fitness:
                 best_phenotype_index = i
-            fittness.append(self._population[i].fitness)
-        var_fitness = np.var(fittness)
-        avg_fitness = np.average(fittness)
+            fitness.append(self._population[i].fitness)
+        var_fitness = np.var(fitness)
+        avg_fitness = np.average(fitness)
         avg_fitness_per_generation.append(avg_fitness)
         variance_per_generation.append(var_fitness)
         global best_chromosome_fitness_in_total, best_phenotype

@@ -275,6 +275,6 @@ def default_stop_condition(generation, max_generation, parameters=None):
 if __name__ == '__main__':
     items = ['a', 'b', 'c', 'd', 'e']
     probs = [0.5, 0.2, 0.1, 0.1, 0.1]
-    n = 1
+    n = 15
     print('RW', roulette_wheel_selection(items, probs, n))
     print('SUS', stochastic_universal_selection(items, probs, n))
