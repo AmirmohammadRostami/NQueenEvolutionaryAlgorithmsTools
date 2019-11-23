@@ -159,6 +159,18 @@ def default_mutation(chromosome, parameters={'prob': 0.05}):
     return chromosome
 
 
+def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
+    """
+    :param chromosome: Chromosome
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param prob: default 0.05, float
+    :return:
+    """
+    if np.random.random() <= parameters['prob']:
+        idx = np.random.choice(np.arange(len(chromosome.genotype)), 2, replace=False)
+        chromosome.genotype[idx[0]], chromosome.genotype[idx[1]] = chromosome.genotype[idx[1]], chromosome.genotype[idx[0]]
+    return chromosome
+
 '''
 -------------------------------------
 Cross Over  Algorithms, COA
@@ -193,6 +205,42 @@ def default_cross_over(parent1, parent2, parameters={'prob': 0.4}):
     return chromosome1, chromosome2
 
 
+def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_count': 'middle'}):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parent1: First parent chromosome, Gene, np.array with len [n^2,1]
+    :param parent2: Second parent chromosome, Gene, np.array with len [n^2,1]
+    :return: return two chromosome for each children, Chromosome
+    """
+
+    if str(parameters['points_count']) == 'middle':
+        return default_cross_over(parent1, parent2)
+    if parameters['points_count'] > len(parent1.genotype) or parameters['points_count'] <= 0:
+        warnings.warn('points must be between 1 and size of genotype. parents will be returned', stacklevel=3)
+        return parent1, parent2
+
+    crossover_points = np.sort(np.random.choice(np.arange(len(parent1.genotype)), replace=False, size=parameters['points_count']))
+    crossover_points = np.append(crossover_points, len(parent1.genotype))
+    # print('cross over points', crossover_points)
+    first_idx = 0
+    gen1, gen2 = np.zeros(len(parent1.genotype)), np.zeros(len(parent1.genotype))
+    for last_idx in crossover_points:
+        if np.random.random() <= parameters['prob']:
+            gen2[first_idx: last_idx] = parent2.genotype[first_idx: last_idx]
+            gen1[first_idx: last_idx] = parent1.genotype[first_idx: last_idx]
+            # print('same')
+        else:
+            gen1[first_idx: last_idx] = parent2.genotype[first_idx: last_idx]
+            gen2[first_idx: last_idx] = parent1.genotype[first_idx: last_idx]
+            # print('not same')
+        # print(gen1)
+        # print(gen2)
+        first_idx = last_idx
+
+
+    chromosome1, chromosome2 = Chromosome(gen1, 0), Chromosome(gen2, 0)
+    return chromosome1, chromosome2
+
 '''
 -------------------------------------
 Parent Selection Algorithms, PaSA
@@ -214,11 +262,7 @@ def default_parent_selection(population, n, parameter=None):
     if n > len(population):
         print('n should be less or equal than len parents list')
         return -1
-    indexes = np.random.randint(0, len(population), n)
-    res = []
-    for index in indexes:
-        res.append(population[index])
-    return res
+    return np.random.choice(population, size=n)
 
 
 '''
@@ -250,6 +294,19 @@ def default_population_selection(parents, children, n, parameters=None):
             res.append(children[index - len(parents)])
     return res
 
+def fitness_based_population_selection(parents, children, n, parameters=None):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parents: list of Parents of current Generation, List
+    :param children: list of new children of current Generation, List
+    :param n: Number of remaining population, Integer
+    :return: list of remained Chromosomes
+    """
+
+    population = parents + children
+    fitness_arr = np.array([x.fitness for x in population])
+    fitness_arr = fitness_arr / np.sum(fitness_arr)
+    return roulette_wheel_selection(population, fitness_arr, n)
 
 '''
 -------------------------------------
@@ -273,8 +330,18 @@ def default_stop_condition(generation, max_generation, parameters=None):
 
 
 if __name__ == '__main__':
-    items = ['a', 'b', 'c', 'd', 'e']
-    probs = [0.5, 0.2, 0.1, 0.1, 0.1]
-    n = 15
-    print('RW', roulette_wheel_selection(items, probs, n))
-    print('SUS', stochastic_universal_selection(items, probs, n))
+    # items = ['a', 'b', 'c', 'd', 'e']
+    # probs = [0.5, 0.2, 0.1, 0.1, 0.1]
+    # n = 15
+    # print('RW', roulette_wheel_selection(items, probs, n))
+    # print('SUS', stochastic_universal_selection(items, probs, n))
+
+    ch1 = Chromosome(np.arange(8), 5)
+    ch2 = Chromosome(np.arange(8)*2, 5)
+
+    pop = []
+    for i in range(10):
+        pop.append(Chromosome(np.arange(10), fitness=i+1))
+    sel_pops = fitness_based_population_selection(pop[: 5], pop[5: ], n=5)
+    for x in sel_pops:
+        print(x.genotype, x.fitness)

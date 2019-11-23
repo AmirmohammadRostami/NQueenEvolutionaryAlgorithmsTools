@@ -2,7 +2,6 @@ import numpy as np
 from chromosome import Chromosome
 import random
 import pickle
-from evolutionary_algorithms_functions import *
 
 best_chromosome_fitness_in_total = -1
 best_phenotype = [1]
@@ -10,17 +9,17 @@ best_phenotype = [1]
 
 class EvolutionaryAlgorithm:
     def __init__(self,
+                 mutation,
+                 cross_over,
+                 parent_selection,
+                 remaining_population_selection,
+                 evaluator,
+                 random_gene_generator,
+                 stop_condition,
                  max_generation=200,
                  n=8,
                  m=160,
-                 y=80,
-                 mutation=default_mutation,
-                 cross_over=default_cross_over,
-                 parent_selection=default_parent_selection,
-                 remaining_population_selection=default_population_selection,
-                 evaluator=default_evaluator,
-                 random_gene_generator=default_random_gene_generator,
-                 stop_condition=default_stop_condition):
+                 y=80, ):
         '''
         :param max_generation: Max number of generation, Integer
         :param n: Number of Queens, maybe power of two!, Integer
@@ -38,15 +37,19 @@ class EvolutionaryAlgorithm:
         global best_phenotype
         self._max_generation = max_generation
         self._generation_counter = 0
-        self._cross_over = cross_over
         self._population = []
         self._m = m
         self._n = n
         self._y = y
         self._n_parent = y
-        self._mutation = mutation
-        self._remaining_population_selection = remaining_population_selection
-        self._parent_selection = parent_selection
+        self._cross_over = cross_over[0]
+        self._cross_over_params = cross_over[1]
+        self._mutation = mutation[0]
+        self._mutation_params = mutation[1]
+        self._remaining_population_selection = remaining_population_selection[0]
+        self._remaining_population_selection_params = remaining_population_selection[1]
+        self._parent_selection = parent_selection[0]
+        self._parent_selection_params = parent_selection[1]
         self._random_gene_generator = random_gene_generator
         self._evaluator = evaluator
         self._stop_condition = stop_condition
@@ -74,9 +77,11 @@ class EvolutionaryAlgorithm:
             self._generation_counter += 1
             if verbose:
                 print(self._generation_counter)
-            parents = self._parent_selection(self._population, self._n_parent)
+            parents = self._parent_selection(self._population, self._n_parent, self._parent_selection_params)
             children = self._new_children(parents)
-            self._population = self._remaining_population_selection(self._population, children, self._m)
+            if type (self._population) != list:
+                self._population = self._population.tolist()
+            self._population = self._remaining_population_selection(self._population, children, self._m,self._remaining_population_selection_params)
             self._log.append(self._save_current_log(avg_per_generation, variance_per_generation, best_chromosome))
             if verbose:
                 print(self._log[-1])
@@ -115,7 +120,9 @@ class EvolutionaryAlgorithm:
         children = []
         random.shuffle(parents)
         for i in range(0, len(parents) - 1, 2):
-            chromosome1, chromosome2 = self._cross_over(parents[i], parents[i + 1])
+            chromosome1, chromosome2 = self._cross_over(parents[i], parents[i + 1], self._cross_over_params)
+            chromosome1 = self._mutation(chromosome1, self._mutation_params)
+            chromosome2 = self._mutation(chromosome2, self._mutation_params)
             chromosome1.fitness = self._evaluator(chromosome1)
             chromosome2.fitness = self._evaluator(chromosome2)
             children += [chromosome1, chromosome2]

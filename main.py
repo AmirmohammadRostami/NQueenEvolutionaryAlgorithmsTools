@@ -36,17 +36,19 @@ drop_down_logs = []
 
 mutation_options = [
     {'label': 'default', 'value': 0},
+    {'label': 'random swap mutation', 'value': 1},
 ]
 cross_over_options = [
     {'label': 'default', 'value': 0},
+    {'label': 'multi points cross over', 'value': 1},
 ]
 parent_selection_options = [
     {'label': 'uniform', 'value': 0},
 
 ]
-remaining_selection_algorithms = [
+remaining_selection_options = [
     {'label': 'uniform', 'value': 0},
-
+    {'label': 'fitness based selection', 'value': 1},
 ]
 evaluation_options = [
     {'label': 'default', 'value': 0},
@@ -92,15 +94,23 @@ app.layout = html.Div([
     html.Div([
         html.Span('Mutation Algorithms'),
         dcc.Dropdown(id='mutation-dropdown',
-                     options=mutation_options),
+                     options=mutation_options,
+                     value=None),
+
+        html.Span('Probability', style={'display': 'None'}),
+        dcc.Input(id='mutation-probability', value='0.05', style={'display': 'None'}),
     ], style={'width': '80%', 'align': 'right', 'display': 'inline-block', 'margin': '10px'},
         id='mutation-div',
     ),
     html.Div([
         html.Span('Cross over Algorithms'),
         dcc.Dropdown(id='cross-over-dropdown',
-                     options=cross_over_options
-                     ),
+                     options=cross_over_options,
+                     value=None),
+        html.Span('Probability of which parents', style={'display': 'None'}),
+        dcc.Input(id='parents-probability', value='0.05', style={'display': 'None'}),
+        html.Span('Points', style={'display': 'None'}),
+        dcc.Input(id='cross-over-points-number', value='2', style={'display': 'None'}),
     ], style={'width': '80%', 'align': 'right', 'display': 'inline-block', 'margin': '10px'},
         id='cross-over-div',
     ),
@@ -115,7 +125,7 @@ app.layout = html.Div([
     html.Div([
         html.Span('Remaining Population Selection Algorithms'),
         dcc.Dropdown(id='remaining-selection-dropdown',
-                     options=remaining_selection_algorithms),
+                     options=parent_selection_options),
 
     ], style={'width': '80%', 'align': 'right', 'display': 'inline-block', 'margin': '10px'},
         id='remaining-selection-div',
@@ -173,6 +183,32 @@ app.layout = html.Div([
 ], style={'align': 'center', 'background-image': './back_ground_img.png'})
 
 
+@app.callback(Output(component_id='remaining-selection-div', component_property='children'),
+              [Input(component_id='remaining-selection-dropdown', component_property='value')])
+def remaining_selection_drop_down(input):
+    if input is None:
+        return [
+            html.Span('Remaining Selection Algorithms'),
+            dcc.Dropdown(id='remaining-selection-dropdown',
+                         options=remaining_selection_options,
+                         value=None),
+        ]
+    elif input == 0:
+        return [
+            html.Span('Remaining Selection Algorithms'),
+            dcc.Dropdown(id='remaining-selection-dropdown',
+                         options=remaining_selection_options,
+                         value=0),
+        ]
+    elif input == 1:
+        return [
+            html.Span('Remaining Selection Algorithms'),
+            dcc.Dropdown(id='remaining-selection-dropdown',
+                         options=remaining_selection_options,
+                         value=1),
+        ]
+
+
 @app.callback(Output(component_id='parent-selection-div', component_property='children'),
               [Input(component_id='parents-selection-dropdown', component_property='value')])
 def parent_selection_drop_down(input):
@@ -194,14 +230,21 @@ def parent_selection_drop_down(input):
 
 
 @app.callback(Output(component_id='cross-over-div', component_property='children'),
-              [Input(component_id='cross-over-dropdown', component_property='value')])
-def cross_over_drop_down(input):
+              [Input(component_id='cross-over-dropdown', component_property='value'),
+               Input(component_id='parents-probability', component_property='value'),
+               Input(component_id='cross-over-points-number', component_property='value'),
+               ])
+def cross_over_drop_down(input, parents_prob, cross_over_points):
     if input is None:
         return [
             html.Span('Cross over Algorithms'),
             dcc.Dropdown(id='cross-over-dropdown',
                          options=cross_over_options,
                          value=None),
+            html.Span('Probability of which parents', style={'display': 'None'}),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
+            html.Span('Points', style={'display': 'None'}),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
         ]
     elif input == 0:
         return [
@@ -209,12 +252,28 @@ def cross_over_drop_down(input):
             dcc.Dropdown(id='cross-over-dropdown',
                          options=cross_over_options,
                          value=0),
+            html.Span('Probability of which parents', style={'display': 'None'}),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
+            html.Span('Points', style={'display': 'None'}),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
+        ]
+    elif input == 1:
+        return [
+            html.Span('Cross over Algorithms'),
+            dcc.Dropdown(id='cross-over-dropdown',
+                         options=cross_over_options,
+                         value=1),
+            html.Span('Probability of which parents'),
+            dcc.Input(id='parents-probability', value=parents_prob),
+            html.Span('Number of Points'),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points),
         ]
 
 
 @app.callback(Output(component_id='mutation-div', component_property='children'),
-              [Input(component_id='mutation-dropdown', component_property='value')])
-def mutation_drop_down(input):
+              [Input(component_id='mutation-dropdown', component_property='value'),
+               Input(component_id='mutation-probability', component_property='value')])
+def mutation_drop_down(input, mutation_prob):
     if input is None:
         return [
             html.Span('Mutation Algorithms'),
@@ -223,7 +282,7 @@ def mutation_drop_down(input):
                          value=None),
 
             html.Span('Probability', style={'display': 'None'}),
-            dcc.Input(id='mutation-probability', value='0.05', style={'display': 'None'}),
+            dcc.Input(id='mutation-probability', value=mutation_prob, style={'display': 'None'}),
         ]
     elif input == 0:
         return [
@@ -232,7 +291,16 @@ def mutation_drop_down(input):
                          options=mutation_options,
                          value=0),
             html.Span('Probability'),
-            dcc.Input(id='mutation-probability', value='0.05'),
+            dcc.Input(id='mutation-probability', value=mutation_prob),
+        ]
+    elif input == 1:
+        return [
+            html.Span('Mutation Algorithms'),
+            dcc.Dropdown(id='mutation-dropdown',
+                         options=mutation_options,
+                         value=1),
+            html.Span('Probability'),
+            dcc.Input(id='mutation-probability', value=mutation_prob),
         ]
 
 
@@ -259,16 +327,37 @@ def stop_condition_drop_down(input):
 
 @app.callback(
     Output(component_id='run-btn', component_property='children'),
-    [Input(component_id='run-btn', component_property='n_clicks'),
-     Input(component_id='name-input', component_property='value'),
-     Input(component_id='generation-input', component_property='value'),
-     Input(component_id='children-input', component_property='value'),
-     Input(component_id='population-input', component_property='value'),
-     Input(component_id='queen-number-input', component_property='value')],
+    [Input(component_id='run-btn', component_property='n_clicks')],
+     [State(component_id='name-input', component_property='value'),
+     State(component_id='generation-input', component_property='value'),
+     State(component_id='children-input', component_property='value'),
+     State(component_id='population-input', component_property='value'),
+     State(component_id='queen-number-input', component_property='value'),
+     State(component_id='mutation-probability', component_property='value'),
+     State(component_id='cross-over-points-number', component_property='value'),
+     State(component_id='parents-probability', component_property='value'),
+     State(component_id='mutation-dropdown', component_property='value'),
+     State(component_id='cross-over-dropdown', component_property='value'),
+     State(component_id='parents-selection-dropdown', component_property='value'),
+     State(component_id='remaining-selection-dropdown', component_property='value'),
+     ],
 )
-def run_btn(n_clicks, name, generation, children, population, queen_number):
+def run_btn(n_clicks,
+            name,
+            generation,
+            children,
+            population,
+            queen_number,
+            mutation_prob,
+            cross_over_points,
+            parents_prob,
+            mutation_drop_down,
+            cross_over_drop_down,
+            parents_selection_drop_down,
+            remaining_selection_drop_down):
     global avg_fitness_per_generation, variance_per_generation, best_chromosome, running
     if n_clicks > 0 and not running:
+        mutation, cross_over, parents_selection, remaining_selection = None, None, None, None
         running = True
         # print(running)
         avg_fitness_per_generation = []
@@ -276,11 +365,41 @@ def run_btn(n_clicks, name, generation, children, population, queen_number):
         best_chromosome = [[0]]
         if name == '' or name is None:
             name = str(datetime.datetime.now())
-        ea = evolutionary_algorithms.EvolutionaryAlgorithm(n=int(queen_number),
-                                                           max_generation=int(generation),
-                                                           m=int(population),
-                                                           y=int(children),
-                                                           )
+
+        # mutation
+        if mutation_drop_down == 0 or mutation_drop_down is None:
+            mutation = (default_mutation, {'prob': float(mutation_prob)})
+        elif mutation_drop_down == 1:
+            mutation = (random_swap_mutation, {'prob': float(mutation_prob)})
+
+        # cross over
+        if cross_over_drop_down == 0 or cross_over_drop_down is None:
+            cross_over = (default_cross_over, {'prob': float(parents_prob)})
+        elif cross_over_drop_down == 1:
+            cross_over = (multi_points_crossover, {'prob': float(parents_prob), 'points_count': int(cross_over_points)})
+
+        # parents selection
+        if parents_selection_drop_down == 0 or parents_selection_drop_down is None:
+            parents_selection = (default_parent_selection, None)
+
+        # remaining selection
+        if remaining_selection_drop_down == 0 or remaining_selection_drop_down is None:
+            remaining_selection = (default_population_selection, None)
+        elif remaining_selection_drop_down == 1:
+            remaining_selection = (fitness_based_population_selection, None)
+        ea = evolutionary_algorithms.EvolutionaryAlgorithm(
+            mutation=mutation,
+            cross_over=cross_over,
+            parent_selection=parents_selection,
+            remaining_population_selection=remaining_selection,
+            evaluator=default_evaluator,
+            random_gene_generator=default_random_gene_generator,
+            stop_condition=default_stop_condition,
+            max_generation=int(generation),
+            n=int(queen_number),
+            m=int(population),
+            y=int(children),
+        )
         ea.run(name,
                variance_per_generation,
                avg_fitness_per_generation,
@@ -327,7 +446,7 @@ def update_best_solution_graph(interval, n_clicks):
     Output(component_id='avg_graph', component_property='children'),
     [Input(component_id='interval', component_property='n_intervals'), ],
     [State(component_id='log-dropdown', component_property='value'),
-     State(component_id='name-input', component_property='value'),]
+     State(component_id='name-input', component_property='value'), ]
 )
 def update_fitness_graph(_, log_dropdown_value, name):
     global avg_fitness_per_generation
@@ -360,11 +479,11 @@ def update_fitness_graph(_, log_dropdown_value, name):
         data_fit = [{'x': np.arange(0, len(avg_fitness_per_generation)),
                      'y': avg_fitness_per_generation,
                      'type': 'line',
-                     'name': name+' Avg. fitness'}]
+                     'name': name + ' Avg. fitness'}]
         data_var = [{'x': np.arange(0, len(variance_per_generation)),
                      'y': variance_per_generation,
                      'type': 'line',
-                     'name': name+' Avg. variance'}]
+                     'name': name + ' Avg. variance'}]
         x_max_value = len(avg_fitness_per_generation) + 1
 
         if len(avg_fitness_per_generation) > 0:
@@ -379,28 +498,28 @@ def update_fitness_graph(_, log_dropdown_value, name):
             y_var_min_value = 0
 
         for i in log_dropdown_value:
-                data_fit.append(
-                    {'x': np.arange(0, len(logs[i]['avg_fit'])),
-                     'y': logs[i]['avg_fit'],
-                     'type': 'line',
-                     'name': logs[i]['name']}
-                )
-                data_var.append(
-                    {'x': np.arange(0, len(logs[i]['var_fit'])),
-                     'y': logs[i]['var_fit'],
-                     'type': 'line',
-                     'name': logs[i]['name']}
-                )
-                if len(logs[i]['avg_fit']) > x_max_value:
-                    x_max_value = len(logs[i]['avg_fit']) + 1
-                if y_var_max_value < np.max(logs[i]['var_fit']):
-                    y_var_max_value = np.max(logs[i]['var_fit'])
-                if y_avg_max_value < np.max(logs[i]['avg_fit']):
-                    y_avg_max_value = np.max(logs[i]['avg_fit'])
-                if y_var_min_value > np.min(logs[i]['var_fit']):
-                    y_var_min_value = np.min(logs[i]['var_fit'])
-                if y_avg_min_value > np.min(logs[i]['avg_fit']):
-                    y_avg_min_value = np.min(logs[i]['avg_fit'])
+            data_fit.append(
+                {'x': np.arange(0, len(logs[i]['avg_fit'])),
+                 'y': logs[i]['avg_fit'],
+                 'type': 'line',
+                 'name': logs[i]['name']}
+            )
+            data_var.append(
+                {'x': np.arange(0, len(logs[i]['var_fit'])),
+                 'y': logs[i]['var_fit'],
+                 'type': 'line',
+                 'name': logs[i]['name']}
+            )
+            if len(logs[i]['avg_fit']) > x_max_value:
+                x_max_value = len(logs[i]['avg_fit']) + 1
+            if y_var_max_value < np.max(logs[i]['var_fit']):
+                y_var_max_value = np.max(logs[i]['var_fit'])
+            if y_avg_max_value < np.max(logs[i]['avg_fit']):
+                y_avg_max_value = np.max(logs[i]['avg_fit'])
+            if y_var_min_value > np.min(logs[i]['var_fit']):
+                y_var_min_value = np.min(logs[i]['var_fit'])
+            if y_avg_min_value > np.min(logs[i]['avg_fit']):
+                y_avg_min_value = np.min(logs[i]['avg_fit'])
     return [
         dcc.Graph(
             id='fitness-graph-plot',
