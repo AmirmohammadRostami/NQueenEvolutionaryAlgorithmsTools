@@ -14,7 +14,7 @@ class EvolutionaryAlgorithm:
                  parent_selection,
                  remaining_population_selection,
                  evaluator,
-                 random_gene_generator,
+                 gene_generator,
                  stop_condition,
                  max_generation=200,
                  n=8,
@@ -50,7 +50,7 @@ class EvolutionaryAlgorithm:
         self._remaining_population_selection_params = remaining_population_selection[1]
         self._parent_selection = parent_selection[0]
         self._parent_selection_params = parent_selection[1]
-        self._random_gene_generator = random_gene_generator
+        self._random_gene_generator = gene_generator
         self._evaluator = evaluator
         self._stop_condition = stop_condition
         self._log = []
@@ -79,9 +79,10 @@ class EvolutionaryAlgorithm:
                 print(self._generation_counter)
             parents = self._parent_selection(self._population, self._n_parent, self._parent_selection_params)
             children = self._new_children(parents)
-            if type (self._population) != list:
+            if type(self._population) != list:
                 self._population = self._population.tolist()
-            self._population = self._remaining_population_selection(self._population, children, self._m,self._remaining_population_selection_params)
+            self._population = self._remaining_population_selection(self._population, children, self._m,
+                                                                    self._remaining_population_selection_params)
             self._log.append(self._save_current_log(avg_per_generation, variance_per_generation, best_chromosome))
             if verbose:
                 print(self._log[-1])

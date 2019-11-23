@@ -105,6 +105,17 @@ def default_random_gene_generator(number_of_queen, parameters=None):
     return gen
 
 
+def permutation_random_gene_generator(number_of_queen, parameters=None):
+    """
+    :param number_of_queen: Number of Queen, Integer
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :return: return np.array with  with len number of queen for each row
+    """
+    gen = np.arange(0,number_of_queen)
+    np.random.shuffle(gen)
+    return gen
+
+
 '''
 -------------------------------------
 Random Evaluators Algorithms, REA
@@ -168,8 +179,10 @@ def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
     """
     if np.random.random() <= parameters['prob']:
         idx = np.random.choice(np.arange(len(chromosome.genotype)), 2, replace=False)
-        chromosome.genotype[idx[0]], chromosome.genotype[idx[1]] = chromosome.genotype[idx[1]], chromosome.genotype[idx[0]]
+        chromosome.genotype[idx[0]], chromosome.genotype[idx[1]] = chromosome.genotype[idx[1]], chromosome.genotype[
+            idx[0]]
     return chromosome
+
 
 '''
 -------------------------------------
@@ -219,7 +232,8 @@ def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_co
         warnings.warn('points must be between 1 and size of genotype. parents will be returned', stacklevel=3)
         return parent1, parent2
 
-    crossover_points = np.sort(np.random.choice(np.arange(len(parent1.genotype)), replace=False, size=parameters['points_count']))
+    crossover_points = np.sort(
+        np.random.choice(np.arange(len(parent1.genotype)), replace=False, size=parameters['points_count']))
     crossover_points = np.append(crossover_points, len(parent1.genotype))
     # print('cross over points', crossover_points)
     first_idx = 0
@@ -237,9 +251,9 @@ def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_co
         # print(gen2)
         first_idx = last_idx
 
-
     chromosome1, chromosome2 = Chromosome(gen1, 0), Chromosome(gen2, 0)
     return chromosome1, chromosome2
+
 
 '''
 -------------------------------------
@@ -294,6 +308,7 @@ def default_population_selection(parents, children, n, parameters=None):
             res.append(children[index - len(parents)])
     return res
 
+
 def fitness_based_population_selection(parents, children, n, parameters=None):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
@@ -307,6 +322,7 @@ def fitness_based_population_selection(parents, children, n, parameters=None):
     fitness_arr = np.array([x.fitness for x in population])
     fitness_arr = fitness_arr / np.sum(fitness_arr)
     return roulette_wheel_selection(population, fitness_arr, n)
+
 
 '''
 -------------------------------------
@@ -336,12 +352,14 @@ if __name__ == '__main__':
     # print('RW', roulette_wheel_selection(items, probs, n))
     # print('SUS', stochastic_universal_selection(items, probs, n))
 
-    ch1 = Chromosome(np.arange(8), 5)
-    ch2 = Chromosome(np.arange(8)*2, 5)
-
-    pop = []
+    # ch1 = Chromosome(np.arange(8), 5)
+    # ch2 = Chromosome(np.arange(8) * 2, 5)
+    #
+    # pop = []
+    # for i in range(10):
+    #     pop.append(Chromosome(np.arange(10), fitness=i + 1))
+    # sel_pops = fitness_based_population_selection(pop[: 5], pop[5:], n=5)
+    # for x in sel_pops:
+    #     print(x.genotype, x.fitness)
     for i in range(10):
-        pop.append(Chromosome(np.arange(10), fitness=i+1))
-    sel_pops = fitness_based_population_selection(pop[: 5], pop[5: ], n=5)
-    for x in sel_pops:
-        print(x.genotype, x.fitness)
+        print(permutation_random_gene_generator(8))
