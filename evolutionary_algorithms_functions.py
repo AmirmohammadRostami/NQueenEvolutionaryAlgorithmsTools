@@ -111,7 +111,7 @@ def permutation_random_gene_generator(number_of_queen, parameters=None):
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
     :return: return np.array with  with len number of queen for each row
     """
-    gen = np.arange(0,number_of_queen)
+    gen = np.arange(0, number_of_queen)
     np.random.shuffle(gen)
     return gen
 
