@@ -422,14 +422,15 @@ def update_best_solution_graph(interval, n_clicks):
     # print(n_clicks)
     if n_clicks == 0:
         return
+    # print(best_chromosome)
     # print(np.array(best_chromosome[0]))
     fig = go.Figure(
         data=go.Heatmap(
             z=np.array(best_chromosome[0]),
             colorscale=[
                 # Let first 10% (0.1) of the values have color rgb(0, 0, 0)
-                [0, "rgb(200, 200, 200)"],
-                [0.6, "rgb(0, 0, 0)"],
+                [0, "rgb(180, 200, 200)"],
+                [0.6, "rgb(255, 0, 0)"],
                 [1, "rgb(70, 255, 70)"]
             ],
             showscale=False,
