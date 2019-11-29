@@ -1,5 +1,7 @@
 # Evolutionary Algorithm for N queen problem
-In this project evolutionary algorithm in various models have been implemented. 
+In this project evolutionary algorithm in various models have been implemented.
+
+The Readme file is under construction. It is estimated that the readme will be finished due to 1 a.m. November 30th, 2019.
 
 
 
@@ -15,8 +17,7 @@ In this project evolutionary algorithm in various models have been implemented.
 
 
 
-
-
+<!--
 > This is simply to emphasize a paragraph
 
 ______
@@ -34,4 +35,4 @@ ______
 import numpy as np
 
 
-```
+``` -->
