@@ -1,6 +1,7 @@
 
 # Evolutionary Algorithm for N queen problem
-> The Readme file is under construction. It is estimated that the readme will be finished due to 1 a.m. 30 November 2019. <p style="color: red"> Due to the current climate disorders that have encountered in Tehran, the deadline of the completion has been postponed to tomorrow. Thanks for your patience. <h2 style="color:green">Special thanks to Amir Rostami for his patience and collaboration</h2> </p>
+> The Readme file is under construction. It is estimated that the readme will be finished due to 1 a.m. 30 November 2019.
+<p style="color: red"> Due to the current climate disorders that have encountered in Tehran, the deadline of the completion has been postponed to tomorrow. Thanks for your patience. <h2 style="color:green">Special thanks to Amir Rostami for his patience and collaboration</h2> </p>
 
 In this project evolutionary algorithm with various methods e.g. mutation cross-over have been implemented. The list of the algorithms that are implemented as reported as below:
 
