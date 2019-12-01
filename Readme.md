@@ -17,8 +17,12 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 # Table of contents
 1. <a href="#evolutionary-algorithms-class-(*evolutionary_algorithms.py*)"> *evolutionary_algorithms.py*</a>
 
+2. <a herf="#main-(main.py)">*main.py*</a>
 
-1. [*evolutionary_algorithms.py*](#evolutionary-algorithms-class-(*evolutionary_algorithms.py*))
+3. <a herf="#main">*main.py*</a>
+
+
+1. [*evolutionary_algorithms.py*](#Evolutionary-algorithms-class-(*evolutionary_algorithms.py*))
 2. [*evolutionary_algorithms_functions.py*](#Evolutionary-algorithms-functions-class-(*evolutionary_algorithms_functions.py*))
 3. [*chromosome.py*](#Chromosome-class-(chromosome.py))
 4. [*main.py*](#main-main.py)
@@ -87,7 +91,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 ## Chromosome class (*chromosome.py*)
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-## main (*main.py*)
+## main
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 ## main (main.py)
