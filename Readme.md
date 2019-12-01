@@ -14,6 +14,29 @@ In this project evolutionary algorithm with various methods e.g. mutation cross-
 - [x] swap mutation
 - [ ] other ideas
 
+# Evolutionary algorithms class
+|function name|parameters|returns|description|
+|:-----------:|:--------:|:-----:|:---------:|
+|[*__ init __*](#__init__) ||||
+|*run*        ||||
+|*_save_current_log*||||
+|_new_children||||
+|_best_gen||||
+|_initial_population||||
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Todo list:
 - [ ] The whole idea behind evolutionary algorithm will be explained
@@ -21,6 +44,13 @@ In this project evolutionary algorithm with various methods e.g. mutation cross-
 - [ ] Consequently the prototype of the methods will be discussed and a short description for the given methods
 - [ ] The summary of the implemented methods will be added to the end
 - [ ] Any other useful changes are appreciated.
+
+
+
+
+
+# __init__ 
+
 
 
 
