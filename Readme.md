@@ -15,35 +15,13 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 - [ ] other ideas
 
 # Table of contents
-1. <a href="#evolutionary-algorithms-class-(*evolutionary_algorithms.py*)"> *evolutionary_algorithms.py*</a>
-
-2. <a herf="#main-(main.py)">*main.py*</a>
-
-3. <a herf="#main">*main.py*</a>
-
-
-1. [*evolutionary_algorithms.py*](#Evolutionary-algorithms-class-(*evolutionary_algorithms.py*))
-2. [*evolutionary_algorithms_functions.py*](#Evolutionary-algorithms-functions-class-(*evolutionary_algorithms_functions.py*))
-3. [*chromosome.py*](#Chromosome-class-(chromosome.py))
-4. [*main.py*](#main-main.py)
-5. [*main.py*](#main)
-6. [*main.py*](#main-(main.py))
-
-max_generation: Max number of generation, Integer<br/>
-n: Number of Queens, maybe power of two!, Integer<br/>
-m: Mu (number of population), number of population, Integer<br/>
-y: Lambda (number of children), number of children, Integer<br/>
-mutation: Mutation algorithm, Function<br/>
-cross_over: Cross over algorithm, Function<br/>
-parent_selection: Selection algorithm for parents, Function<br/>
-remaining_population_selection: Selection algorithm for remaining population, Function<br/>
-evaluator: Evaluator algorithm for each chromosome, Function<br/>
-random_gene_generator: Random algorithm for initial
+1. [*evolutionary_algorithms.py*](#*evolutionary_algorithms.py*)
+2. [*evolutionary_algorithms_functions.py*](#*evolutionary_algorithms_functions.py*)
+3. [*chromosome.py*](#*chromosome.py*)
+4. [*main.py*](#*main.py*)
 
 
-
-
-## Evolutionary algorithms class (*evolutionary_algorithms.py*)
+## *evolutionary_algorithms.py*
 
 |function name|parameters|returns|description|
 |:-----------:|:--------:|:-----:|:---------:|
@@ -85,16 +63,13 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 
-## Evolutionary algorithms functions class (*evolutionary_algorithms_functions.py*)
+## *evolutionary_algorithms_functions.py*
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-## Chromosome class (*chromosome.py*)
+## *chromosome.py*
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-## main
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-## main (main.py)
+## *main.py*
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 
