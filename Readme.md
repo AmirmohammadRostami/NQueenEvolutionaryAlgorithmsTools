@@ -19,7 +19,7 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 2. [*evolutionary_algorithms_functions.py*](#Evolutionary-algorithms-functions-class-(*evolutionary_algorithms_functions.py*))
 3. [*chromosome.py*](#Chromosome-class-(chromosome.py))
 4. [*main.py*](#main-(main.py))
-5. [*main.py*](#main-(*main.py*))
+5. [*main.py*](#main)
 
 max_generation: Max number of generation, Integer<br/>
 n: Number of Queens, maybe power of two!, Integer<br/>
