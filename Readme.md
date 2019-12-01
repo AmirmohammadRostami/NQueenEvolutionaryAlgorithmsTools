@@ -19,10 +19,10 @@ In this project evolutionary algorithm with various methods e.g. mutation cross-
 |:-----------:|:--------:|:-----:|:---------:|
 |[*__ init __*](#__-init-__) ||||
 |[*run*](#run)        ||||
-|[*_save_current_log*](#_save_current_log)||||
-|[_new_children](#_new_children)||||
-|[_best_gen](#_best_gen)||||
-|[_initial_population](#_initial_population)||||
+|[*_save_current_log*](#_-save_current_log)||||
+|[_new_children](#_-new_children)||||
+|[_best_gen](#_-best_gen)||||
+|[_initial_population](#_-initial_population)||||
 
 
 ### __ init __
