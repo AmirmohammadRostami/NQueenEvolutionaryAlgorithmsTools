@@ -15,10 +15,13 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 - [ ] other ideas
 
 # Table of contents
+1. <a href="#evolutionary-algorithms-class-(*evolutionary_algorithms.py*)"> *evolutionary_algorithms.py*</a>
+
+
 1. [*evolutionary_algorithms.py*](#evolutionary-algorithms-class-(*evolutionary_algorithms.py*))
 2. [*evolutionary_algorithms_functions.py*](#Evolutionary-algorithms-functions-class-(*evolutionary_algorithms_functions.py*))
 3. [*chromosome.py*](#Chromosome-class-(chromosome.py))
-4. [*main.py*](#main-(main.py))
+4. [*main.py*](#main-main.py)
 5. [*main.py*](#main)
 6. [*main.py*](#main-(main.py))
 
