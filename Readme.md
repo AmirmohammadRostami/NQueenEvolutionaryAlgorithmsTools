@@ -19,6 +19,7 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 2. [*evolutionary_algorithms_functions.py*](#Evolutionary-algorithms-functions-class-(*evolutionary_algorithms_functions.py*))
 3. [*chromosome.py*](#Chromosome-class-(chromosome.py))
 4. [*main.py*](#main-(main.py))
+5. [*main.py*](#main-(*main.py*))
 
 max_generation: Max number of generation, Integer<br/>
 n: Number of Queens, maybe power of two!, Integer<br/>
@@ -29,7 +30,7 @@ cross_over: Cross over algorithm, Function<br/>
 parent_selection: Selection algorithm for parents, Function<br/>
 remaining_population_selection: Selection algorithm for remaining population, Function<br/>
 evaluator: Evaluator algorithm for each chromosome, Function<br/>
-random_gene_generator: Random algorithm for initial 
+random_gene_generator: Random algorithm for initial
 
 
 
