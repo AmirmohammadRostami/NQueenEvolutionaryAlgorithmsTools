@@ -17,7 +17,7 @@ In this project evolutionary algorithm with various methods e.g. mutation cross-
 # Evolutionary algorithms class
 |function name|parameters|returns|description|
 |:-----------:|:--------:|:-----:|:---------:|
-|[*__ init __*](#__init__) ||||
+|[*__ init __*](#__-init-__) ||||
 |[*run*](#run)        ||||
 |*_save_current_log*||||
 |_new_children||||
@@ -49,7 +49,7 @@ In this project evolutionary algorithm with various methods e.g. mutation cross-
 
 
 
-# __init__
+# __ init __
 
 # run
 
