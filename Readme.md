@@ -15,7 +15,7 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 - [ ] other ideas
 
 # Table of contents
-1. [*evolutionary_algorithms.py*](#evolutionary_algorithms.py)
+1. [*evolutionary_algorithms.py*](#-evolutionary_algorithms.py-)
 2. [*evolutionary_algorithms_functions.py*](#*evolutionary_algorithms_functions.py*)
 3. [*chromosome.py*](#*chromosome.py*)
 4. [*main.py*](#main.py)
