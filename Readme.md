@@ -35,7 +35,7 @@ random_gene_generator: Random algorithm for initial
 
 
 
-## Evolutionary algorithms class (*evolutionary_algorithms.py*)
+## evolutionary algorithms class (*evolutionary_algorithms.py*)
 
 |function name|parameters|returns|description|
 |:-----------:|:--------:|:-----:|:---------:|
