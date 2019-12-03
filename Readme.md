@@ -25,7 +25,7 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 
 |function name|parameters|returns|description|
 |:-----------:|:--------:|:-----:|:---------:|
-|[*__ init __*](#__-init-__) |max_generation <br/>n <br/> m <br/> number of population <br/> y <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |NA| Constructor method for evolutionary algorithms class
+|[*__ init __*](#__-init-__) |max_generation=200 <br/>n = 8 <br/> m = 160 <br/> number of population <br/> y = 80 <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |NA| Constructor method for evolutionary algorithms class
 |[*run*](#run)|name <br/> variance_per_generation=[] <br/> avg_per_generation=[] <br/> best_chromosome=[1] <br/> verbose=False <br/> save_log=True <br/> save_log_path|NA||
 |[*_save_current_log*](#_-save_current_log)|avg_fitness_per_generation <br/> variance_per_generation <br/> best_chromosome|NA||
 |[_new_children](#_-new_children)|parents|NA||
@@ -34,9 +34,10 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 
 
 #### __ init __
-max_generation: Max number of generation, Integer<br/>
-n: Number of Queens, maybe power of two!, Integer<br/>
-m: Mu (number of population), number of population, Integer<br/>
+
+max_generation (Integer): Defines the maximum number of the generations, <br/>
+n (Integer): Number of the queens, maybe power of 2<br/>
+m (Integer): Shows the number of the population<br/>
 y: Lambda (number of children), number of children, Integer<br/>
 mutation: Mutation algorithm, Function<br/>
 cross_over: Cross over algorithm, Function<br/>
