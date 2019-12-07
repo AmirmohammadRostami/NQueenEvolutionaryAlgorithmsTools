@@ -17,7 +17,7 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then many mathematicians and computer scientists have been interested on this problem. In 1972, Edsgar Dijkstra proposed a method based on depth-first-backtracking to solve the challenge.<br/>
 The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
 <!-- <img src="images/N_Queen_Problem.jpg" alt="5 queen problem" style="width:20vw;margin:0 10vw"/> -->
-![5 queen problem](./images/N_Queen_Problem.jpg)
+![5 queen problem](./images/N_Queen_Problem.jpg =100x100)
 <center> Figure 1</center><br/>
 
 Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In this regard the following steps have to be followed:
