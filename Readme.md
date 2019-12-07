@@ -1,36 +1,43 @@
 
 # Evolutionary Algorithm for N queen problem
-> The Readme file is under construction. It is estimated that the readme will be finished due to 1 a.m. 30 November 2019. <p style="color: red"> Due to the current climate disorders that have encountered in Tehran, the deadline of the completion has been postponed to tomorrow. Thanks for your patience. <h2 style="color:green">Special thanks to Amir Rostami for his patience and collaboration</h2> </p>
-
 In this project evolutionary algorithm with various methods e.g. mutation, cross-over have been implemented. The list of the algorithms that are implemented as reported as below:
 
-### Cross over methods
-- [x] default cross over
-- [x] multi point cross over
-- [ ] other ideas
 
-### Mutation methods
-- [x] default method
-- [x] swap mutation
-- [ ] other ideas
+
 
 # Table of contents
+0. [*n queen problem*](#n-queen-problem)
 1. [*evolutionary_algorithms.py*](#evolutionaryalgorithm-class-evolutionary_algorithmspy)
 2. [*evolutionary_algorithms_functions.py*](#evolution-algorithm-functions-evolutionary_algorithms_functionspy)
 3. [*chromosome.py*](#chromosome-class-chromosomepy)
 4. [*main.py*](#main-mainpy)
+5. [*summary*](#summary)
+
+## N queen problem
+N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then many mathematicians and computer scientists have been interested on this problem. In 1972, Edsgar Dijkstra proposed a method based on depth-first-backtracking to solve the challenge.<br/>
+The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
+<!-- <img src="images/N_Queen_Problem.jpg" alt="5 queen problem" style="width:20vw;margin:0 10vw"/> -->
+![5 queen problem](./images/N_Queen_Problem.jpg)
+<center> Figure 1</center><br/>
+
+Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In this regard the following steps have to be followed:
+1. We should define a chromosome-based representation for the possible solutions, which in this specific problem it could be estimated with a list of numbers from 1 to n, with size of n where each of the elements shows the ith queens positiono in the chessboard e.g. the chromosome of figure 1 could be defined as [3, 1, 4, 2].
+2. A fitness function should be defined showing the merit of a possible solution. In this challenge the fitness functions could be (1/the number of the queens threatening each other).
+3. The initial population should will be generated which consists of random chromosomes.
+to be continued...
+
 
 
 ## EvolutionaryAlgorithm class (*evolutionary_algorithms.py*)
 
 |function name|parameters|returns|description|
 |:-----------:|:--------:|:-----:|:---------:|
-|[*__ init __*](#__-init-__) |max_generation=200 <br/>n = 8 <br/> m = 160 <br/> number of population <br/> y = 80 <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |NA| Constructor method for evolutionary algorithms class
-|[*run*](#run)|name <br/> variance_per_generation=[] <br/> avg_per_generation=[] <br/> best_chromosome=[1] <br/> verbose=False <br/> save_log=True <br/> save_log_path|NA||
-|[*_save_current_log*](#_-save_current_log)|avg_fitness_per_generation <br/> variance_per_generation <br/> best_chromosome|NA||
-|[_new_children](#_-new_children)|parents|NA||
-|[_best_gen](#_-best_gen)|-|NA||
-|[_initial_population](#_-initial_population)|-|NA||
+|[*__ init __*](#__-init-__) |max_generation=200 <br/>n = 8 <br/> m = 160 <br/> number of population <br/> y = 80 <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |void| Constructor method for evolutionary algorithms class
+|[*run*](#run)|name <br/> variance_per_generation=[] <br/> avg_per_generation=[] <br/> best_chromosome=[1] <br/> verbose=False <br/> save_log=True <br/> save_log_path|void||
+|[*_save_current_log*](#_-save_current_log)|avg_fitness_per_generation <br/> variance_per_generation <br/> best_chromosome|dictionary||
+|[_new_children](#_-new_children)|parents|list||
+|[_best_gen](#_-best_gen)|-|NA|Chromosome|
+|[_initial_population](#_-initial_population)|-|void||
 
 
 #### __ init __
@@ -38,7 +45,7 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 max_generation (Integer): Defines the maximum number of the generations, <br/>
 n (Integer): Number of the queens, maybe power of 2<br/>
 m (Integer): Shows the number of the population<br/>
-y: Lambda (number of children), number of children, Integer<br/>
+y Integer: Lambda (number of children), number of children, <br/>
 mutation: Mutation algorithm, Function<br/>
 cross_over: Cross over algorithm, Function<br/>
 parent_selection: Selection algorithm for parents, Function<br/>
@@ -72,6 +79,22 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 
 ## main (*main.py*)
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+
+## Summary
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+### Cross over methods
+- [x] default cross over
+- [x] multi point cross over
+- [ ] other ideas
+
+### Mutation methods
+- [x] default method
+- [x] swap mutation
+- [ ] other ideas
+
 
 
 <!-- # Todo list:
