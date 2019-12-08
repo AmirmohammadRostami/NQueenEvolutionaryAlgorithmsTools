@@ -20,39 +20,86 @@ The whole idea pf the challenge is *to place n queens on a nxn chessboard in a w
 ![5 queen problem](./images/N_Queen_Problem.jpg =100x100)
 <center> Figure 1</center><br/>
 
-Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In this regard the following steps have to be followed:
+Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In general a evolutionary algorithm consists of the following stages which have been summarized in Figure 2:
+1. to be continued...
+2. to be continued...
+3. to be continued...
+[have to insert figure 2]
+
+In order to formulate any problem to be solved using evolutionary algorithms, the following steps have to be followed:
 1. We should define a chromosome-based representation for the possible solutions, which in this specific problem it could be estimated with a list of numbers from 1 to n, with size of n where each of the elements shows the ith queens positiono in the chessboard e.g. the chromosome of figure 1 could be defined as [3, 1, 4, 2].
 2. A fitness function should be defined showing the merit of a possible solution. In this challenge the fitness functions could be (1/the number of the queens threatening each other).
 3. The initial population should will be generated which consists of random chromosomes.
-to be continued...
-
 
 
 ## EvolutionaryAlgorithm class (*evolutionary_algorithms.py*)
 
+#### list of the attributes of the class
+|Attribute name|type|Initial value|description|
+|-|:-:|:-:|:-|
+|_max_generation|integer|||
+|_generation_counter|integer|||
+|_population||||
+|_m|integer|||
+|_n|integer|||
+|_y|integer|||
+|_n_parent|integer|||
+|_cross_over|function|||
+|_cross_over_params|dictionary|||
+|_mutation||||
+|_mutation_params||||
+|_remaining_population_selection||||
+|_remaining_population_selection_params||||
+|_parent_selection||||
+|_parent_selection_params||||
+|_random_gene_generator||||
+|_evaluator||||
+|_stop_condition||||
+|_log||||
+|||||
+
+
+
+#### list of the methods of the class
 |function name|parameters|returns|description|
 |:-----------:|:--------:|:-----:|:---------:|
 |[*__ init __*](#__-init-__) |max_generation=200 <br/>n = 8 <br/> m = 160 <br/> number of population <br/> y = 80 <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |void| Constructor method for evolutionary algorithms class
-|[*run*](#run)|name <br/> variance_per_generation=[] <br/> avg_per_generation=[] <br/> best_chromosome=[1] <br/> verbose=False <br/> save_log=True <br/> save_log_path|void||
-|[*_save_current_log*](#_-save_current_log)|avg_fitness_per_generation <br/> variance_per_generation <br/> best_chromosome|dictionary||
-|[_new_children](#_-new_children)|parents|list||
-|[_best_gen](#_-best_gen)|-|NA|Chromosome|
-|[_initial_population](#_-initial_population)|-|void||
+|[*run*](#run)|name <br/> variance_per_generation=[] <br/> avg_per_generation=[] <br/> best_chromosome=[1] <br/> verbose=False <br/> save_log=True <br/> save_log_path|void|The main method where the evolutionary algorithm is called|
+|[*_save_current_log*](#_-save_current_log)|avg_fitness_per_generation <br/> variance_per_generation <br/> best_chromosome|dictionary|Method used for saving the recent run's log|
+|[_new_children](#_-new_children)|parents|list|Takes a list of parents and generates a list of children with size of y|
+|[_best_gen](#_-best_gen)|-|Chromosome|Returns the best chromosome according to fitness function in the population|
+|[_initial_population](#_-initial_population)|-|void|Generates the initial population |
 
 
 #### __ init __
 
-max_generation (Integer): Defines the maximum number of the generations, <br/>
-n (Integer): Number of the queens, maybe power of 2<br/>
-m (Integer): Shows the number of the population<br/>
-y Integer: Lambda (number of children), number of children, <br/>
-mutation: Mutation algorithm, Function<br/>
-cross_over: Cross over algorithm, Function<br/>
-parent_selection: Selection algorithm for parents, Function<br/>
-remaining_population_selection: Selection algorithm for remaining population, Function<br/>
-evaluator: Evaluator algorithm for each chromosome, Function<br/>
-random_gene_generator: Random algorithm for initial population, Function<br/>
-stop_condition: Stop condition function, Function<br/>
+```python
+def __init__(mutation,
+             cross_over,
+             parent_selection,
+             remaining_population_selection,
+             evaluator,
+             gene_generator,
+             stop_condition,
+             max_generation=200,
+             n=8,
+             m=160,
+             y=80)
+```
+
+**max_generation (Integer)**: Defines the maximum number of the generations, <br/>
+**n (Integer)**: Number of the queens, maybe power of 2<br/>
+**m (Integer)**: Shows the number of the population<br/>
+**y (Integer)**: Lambda (number of children), number of children, <br/>
+**mutation (Function)**: Mutation algorithm<br/>
+**cross_over (Function)**: Cross over algorithm<br/>
+**parent_selection (Function)**: Selection algorithm for parents<br/>
+**remaining_population_selection (Function)**: Selection algorithm for remaining population<br/>
+**evaluator (Function)**: Evaluator algorithm for each chromosome<br/>
+**random_gene_generator (Function)**: Random algorithm for initial population <br/>
+**stop_condition (Function)**: Stop condition function<br/>
+
+
 
 
 #### run
