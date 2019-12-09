@@ -17,7 +17,7 @@ In this project evolutionary algorithm with various methods e.g. mutation, cross
 N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then many mathematicians and computer scientists have been interested on this problem. In 1972, Edsgar Dijkstra proposed a method based on depth-first-backtracking to solve the challenge.<br/>
 The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
 <!-- <img src="images/N_Queen_Problem.jpg" alt="5 queen problem" style="width:20vw;margin:0 10vw"/> -->
-![5 queen problem](./images/N_Queen_Problem.jpg =100x100)
+![5 queen problem](./images/N_Queen_Problem.jpg)
 <center> Figure 1</center><br/>
 
 Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In general a evolutionary algorithm consists of the following stages which have been summarized in Figure 2:
@@ -64,9 +64,9 @@ In order to formulate any problem to be solved using evolutionary algorithms, th
 |[*__ init __*](#__-init-__) |max_generation=200 <br/>n = 8 <br/> m = 160 <br/> number of population <br/> y = 80 <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |void| Constructor method for evolutionary algorithms class
 |[*run*](#run)|name <br/> variance_per_generation=[] <br/> avg_per_generation=[] <br/> best_chromosome=[1] <br/> verbose=False <br/> save_log=True <br/> save_log_path|void|The main method where the evolutionary algorithm is called|
 |[*_save_current_log*](#_-save_current_log)|avg_fitness_per_generation <br/> variance_per_generation <br/> best_chromosome|dictionary|Method used for saving the recent run's log|
-|[_new_children](#_-new_children)|parents|list|Takes a list of parents and generates a list of children with size of y|
-|[_best_gen](#_-best_gen)|-|Chromosome|Returns the best chromosome according to fitness function in the population|
-|[_initial_population](#_-initial_population)|-|void|Generates the initial population |
+|[*_new_children*](#_-new_children)|parents|list|Takes a list of parents and generates a list of children with size of y|
+|[*_best_gen*](#_-best_gen)|-|Chromosome|Returns the best chromosome according to fitness function in the population|
+|[*_initial_population*](#_-initial_population)|-|void|Generates the initial population |
 
 
 ### __ init __
@@ -220,7 +220,7 @@ def _best_gen(self):
             best = self._population[i]
     return best
 ```
-In the above function the best chromosome in the current population is found according their fitness values.
+In the above function the best chromosome in the current population is found according to their fitness values.
 
 #### _ initial_population
 
@@ -232,10 +232,200 @@ def _initial_population(self):
           chromosome.fitness = self._evaluator(chromosome)
           self._population.append(chromosome)
 ```
-The population attribute of the EvolutionaryAlgorithm class is initiated in this function based on the gene generation approach (_ random_gene_generator). It can be seen that m samples are generated with size of n, where m shown the number of the initial population and n defined the number of queens.
+The population attribute of the EvolutionaryAlgorithm class is initiated in this function based on the gene generation approach (_ random_gene_generator). It can be seen that m samples are generated with size of n, where m shown the number of the initial population and n defines the number of queens.
 
 ## Evolution algorithm functions  (*evolutionary_algorithms_functions.py*)
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+|function name|parameters|returns|description|
+|:-:|:-:|:-:|:-:|
+|[*warning_data_type_check_selection_algorithms*](#warning_data_type_check_selection_algorithms)|items, probs|||
+|[*roulette_wheel_selection*](#roulette_wheel_selection)|items, probs, n|||
+|[*stochastic_universal_selection*](#stochastic_universal_selection)|items, probs, n|||
+|[*default_random_gene_generator*](#default_random_gene_generator)|number_of_queen, parameters=None|||
+|[*permutation_random_gene_generator*](#permutation_random_gene_generator)|number_of_queen, parameters=None|||
+|[*default_evaluator*](#default_evaluator)|chromosome, parameters=None|||
+|[*default_mutation*](#default_mutation)|chromosome, parameters={'prob': 0.05}|||
+|[*random_swap_mutation*](#random_swap_mutation)|chromosome, parameters={'prob': 0.05}|||
+|[*default_cross_over*](#default_cross_over)|parent1, parent2, parameters={'prob': 0.4}|||
+|[*multi_points_crossover*](#multi_points_crossover)|parent1, parent2, parameters={'prob': 0.4, 'points_count': 'middle'}|||
+|[*default_parent_selection*](#default_parent_selection)|population, n, parameter=None|||
+|[*default_population_selection*](#default_population_selection])|parents, children, n, parameters=None|||
+|[*fitness_based_population_selection*](#fitness_based_population_selection)|parents, children, n, parameters=None|||
+|[*default_stop_condition*](#default_stop_condition)|generation, max_generation, parameters=None|||
+
+### warning_data_type_check_selection_algorithms
+```python
+def warning_data_type_check_selection_algorithms(items, probs):
+```
+**param items (np.array or list)**: Items that want to choose from them, np.array or list <br/>
+**param probs (np.array or list)**: Probabilities of each item<br/>
+**returns (np.array)**: fixed items and probs<br/>
+The probs is a list of probabilities for the items, in this function the probs are checked to be in the correct format. These features include:
+- checking if the items and the probs have the same size
+- convert the items and the probs to ndarray format
+- check if the probabilities are positive
+- Normalize the probs values in order to have a sum of 1
+
+### roulette_wheel_selection
+```python
+def roulette_wheel_selection(items, probs, n):
+```
+**items (np.array or list)**:  Items that want to choose from them<br/>
+**probs (np.array or list)**:  Probabilities of each item<br/>
+**n (Integer)**: number of selected item(s)<br/>
+**return (np.array)**: array of selected Items<br/>
+The main goal of this method is to select n items from a list with specified probabilities. In this method a random list is generated with values in range [0, 1]. The cumulative probability of the probs parameter is calculated afterwards. Using a for loop which iterates over the generated random values, each time the lowest index where the cumulative sum is higher than the generated random value is chosen as an item to return. Eventually a list of the selected indexes is returned (It should be mentioned that the list may contain repetitive values).
+
+### stochastic_universal_selection
+```python
+def stochastic_universal_selection(items, probs, n):
+```
+**items (np.array or list)**:  Items that want to choose from them<br/>
+**probs (np.array or list)**:  Probabilities of each item<br/>
+**n (Integer)**: number of selected item(s)<br/>
+**return (np.array)**: array of selected Items<br/>
+In this function the well-known SUS algorithm has been implemented. In this selection approach, at first, the probs and the items are shuffled with the same manner. Then n (number of the desired selections) numbers will be generated which are linearly selected from [0, 1-(1/n)] and are summed with a bias value which is selected randomly from U(0, (1/n))(uniform distribution). This results in a list of float values which could vary in [0, 1]from the cumulative probability is calculated from the probs parameter, afterwards the cumulative probabilities will be compared with the final generated values. To conduct this operation, a for loop is applied on the generated values where on each iteration one value is chosen from the list and the cumulative probabilities are compared with the selected value. This has been implemented by comparing the probabilities consequently till we reach a probability compared to the selected value (Because both of the generated values and the cumulative probabilities are incremental, there is no need to reset the comparison on each iteration of the outer loop). <br/>
+For a deeper understanding, read the below numerical example:
+Suppose n is 5, the generated list (which is named as index_of_choose in implementation) is generated as [0.3, 0.4, 0.5, 0.8, 0.9] and the probs parameter is a list of [0.1, 0.2, 0.05, 0.01, 0.05, 0.04, 0.2, 0.06, 0.1, 0.1] (remind that n is not supposedly equal with the size of the items list):
+cum_sum = [0.1, 0.3, 0.35, 0.45, 0.5, 0.54, 0.74, 0.8, 0.9, 1]
+An iteration is done over the generated values, which has been summarized in the below table:<br/>
+
+|outer loop iteration number|seleted index from index_of_choice |items_pointer before the inner while loop|items_pointer after the inner while loop|selected_items|
+|:-:|:-:|:-:|:-:|:-:|
+|1|0.3|0|1|items[1]|
+|2|0.4|1|3|+ items[3]|
+|3|0.5|3|4|+ items[4]|
+|4|0.8|4|7|+ items[7]|
+|5|0.9|7|8|+ items[8]|
+
+
+### default_random_gene_generator
+```python
+def default_random_gene_generator(number_of_queen, parameters=None):
+```
+**number_of_queen (integer)**: Number of Queen <br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value <br/>
+**returns (np.array)**: ndarray with length of number_of_queen for each row<br/>
+
+This is the default random gene generation method which returns a list of n values in range of [0, n]. You should notice that the numbers inside a list(gene) are not necessarily unique.
+
+### permutation_random_gene_generator
+```python
+def permutation_random_gene_generator(number_of_queen, parameters=None):
+```
+**number_of_queen (integer)**: Number of Queen <br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value <br/>
+**returns (np.array)**: ndarray with length of number_of_queen for each row<br/>
+
+Another method used for gene generation. In this method a list of n numbers from 1 to n are generated, then the generated list is shuffled. The main difference of this method compared top the default_random_gene_generator is the uniqueness of the generated values.
+
+### default_evaluator
+```python
+def default_evaluator(chromosome, parameters=None):
+```
+**chromosome (Chromosome)**: The specified chromosome to calculate the fitness for<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**returns (float)**: fitness of that chromosome which is a value in range [0, 1]<br/>
+
+In this function the fitness value of the given chromosome is calculated. As discussed before the fitness value should specify the amount of the similarity of the chromosome to the desired output. In n queen problem this could be defined as the reverse of the number of the threats between the queens (1 / number of threats). As high the number of the threats is, the lower the fitness will be, and the value of the fitness converges to infinite when the threats converge to zero.
+
+### default_mutation
+```python
+def default_mutation(chromosome, parameters={'prob': 0.05}):
+```
+**chromosome (Chromosome)**: the chromosome that the mutation will be applied on<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**return (Chromosome)**: The mutated chromosome<br/>
+
+One of the fundamental stages in evolutionary algorithms is mutation, which tries to manipulate the given chromosome in a specific manner. This function is the default mutation algorithm which changes some of the genes of the chromosome with probability of prob (defined in the parameters dictionary with initial value of 0.5). As higher the value of the probability, the more chance of changing the genes. Eventually the manipulated chromosome will be returned.
+
+> Author: mohammad Tavakkoli, will be completed
+
+### random_swap_mutation
+```python
+def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
+```
+**chromosome (Chromosome)**: the chromosome that the mutation will be applied on<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**return (Chromosome)**: The mutated chromosome<br/>
+
+
+### default_cross_over
+```python
+def default_cross_over(parent1, parent2, parameters={'prob': 0.4}):
+```
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
+
+Similar to mutation, cross over is the other fundamental stage in evolutionary algorithm, which tries to combine two chromosomes named as parents in order to generate two children in a specific manner. The above function is a single point cross over, which tries to combine the given chromosomes from the middle point with probability of prob (which is specified in the parameters dictionary with initial value of 0.4). For more understanding read the next numerical example:<br/>
+suppose the number of queens is 4, <br/>
+parent1: [1, 2, 3, 4]<br/>
+parent2: [4, 3, 2, 1]<br/>
+With a probability of probe, the cross over operation will be applied between the parents (shown as below), otherwise the stated parents will be returned without any changes:<br/>
+chromosome1: [4, 3, 3, 4]<br/>
+chromosome2: [1, 2, 2, 1]<br/>
+
+> Author: mohammad Tavakkoli, will be completed
+
+### multi_points_crossover
+```python
+def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_count': 'middle'}):
+```
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
+
+
+### default_parent_selection
+```python
+def default_parent_selection(population, n, parameter=None):
+```
+**parameter (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**population (list)**: list of current population Chromosomes<br/>
+**n (integer)**: Number of Parents that should be chosen, the value should be less or equal to the length of population<br/>
+**return (list)**: list of selected Parents<br/>
+
+In order to generate new children, a subset of the parents should be chosen to be mutated and cross-overed (which could also be the whole population). In this function n number of the given population will be chosen and returned to be used in the next stages.
+
+
+
+### default_population_selection
+```python
+def default_population_selection(parents, children, n, parameters=None):
+```
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**parents (list)**: list of Parents of current Generation<br/>
+**children (list)**: list of new children of current Generation<br/>
+**n (integer)**: Number of remaining population<br/>
+**returns (list)**: list of remained Chromosomes with size of n<br/>
+
+After generating new children from the selected parents, the next population has to be selected from the parents and the new children. The default approach to select the new generation is implemented in the above function which chooses n chromosomes randomly from the list of parents concatenated with children. The returned list will always have a size of n which technically is the size of specified population.
+
+### fitness_based_population_selection
+```python
+def fitness_based_population_selection(parents, children, n, parameters=None):
+```
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**parents (list)**: list of Parents of current Generation<br/>
+**children (list)**: list of new children of current Generation<br/>
+**n (integer)**: Number of remaining population<br/>
+**returns (list)**: list of remained Chromosomes with size of n<br/>
+
+As discussed in default_population_selection part, population selection is to select n chromosomes among the parents and children to be used as the next generation. In this approach a list of chromosomes with length of n will be returned containing the selected chromosomes. The main idea behind this approach is the [roulette wheel selection](#roulette_wheel_selection) which has been discussed before. Using this approach chromosomes with higher fitness values have higher probabilities to be chosen. This idea is similar to the evolution of the live beings in the nature, where animals with higher abilities have a higher chance of survival.
+
+### default_stop_condition
+```python
+def default_stop_condition(generation, max_generation, parameters=None):
+```
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**generation (integer)**: The step of current generation<br/>
+**max_generation (integer)**: The maximum number of generations that the algorithm may continue<br/>
+**returns (Boolean)**: True if the condition has reached otherwise False<br/>
+
+The evolution process has to be stopped at one generation. The above function breaks the evolution process when the evolution has been done max_generation times.
 
 ## Chromosome class (*chromosome.py*)
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
