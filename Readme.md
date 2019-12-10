@@ -1,25 +1,28 @@
 
 # Evolutionary Algorithm for N queen problem
-In this project evolutionary algorithm with various methods e.g. mutation, cross-over have been implemented. The list of the algorithms that are implemented as reported as below:
-
-
-
+In this project, the evolutionary algorithm with various approaches has been implemented and applied on the n queen problem. In the Introduction section the well-known n queen problem and the general overview of evolutionary algorithms will be discussed. Afterwards, in the implementation section we will go into the details of evolutionary algorithm's implementation. A quick installation guide and the procedure of running and analyzing the results have been described in section 3. Eventually, if you want to contribute in the project, see the final part of section 3 which covers the rules you have to follow. For any further information, feel free to contact us using the information given at section 4.
 
 # Table of contents
-0. [*n queen problem*](#n-queen-problem)
-1. [*evolutionary_algorithms.py*](#evolutionaryalgorithm-class-evolutionary_algorithmspy)
-2. [*evolutionary_algorithms_functions.py*](#evolution-algorithm-functions-evolutionary_algorithms_functionspy)
-3. [*chromosome.py*](#chromosome-class-chromosomepy)
-4. [*main.py*](#main-mainpy)
-5. [*summary*](#summary)
+1. **Introduction**
+  1. [*N queen problem*](#n-queen-problem)
+  2. [Evolutionary algorithms](#evolutionary-algorithms)
+2. **Implementation**
+  1. [*evolutionary_algorithms.py*](#evolutionaryalgorithm-class-evolutionary_algorithmspy)
+  2. [*evolutionary_algorithms_functions.py*](#evolution-algorithm-functions-evolutionary_algorithms_functionspy)
+  3. [*chromosome.py*](#chromosome-class-chromosomepy)
+3. **Quick tour**
+  1. [*Installation guide*](#installation-guide)
+  1. [*Graphical User Interface*](#graphical-user-interface)
+  2. [*A few words with contributors*](#a-few-words-with-contributors)
+4. [**contact us**](#contact-us)
 
 ## N queen problem
 N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then many mathematicians and computer scientists have been interested on this problem. In 1972, Edsgar Dijkstra proposed a method based on depth-first-backtracking to solve the challenge.<br/>
 The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
-<!-- <img src="images/N_Queen_Problem.jpg" alt="5 queen problem" style="width:20vw;margin:0 10vw"/> -->
-![5 queen problem](./images/N_Queen_Problem.jpg)
-<center> Figure 1</center><br/>
 
+![5 queen problem](./images/N_Queen_Problem.jpg)
+
+## Evolutionary algorithms
 Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In general a evolutionary algorithm consists of the following stages which have been summarized in Figure 2:
 1. to be continued...
 2. to be continued...
@@ -33,6 +36,7 @@ In order to formulate any problem to be solved using evolutionary algorithms, th
 
 
 ## EvolutionaryAlgorithm class (*evolutionary_algorithms.py*)
+This is the main class which handles the evolution process.
 
 ### list of the attributes of the class
 |Attribute name|type|Initial value|description|
@@ -96,6 +100,8 @@ def __init__(mutation,
 **evaluator (Function)**: Evaluator algorithm for each chromosome<br/>
 **random_gene_generator (Function)**: Random algorithm for initial population <br/>
 **stop_condition (Function)**: Stop condition function<br/>
+**returns ()**:<br/>
+
 
 ### run
 ```python
@@ -107,33 +113,6 @@ def run(self,
         verbose=False,
         save_log=True,
         save_log_path='./log_files/'):
-      file_name = name
-      if verbose:
-          print('EA algorithms Running . . . ')
-      self._initial_population()
-      self._generation_counter = 1
-      self._log.append(self._save_current_log(avg_per_generation, variance_per_generation, best_chromosome))
-      if verbose:
-          print(self._log[-1])
-      while not self._stop_condition(self._generation_counter, self._max_generation):
-          self._generation_counter += 1
-          if verbose:
-              print(self._generation_counter)
-          parents = self._parent_selection(self._population, self._n_parent, self._parent_selection_params)
-          children = self._new_children(parents)
-          if type(self._population) != list:
-              self._population = self._population.tolist()
-          self._population = self._remaining_population_selection(self._population, children, self._m,
-                                                                  self._remaining_population_selection_params)
-          self._log.append(self._save_current_log(avg_per_generation, variance_per_generation, best_chromosome))
-          if verbose:
-              print(self._log[-1])
-      file_name += '.pickle'
-      print('yes')
-      if save_log:
-          with open(save_log_path + file_name, 'wb') as file:
-              pickle.dump(self._log, file)
-          print('log file successfully saved!')
 ```
 
 **name (string)**: the name which the log file will be saved with.<br/>
@@ -143,6 +122,7 @@ def run(self,
 **verbose (boolean)**: If True the log will also be printed.<br/>
 **save_log (boolean)**: If True the log will be saved otherwise not.<br/>
 **save_log_path (string)**: Defines the path in which the log will be saved.<br/>
+**returns ()**:<br/>
 
 The whole process of running and finding the best solution is done in the above method. It can be seen that in the first part of the function, the initial population is called which has been described later. Using a while loop, which iterates until the stop_condition has been met, the the whole process goes on. In this loop a subset of the parents are chosen, then the children are generated from the selected parents. Finally the new population is selected among the current population and the new generated children. It should also be noted that the log of the whole operation is saved at the end of the function.
 
@@ -153,29 +133,6 @@ def _save_current_log(self,
                       avg_fitness_per_generation,
                       variance_per_generation,
                       best_chromosome):
-    fitness = []
-    best_phenotype_index = 0
-    for i in range(1, len(self._population)):
-        if self._population[i].fitness > self._population[best_phenotype_index].fitness:
-            best_phenotype_index = i
-        fitness.append(self._population[i].fitness)
-    var_fitness = np.var(fitness)
-    avg_fitness = np.average(fitness)
-    avg_fitness_per_generation.append(avg_fitness)
-    variance_per_generation.append(var_fitness)
-    global best_chromosome_fitness_in_total, best_phenotype
-    if self._population[best_phenotype_index].fitness >= best_chromosome_fitness_in_total:
-        best_chromosome_fitness_in_total = self._population[best_phenotype_index].fitness
-        best_phenotype = self._population[best_phenotype_index].get_phenotype()
-    best_chromosome[-1] = best_phenotype
-    return {'generation': self._generation_counter,
-            'avg_fitness': avg_fitness,
-            'var_fitness': var_fitness,
-            'best_phenotype': best_chromosome,
-            'best_genotype': self._population[best_phenotype_index].genotype.tolist(),
-            'best_fitness': self._population[best_phenotype_index].fitness,
-            }
-
 ```
 **avg_fitness_per_generation (float)**: the global variable containing the average fitness values for chromosomes on a generation<br/>
 **variance_per_generation (float)**: the global variable containing the variance of fitness values for chromosomes on a generation<br/>
@@ -193,18 +150,6 @@ All the evaluation metrics are calculated in the above method. At the first step
 #### _ new_children
 ```python
     def _new_children(self, parents):
-      children = []
-          random.shuffle(parents)
-          for i in range(0, len(parents) - 1, 2):
-              chromosome1, chromosome2 = self._cross_over(parents[i], parents[i + 1], self._cross_over_params)
-              chromosome1 = self._mutation(chromosome1, self._mutation_params)
-              chromosome2 = self._mutation(chromosome2, self._mutation_params)
-              chromosome1.fitness = self._evaluator(chromosome1)
-              chromosome2.fitness = self._evaluator(chromosome2)
-              children += [chromosome1, chromosome2]
-              if len(children) >= self._y:
-                  break
-          return children[:self._y]
 ```
 **parents (list)**: list of the parents that have been selected from the population <br/>
 
@@ -214,11 +159,6 @@ This function is the main kernel of the evolutionary algorithm since the cross o
 #### _ best_gen
 ```python
 def _best_gen(self):
-    best = self._population[0]
-    for i in range(1, len(self._population)):
-        if self._population[i].fitness > best.fitness:
-            best = self._population[i]
-    return best
 ```
 In the above function the best chromosome in the current population is found according to their fitness values.
 
@@ -226,11 +166,6 @@ In the above function the best chromosome in the current population is found acc
 
 ```python
 def _initial_population(self):
-      for i in range(self._m):
-          random_gene = self._random_gene_generator(self._n)
-          chromosome = Chromosome(random_gene, 0)
-          chromosome.fitness = self._evaluator(chromosome)
-          self._population.append(chromosome)
 ```
 The population attribute of the EvolutionaryAlgorithm class is initiated in this function based on the gene generation approach (_ random_gene_generator). It can be seen that m samples are generated with size of n, where m shown the number of the initial population and n defines the number of queens.
 
@@ -359,7 +294,7 @@ def default_cross_over(parent1, parent2, parameters={'prob': 0.4}):
 **parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
 
-Similar to mutation, cross over is the other fundamental stage in evolutionary algorithm, which tries to combine two chromosomes named as parents in order to generate two children in a specific manner. The above function is a single point cross over, which tries to combine the given chromosomes from the middle point with probability of prob (which is specified in the parameters dictionary with initial value of 0.4). For more understanding read the next numerical example:<br/>
+Similar to mutation, cross over is the other fundamental stage in evolutionary algorithms, which tries to combine two chromosomes named as parents in order to generate two children in a specific manner. The above function is a single point cross over, which tries to combine the given chromosomes from the middle point with probability of prob (which is specified in the parameters dictionary with initial value of 0.4). For more understanding read the next numerical example:<br/>
 suppose the number of queens is 4, <br/>
 parent1: [1, 2, 3, 4]<br/>
 parent2: [4, 3, 2, 1]<br/>
@@ -428,22 +363,63 @@ def default_stop_condition(generation, max_generation, parameters=None):
 The evolution process has to be stopped at one generation. The above function breaks the evolution process when the evolution has been done max_generation times.
 
 ## Chromosome class (*chromosome.py*)
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-## main (*main.py*)
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+### List of the attributes of the class
+|Attribute name|type|initial value|description|
+|:-:|:-:|:-:|:-:|
+|fitness|float|None|The fitness of this chromosome|
+|genotype|list|None|A list containing n (number of queens) in range [1, n]|
+
+### list of the methods of the class
+|function name|parameters|returns|descriptions|
+|:-:|:-:|:-:|:-:|
+|[*__ init__*](#__-init__)|genotype<br/>fitness|void|The constructor function of the Chromosome class|
+|[*get_phenotype*](#get_phenotype)|void|list|returns the phenotype of the chromosome|
+
+### __init__
+```python
+def __init__(self, genotype, fitness):
+```
+**genotype (list)**: A list containing of n integers in range [1, n]<br/>
+**fitness (float)**: fitness of the specified chromosome<br/>
 
 
+### get_phenotype
+```python
+def get_phenotype(self):
+```
+**returns (list)**: Returns a 2d array with integer values which specify the phenotype of the Chromosome
 
-## Summary
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+In order to convert the genotype to phenotype ??????
 
-### Cross over methods
+
+## Quick Tour
+
+### Installation guide
+
+### Graphical User Interface
+
+### A few words with the contributors
+
+
+## Contact Us
+Fell free to contact us for any further information using the following channels:
+
+### Amirmohhammad rostami:
+- email: [*email@gmail.com*](#emailto:email@gmail.com)
+- linkdin: [*linkdin_id*](#linkdin_link)
+
+### Milad Bohlouli:
+- email: [*miladbohlouli@gmail.com*](#emailto:miladbohlouli@gmail.com)
+- linkdin: [*milad_bohlouli*](#https://www.linkedin.com/in/milad-bohlouli-536011163)
+- homepage: [*ceit.aut.ac.ir/~bohlouli*](#https://ceit.aut.ac.ir/~bohlouli/index.html)
+
+## Cross over methods
 - [x] default cross over
 - [x] multi point cross over
 - [ ] other ideas
 
-### Mutation methods
+## Mutation methods
 - [x] default method
 - [x] swap mutation
 - [ ] other ideas
@@ -456,9 +432,6 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 - [ ] Consequently the prototype of the methods will be discussed and a short description for the given methods
 - [ ] The summary of the implemented methods will be added to the end
 - [ ] Any other useful changes are appreciated. -->
-
-
-
 
 
 
