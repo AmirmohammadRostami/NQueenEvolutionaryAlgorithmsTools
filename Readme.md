@@ -443,10 +443,11 @@ Among the outputs you would see a localhost address, enter it in your browser an
 
 
 ## 3.2.  Graphical User Interface
-The original user interface is shown in figure 3. You just have to select the algorithms that you want to run the evolutionary algorithm with and hit the run button. 
+The original user interface is shown in figure 3. You just have to select the algorithms that you want to run the evolutionary algorithm with and hit the run button.
 
 <p width="auto" align="center">
 <img align="center" src="./images/GUI.png" alt="Graphical user interface">
+<figcaption>figure 3: Graphical environment of the project</figcaption>
 </p>
 
 
@@ -456,7 +457,11 @@ The original user interface is shown in figure 3. You just have to select the al
 
 
 # 4. Contact Us
-Feel free to contact us for any further information using the following channels:
+### Supervisor: Prof. Dr. Mohammad Mehdi Ebadzadeh
+- email: [*ebadzadeh@aut.ac.ir*](#emailto:ebadzadeh@aut.ac.ir)
+- Tell: +98 21 64542730
+- homepage: [*aut.ac.ir/official/main.asp?uid=ebadzadeh*](#https://old.aut.ac.ir/official/main.asp?uid=ebadzadeh)
+
 
 ### Amirmohhammad rostami:
 - email: [*email@gmail.com*](#emailto:email@gmail.com)
@@ -467,6 +472,7 @@ Feel free to contact us for any further information using the following channels
 - linkdin: [*milad_bohlouli*](#https://www.linkedin.com/in/milad-bohlouli-536011163)
 - homepage: [*ceit.aut.ac.ir/~bohlouli*](#https://ceit.aut.ac.ir/~bohlouli/index.html)
 
+Feel free to contact us for any further information via above channels.
 <!-- ## Cross over methods
 - [x] default cross over
 - [x] multi point cross over
