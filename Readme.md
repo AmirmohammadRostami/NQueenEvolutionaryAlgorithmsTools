@@ -36,9 +36,10 @@ In this project, the evolutionary algorithm with various approaches has been imp
 N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then many mathematicians and computer scientists have been interested on this problem. In 1972, Edsgar Dijkstra proposed a method based on depth-first-backtracking to solve the challenge.<br/>
 The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
 
-<p width="auto" align="center">
+<div align="center">
 <img align="center" src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=200px>
-</p>
+<figcaption>Figure 1: one solution for 4 queen problem</figcaption>
+</div>
 
 ## 1.2. Evolutionary algorithms
 Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In general a evolutionary algorithm consists of the following stages which have been summarized in Figure 2:
@@ -50,9 +51,10 @@ Evolutionary algorithms are one of the solutions to solve this challenge. These 
 6. next generation selection
 7. check the stop condition, if not met repeat from step 3
 
-<p align="center" width="200px">
+<span align="center" width="200px">
 <img src="./images/flowchart.png" alt="flowchart" width=200px>
-</p>
+<figcaption align="center">Figure 2: The flowchart for evolutionary algorithms</figcaption>
+</span>
 
 In order to formulate any problem to be solved using evolutionary algorithms, the following steps have to be followed:
 1. We should define a chromosome-based representation for the possible solutions, which in this specific problem it could be estimated with a list of numbers from 1 to n, with size of n where each of the elements show the ith queen's position in the chessboard e.g. the chromosome of figure 1 could be defined as [3, 1, 4, 2].
