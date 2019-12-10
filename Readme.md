@@ -448,11 +448,23 @@ Among the outputs you would see a localhost address, enter it in your browser an
 
 
 ## 3.2.  Graphical User Interface
-The graphical environment of is depicted in figure 3. You just have to select the algorithms that you want to run the evolutionary algorithm with and hit the run button. After hitting the run button, you will see two plots at bottom which are shown in figure 4 and figure 5.
+The graphical environment of is depicted in figure 3. You just have to select the algorithms that you want to run the evolutionary algorithm with and hit the run button. After hitting the run button, you will see two plots at bottom which are shown in figure 4.
 
 <div align="center">
-<img align="center" src="./images/GUI.png" alt="Graphical user interface" width=200px>
+<img align="center" src="./images/GUI.png" alt="Graphical user interface">
 <figcaption>Figure 3: Graphical environment of the project</figcaption>
+</div><br/>
+
+The results of running the algorithm is shown in three parts, two plots and one chessboard. The vertical axis in the plots show the fitness variance and the average fitness, but the horizontal axis specify the number of generation. This shown how the average fitness and variance change as the generation progresses. The other part shown the chessboard which shows the best found solution for the problem. The queens have been specified with green and dark red colors. The green colored grids show safe queens while the dark red colored images show the queens which threaten each other. This has been compared in Figure 5.
+
+<div align="center">
+<img align="center" src="./images/Output.png" alt="Output">
+<figcaption>Figure 4: The output of running the evolutionary algorithm</figcaption>
+</div><br/><br/>
+
+<div align="center">
+<img align="center" src="./images/truevsfalse.jpg" alt="Output">
+<figcaption>Figure 5: A wrong solution (left), a correct solution (right)</figcaption>
 </div>
 
 
