@@ -453,7 +453,7 @@ The graphical environment of is depicted in figure 3. You just have to select th
 <div align="center">
 <img align="center" src="./images/GUI.png" alt="Graphical user interface">
 <figcaption>Figure 3: Graphical environment of the project</figcaption>
-</p>
+</div>
 
 
 
