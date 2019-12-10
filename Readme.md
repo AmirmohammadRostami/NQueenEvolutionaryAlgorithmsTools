@@ -32,7 +32,7 @@ In this project, the evolutionary algorithm with various approaches has been imp
 
 # 1. Introduction
 
-## N queen problem
+## 1.1. N queen problem
 N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then many mathematicians and computer scientists have been interested on this problem. In 1972, Edsgar Dijkstra proposed a method based on depth-first-backtracking to solve the challenge.<br/>
 The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
 
@@ -40,7 +40,7 @@ The whole idea pf the challenge is *to place n queens on a nxn chessboard in a w
 <img align="center" src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=200px>
 </p>
 
-## Evolutionary algorithms
+## 1.2. Evolutionary algorithms
 Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In general a evolutionary algorithm consists of the following stages which have been summarized in Figure 2:
 1. define the representation
 2. Initiate the population
@@ -62,7 +62,7 @@ In order to formulate any problem to be solved using evolutionary algorithms, th
 
 # 2. Implementation
 
-## EvolutionaryAlgorithm class (*evolutionary_algorithms.py*)
+## 2.1. EvolutionaryAlgorithm class (*evolutionary_algorithms.py*)
 This is the main class which handles the evolution process.
 
 ### list of the attributes of the class
@@ -196,7 +196,7 @@ def _initial_population(self):
 ```
 The population attribute of the EvolutionaryAlgorithm class is initiated in this function based on the gene generation approach (_ random_gene_generator). It can be seen that m samples are generated with size of n, where m shown the number of the initial population and n defines the number of queens.
 
-## Evolution algorithm functions  (*evolutionary_algorithms_functions.py*)
+## 2.2. Evolution algorithm functions  (*evolutionary_algorithms_functions.py*)
 
 |function name|parameters|returns|description|
 |:-:|:-:|:-:|:-:|
@@ -390,7 +390,7 @@ def default_stop_condition(generation, max_generation, parameters=None):
 
 The evolution process has to be stopped at one generation. The above function breaks the evolution process when the evolution has been done max_generation times.
 
-## Chromosome class (*chromosome.py*)
+## 2.3. Chromosome class (*chromosome.py*)
 
 ### List of the attributes of the class
 |Attribute name|type|initial value|description|
@@ -423,11 +423,36 @@ In order to convert the genotype to phenotype ??????
 
 # 3. Quick Tour
 
-### Installation guide
+## 3.1.  Installation guide
+In order to run the project the following packages need to be installed:
+1. numpy
+2. dash
+3. pickle
 
-### Graphical User Interface
+After installing the above packages, you should clone the project into a directory. In order to clone, you should have git installed. Using the bellow command you can clone the project:
+```
+git clone https://gitlab.com/reflax/evolutionary_algorithms_tools_for_n_queen.git
+```
 
-### A few words with the contributors
+Then enter into the cloned directory and run the main.py file using python3:
+```
+python3 main.py
+```
+
+Among the outputs you would see a localhost address, enter it in your browser and that's it. You will see the graphical user interface of the project which will be discussed in the next part.
+
+
+## 3.2.  Graphical User Interface
+The original user interface is shown in figure 3. You just have to select the algorithms that you want to run the evolutionary algorithm with and hit the run button. 
+
+<p width="auto" align="center">
+<img align="center" src="./images/GUI.png" alt="Graphical user interface">
+</p>
+
+
+
+
+## 3.3. A few words with the contributors
 
 
 # 4. Contact Us
