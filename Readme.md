@@ -47,7 +47,7 @@ Evolutionary algorithms are one of the solutions to solve this challenge. These 
 7. check the stop condition, if not met repeat from step 3
 
 
-<img src="./images/flowchart.png" alt="flowchart" width=200px style="display:block;margin:0 auto">
+<img src="./images/flowchart.png" alt="flowchart" width=200px style="text-align:center!important;">
 
 <!-- ![flowchart](./images/flowchart.png) -->
 
