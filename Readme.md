@@ -3,6 +3,33 @@
 In this project, the evolutionary algorithm with various approaches has been implemented and applied on the n queen problem. In the Introduction section the well-known n queen problem and the general overview of evolutionary algorithms will be discussed. Afterwards, in the implementation section we will go into the details of evolutionary algorithm's implementation. A quick installation guide and the procedure of running and analyzing the results have been described in section 3. Eventually, if you want to contribute in the project, see the final part of section 3 which covers the rules you have to follow. For any further information, feel free to contact us using the information given at section 4.
 
 # Table of contents
+<ol>
+
+  <li>intro
+  <ol>
+    <li>asdasd</li>
+  </ol>
+  </li>
+
+  <li>second parent
+  <ol>
+    <li>asdasd</li>
+    <li>asdasd</li>
+    <li>asdasd</li>
+  </ol>
+  </li>
+  <li>Third part
+  <ol>
+    <li>asdasd</li>
+    <li>asdasd</li>
+    <li>asdasd</li>
+  </ol>
+  </li>
+  <li>
+  final part
+  </li>
+
+</ol>
 1. **Introduction**<br/>
   1. [*N queen problem*](#n-queen-problem)
   2. [Evolutionary algorithms](#evolutionary-algorithms)
