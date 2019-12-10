@@ -38,17 +38,18 @@ The whole idea pf the challenge is *to place n queens on a nxn chessboard in a w
 
 ## Evolutionary algorithms
 Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In general a evolutionary algorithm consists of the following stages which have been summarized in Figure 2:
-1. Initiate the population
-2. 
-3. to be continued...
-3. to be continued...
-3. to be continued...
-3. to be continued...
-3. to be continued...
-3. to be continued...
+1. define the representation
+2. Initiate the population
+3. parent selection
+4. Children generation
+5. children evaluation
+6. next generation selection
+7. check the stop condition, if not met repeat from step 3
 
 
-![flowchart](./images/flowchart.png)
+<center><img src="./images/flowchart.png" alt="flowchart" width=200px></center>
+
+<!-- ![flowchart](./images/flowchart.png) -->
 
 
 In order to formulate any problem to be solved using evolutionary algorithms, the following steps have to be followed:
