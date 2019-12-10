@@ -447,7 +447,7 @@ The original user interface is shown in figure 3. You just have to select the al
 
 <p width="auto" align="center">
 <img align="center" src="./images/GUI.png" alt="Graphical user interface">
-<figcaption>figure 3: Graphical environment of the project</figcaption>
+<figcaption align="center">figure 3: Graphical environment of the project</figcaption>
 </p>
 
 
