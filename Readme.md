@@ -30,12 +30,15 @@ In this project, the evolutionary algorithm with various approaches has been imp
   </li>
 </ol>
 
+# 1. Introduction
+
 ## N queen problem
 N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then many mathematicians and computer scientists have been interested on this problem. In 1972, Edsgar Dijkstra proposed a method based on depth-first-backtracking to solve the challenge.<br/>
 The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
 
-![5 queen problem](./images/N_Queen_Problem.jpg)
-
+<p align="center">
+<img src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=200px>
+</p>
 ## Evolutionary algorithms
 Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In general a evolutionary algorithm consists of the following stages which have been summarized in Figure 2:
 1. define the representation
@@ -46,17 +49,17 @@ Evolutionary algorithms are one of the solutions to solve this challenge. These 
 6. next generation selection
 7. check the stop condition, if not met repeat from step 3
 
-
-<img src="./images/flowchart.png" alt="flowchart" width=200px style="text-align:center!important;">
-
-<!-- ![flowchart](./images/flowchart.png) -->
-
+<p align="center">
+<img src="./images/flowchart.png" alt="flowchart" width=200px>
+</p>
 
 In order to formulate any problem to be solved using evolutionary algorithms, the following steps have to be followed:
 1. We should define a chromosome-based representation for the possible solutions, which in this specific problem it could be estimated with a list of numbers from 1 to n, with size of n where each of the elements show the ith queen's position in the chessboard e.g. the chromosome of figure 1 could be defined as [3, 1, 4, 2].
 2. A fitness function should be defined showing the merit of a possible solution. In this challenge the fitness functions could be (1/the number of the queens threatening each other).
 3. The initial population should be generated which consists of random chromosomes.
 
+
+# 2. Implementation
 
 ## EvolutionaryAlgorithm class (*evolutionary_algorithms.py*)
 This is the main class which handles the evolution process.
@@ -325,7 +328,7 @@ With a probability of probe, the cross over operation will be applied between th
 chromosome1: [4, 3, 3, 4]<br/>
 chromosome2: [1, 2, 2, 1]<br/>
 
-> Author: mohammad Tavakkoli, will be completed
+
 
 ### multi_points_crossover
 ```python
@@ -336,6 +339,7 @@ def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_co
 **parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
 
+> Author: mohammad Tavakkoli, will be completed
 
 ### default_parent_selection
 ```python
@@ -416,7 +420,7 @@ def get_phenotype(self):
 In order to convert the genotype to phenotype ??????
 
 
-## Quick Tour
+# 3. Quick Tour
 
 ### Installation guide
 
@@ -425,8 +429,8 @@ In order to convert the genotype to phenotype ??????
 ### A few words with the contributors
 
 
-## Contact Us
-Fell free to contact us for any further information using the following channels:
+# 4. Contact Us
+Feel free to contact us for any further information using the following channels:
 
 ### Amirmohhammad rostami:
 - email: [*email@gmail.com*](#emailto:email@gmail.com)
