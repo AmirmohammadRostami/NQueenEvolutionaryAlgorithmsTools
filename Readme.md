@@ -36,9 +36,7 @@ In this project, the evolutionary algorithm with various approaches has been imp
 N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then many mathematicians and computer scientists have been interested on this problem. In 1972, Edsgar Dijkstra proposed a method based on depth-first-backtracking to solve the challenge.<br/>
 The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
 
-<p align="center">
-<img src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=200px>
-</p>
+<img align="center" src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=200px>
 ## Evolutionary algorithms
 Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In general a evolutionary algorithm consists of the following stages which have been summarized in Figure 2:
 1. define the representation
