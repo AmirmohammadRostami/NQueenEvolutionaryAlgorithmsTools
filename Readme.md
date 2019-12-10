@@ -3,18 +3,18 @@
 In this project, the evolutionary algorithm with various approaches has been implemented and applied on the n queen problem. In the Introduction section the well-known n queen problem and the general overview of evolutionary algorithms will be discussed. Afterwards, in the implementation section we will go into the details of evolutionary algorithm's implementation. A quick installation guide and the procedure of running and analyzing the results have been described in section 3. Eventually, if you want to contribute in the project, see the final part of section 3 which covers the rules you have to follow. For any further information, feel free to contact us using the information given at section 4.
 
 # Table of contents
-1. **Introduction**
+1. **Introduction**<br/>
   1. [*N queen problem*](#n-queen-problem)
   2. [Evolutionary algorithms](#evolutionary-algorithms)
-2. **Implementation**
+2. **Implementation**<br/>
   1. [*evolutionary_algorithms.py*](#evolutionaryalgorithm-class-evolutionary_algorithmspy)
   2. [*evolutionary_algorithms_functions.py*](#evolution-algorithm-functions-evolutionary_algorithms_functionspy)
   3. [*chromosome.py*](#chromosome-class-chromosomepy)
-3. **Quick tour**
+3. **Quick tour**<br/>
   1. [*Installation guide*](#installation-guide)
   1. [*Graphical User Interface*](#graphical-user-interface)
   2. [*A few words with contributors*](#a-few-words-with-contributors)
-4. [**contact us**](#contact-us)
+4. [**contact us**](#contact-us)<br/>
 
 ## N queen problem
 N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then many mathematicians and computer scientists have been interested on this problem. In 1972, Edsgar Dijkstra proposed a method based on depth-first-backtracking to solve the challenge.<br/>
@@ -414,7 +414,7 @@ Fell free to contact us for any further information using the following channels
 - linkdin: [*milad_bohlouli*](#https://www.linkedin.com/in/milad-bohlouli-536011163)
 - homepage: [*ceit.aut.ac.ir/~bohlouli*](#https://ceit.aut.ac.ir/~bohlouli/index.html)
 
-## Cross over methods
+<!-- ## Cross over methods
 - [x] default cross over
 - [x] multi point cross over
 - [ ] other ideas
@@ -422,7 +422,7 @@ Fell free to contact us for any further information using the following channels
 ## Mutation methods
 - [x] default method
 - [x] swap mutation
-- [ ] other ideas
+- [ ] other ideas -->
 
 
 
