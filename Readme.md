@@ -51,10 +51,11 @@ Evolutionary algorithms are one of the solutions to solve this challenge. These 
 6. next generation selection
 7. check the stop condition, if not met repeat from step 3
 
-<span align="center" width="200px">
+<div align="center" width="200px">
 <img src="./images/flowchart.png" alt="flowchart" width=200px>
 <figcaption align="center">Figure 2: The flowchart for evolutionary algorithms</figcaption>
-</span>
+</div><br/>
+
 
 In order to formulate any problem to be solved using evolutionary algorithms, the following steps have to be followed:
 1. We should define a chromosome-based representation for the possible solutions, which in this specific problem it could be estimated with a list of numbers from 1 to n, with size of n where each of the elements show the ith queen's position in the chessboard e.g. the chromosome of figure 1 could be defined as [3, 1, 4, 2].
@@ -244,11 +245,13 @@ The main goal of this method is to select n items from a list with specified pro
 ```python
 def stochastic_universal_selection(items, probs, n):
 ```
-**items (np.array or list)**:  Items that want to choose from them<br/>
+**items (np.array or list)**:  Items that want we to choose from<br/>
 **probs (np.array or list)**:  Probabilities of each item<br/>
 **n (Integer)**: number of selected item(s)<br/>
 **return (np.array)**: array of selected Items<br/>
-In this function the well-known SUS algorithm has been implemented. In this selection approach, at first, the probs and the items are shuffled with the same manner. Then n (number of the desired selections) numbers will be generated which are linearly selected from [0, 1-(1/n)] and are summed with a bias value which is selected randomly from U(0, (1/n))(uniform distribution). This results in a list of float values which could vary in [0, 1]from the cumulative probability is calculated from the probs parameter, afterwards the cumulative probabilities will be compared with the final generated values. To conduct this operation, a for loop is applied on the generated values where on each iteration one value is chosen from the list and the cumulative probabilities are compared with the selected value. This has been implemented by comparing the probabilities consequently till we reach a probability compared to the selected value (Because both of the generated values and the cumulative probabilities are incremental, there is no need to reset the comparison on each iteration of the outer loop). <br/>
+
+**order:** O(len(probs) + n) where n is quantity of the numbers we want to choose.
+In this function the well-known SUS algorithm has been implemented. In this selection approach, at first, the probs and the items are shuffled with the same manner. Then n (number of the desired selections) numbers will be generated which are linearly selected from [0, 1-(1/n)] and are summed with a bias value which is selected randomly from U(0, (1/n))(uniform distribution). This results in a list of float values which could vary in [0, 1]. The cumulative probability is calculated from the probs parameter, afterwards the cumulative probabilities will be compared with the final generated values. To conduct this operation, a for loop is applied on the generated values where on each iteration one value is chosen from the list and the cumulative probabilities are compared with the selected value. This has been implemented by comparing the probabilities consequently till we reach a higher float compared to the selected value (Because both of the generated values and the cumulative probabilities are incremental, there is no need to reset the comparison on each iteration of the outer loop). <br/>
 For a deeper understanding, read the below numerical example:
 Suppose n is 5, the generated list (which is named as index_of_choose in implementation) is generated as [0.3, 0.4, 0.5, 0.8, 0.9] and the probs parameter is a list of [0.1, 0.2, 0.05, 0.01, 0.05, 0.04, 0.2, 0.06, 0.1, 0.1] (remind that n is not supposedly equal with the size of the items list):
 cum_sum = [0.1, 0.3, 0.35, 0.45, 0.5, 0.54, 0.74, 0.8, 0.9, 1]
@@ -445,13 +448,12 @@ Among the outputs you would see a localhost address, enter it in your browser an
 
 
 ## 3.2.  Graphical User Interface
-The original user interface is shown in figure 3. You just have to select the algorithms that you want to run the evolutionary algorithm with and hit the run button.
+The graphical environment of is depicted in figure 3. You just have to select the algorithms that you want to run the evolutionary algorithm with and hit the run button. After hitting the run button, you will see two plots at bottom which are shown in figure 4 and figure 5.
 
-<p width="auto" align="center">
+<div align="center">
 <img align="center" src="./images/GUI.png" alt="Graphical user interface">
-<figcaption align="center">figure 3: Graphical environment of the project</figcaption>
+<figcaption>Figure 3: Graphical environment of the project</figcaption>
 </p>
-
 
 
 
@@ -465,7 +467,7 @@ The original user interface is shown in figure 3. You just have to select the al
 - homepage: [*aut.ac.ir/official/main.asp?uid=ebadzadeh*](#https://old.aut.ac.ir/official/main.asp?uid=ebadzadeh)
 
 
-### Amirmohhammad rostami:
+### Amirmohhammad Rostami:
 - email: [*email@gmail.com*](#emailto:email@gmail.com)
 - linkdin: [*linkdin_id*](#linkdin_link)
 
