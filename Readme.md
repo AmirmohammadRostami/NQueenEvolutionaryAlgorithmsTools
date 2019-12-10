@@ -451,10 +451,9 @@ Among the outputs you would see a localhost address, enter it in your browser an
 The graphical environment of is depicted in figure 3. You just have to select the algorithms that you want to run the evolutionary algorithm with and hit the run button. After hitting the run button, you will see two plots at bottom which are shown in figure 4 and figure 5.
 
 <div align="center">
-<img align="center" src="./images/GUI.png" alt="Graphical user interface">
+<img align="center" src="./images/GUI.png" alt="Graphical user interface" width=200px>
 <figcaption>Figure 3: Graphical environment of the project</figcaption>
 </div>
-
 
 
 ## 3.3. A few words with the contributors
@@ -462,9 +461,9 @@ The graphical environment of is depicted in figure 3. You just have to select th
 
 # 4. Contact Us
 ### Supervisor: Prof. Dr. Mohammad Mehdi Ebadzadeh
-- email: [*ebadzadeh@aut.ac.ir*](#emailto:ebadzadeh@aut.ac.ir)
+- email: [*ebadzadeh@aut.ac.ir*](emailto:ebadzadeh@aut.ac.ir)
 - Tell: +98 21 64542730
-- homepage: [*aut.ac.ir/official/main.asp?uid=ebadzadeh*](#https://old.aut.ac.ir/official/main.asp?uid=ebadzadeh)
+- homepage: [*aut.ac.ir/official/main.asp?uid=ebadzadeh*](https://old.aut.ac.ir/official/main.asp?uid=ebadzadeh)
 
 
 ### Amirmohhammad Rostami:
@@ -472,9 +471,9 @@ The graphical environment of is depicted in figure 3. You just have to select th
 - linkdin: [*linkdin_id*](#linkdin_link)
 
 ### Milad Bohlouli:
-- email: [*miladbohlouli@gmail.com*](#emailto:miladbohlouli@gmail.com)
-- linkdin: [*milad_bohlouli*](#https://www.linkedin.com/in/milad-bohlouli-536011163)
-- homepage: [*ceit.aut.ac.ir/~bohlouli*](#https://ceit.aut.ac.ir/~bohlouli/index.html)
+- email: [*miladbohlouli@gmail.com*](emailto:miladbohlouli@gmail.com)
+- linkdin: [*milad_bohlouli*](https://www.linkedin.com/in/milad-bohlouli-536011163)
+- homepage: [*ceit.aut.ac.ir/~bohlouli*](https://ceit.aut.ac.ir/~bohlouli/index.html)
 
 Feel free to contact us for any further information via above channels.
 <!-- ## Cross over methods
