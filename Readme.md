@@ -5,17 +5,18 @@ In this project, the evolutionary algorithm with various approaches has been imp
 # Table of contents
 <ol>
 
-  <li>intro
+  <li>**Introduction**
   <ol>
-    <li>asdasd</li>
+    <li> [*N queen problem*](#n-queen-problem)</li>
+    <li> [Evolutionary algorithms](#evolutionary-algorithms)</li>
   </ol>
   </li>
 
   <li>second parent
   <ol>
-    <li>asdasd</li>
-    <li>asdasd</li>
-    <li>asdasd</li>
+    <li></li>
+    <li></li>
+    <li></li>
   </ol>
   </li>
   <li>Third part
@@ -30,9 +31,10 @@ In this project, the evolutionary algorithm with various approaches has been imp
   </li>
 
 </ol>
-1. **Introduction**<br/>
-  1. [*N queen problem*](#n-queen-problem)
-  2. [Evolutionary algorithms](#evolutionary-algorithms)
+
+1. <br/>
+  1.
+  2.
 2. **Implementation**<br/>
   1. [*evolutionary_algorithms.py*](#evolutionaryalgorithm-class-evolutionary_algorithmspy)
   2. [*evolutionary_algorithms_functions.py*](#evolution-algorithm-functions-evolutionary_algorithms_functionspy)
