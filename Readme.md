@@ -19,7 +19,7 @@ In this project, the evolutionary algorithm with various approaches has been imp
     <li>[*chromosome.py*](#chromosome-class-chromosomepy)</li>
   </ol>
   </li>
-  <li><b>Quick tour<b/>
+  <li><b>Quick tour</b>
   <ol>
     <li>[*Installation guide*](#installation-guide)</li>
     <li>[*Graphical User Interface*](#graphical-user-interface)</li>
@@ -38,10 +38,18 @@ The whole idea pf the challenge is *to place n queens on a nxn chessboard in a w
 
 ## Evolutionary algorithms
 Evolutionary algorithms are one of the solutions to solve this challenge. These algorithms are inspired from the evolutionary instinct of the being in the universe. In order to solve a challenge using this approach, the challenge has to be formulated in a specific manner. In general a evolutionary algorithm consists of the following stages which have been summarized in Figure 2:
-1. to be continued...
-2. to be continued...
+1. Initiate the population
+2. 
 3. to be continued...
-[have to insert figure 2]
+3. to be continued...
+3. to be continued...
+3. to be continued...
+3. to be continued...
+3. to be continued...
+
+
+![flowchart](./images/flowchart.png)
+
 
 In order to formulate any problem to be solved using evolutionary algorithms, the following steps have to be followed:
 1. We should define a chromosome-based representation for the possible solutions, which in this specific problem it could be estimated with a list of numbers from 1 to n, with size of n where each of the elements show the ith queen's position in the chessboard e.g. the chromosome of figure 1 could be defined as [3, 1, 4, 2].
