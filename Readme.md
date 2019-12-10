@@ -5,45 +5,30 @@ In this project, the evolutionary algorithm with various approaches has been imp
 # Table of contents
 <ol>
 
-  <li>**Introduction**
+  <li><b>Introduction</b>
   <ol>
     <li> [*N queen problem*](#n-queen-problem)</li>
     <li> [Evolutionary algorithms](#evolutionary-algorithms)</li>
   </ol>
   </li>
 
-  <li>second parent
+  <li><b>Implementation</b>
   <ol>
-    <li></li>
-    <li></li>
-    <li></li>
+    <li>[*evolutionary_algorithms.py*](#evolutionaryalgorithm-class-evolutionary_algorithmspy)</li>
+    <li>[*evolutionary_algorithms_functions.py*](#evolution-algorithm-functions-evolutionary_algorithms_functionspy)</li>
+    <li>[*chromosome.py*](#chromosome-class-chromosomepy)</li>
   </ol>
   </li>
-  <li>Third part
+  <li><b>Quick tour<b/>
   <ol>
-    <li>asdasd</li>
-    <li>asdasd</li>
-    <li>asdasd</li>
+    <li>[*Installation guide*](#installation-guide)</li>
+    <li>[*Graphical User Interface*](#graphical-user-interface)</li>
+    <li>[*A few words with contributors*](#a-few-words-with-contributors)</li>
   </ol>
   </li>
-  <li>
-  final part
+  <li><b>[contact us](#contact-us)</b>
   </li>
-
 </ol>
-
-1. <br/>
-  1.
-  2.
-2. **Implementation**<br/>
-  1. [*evolutionary_algorithms.py*](#evolutionaryalgorithm-class-evolutionary_algorithmspy)
-  2. [*evolutionary_algorithms_functions.py*](#evolution-algorithm-functions-evolutionary_algorithms_functionspy)
-  3. [*chromosome.py*](#chromosome-class-chromosomepy)
-3. **Quick tour**<br/>
-  1. [*Installation guide*](#installation-guide)
-  1. [*Graphical User Interface*](#graphical-user-interface)
-  2. [*A few words with contributors*](#a-few-words-with-contributors)
-4. [**contact us**](#contact-us)<br/>
 
 ## N queen problem
 N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then many mathematicians and computer scientists have been interested on this problem. In 1972, Edsgar Dijkstra proposed a method based on depth-first-backtracking to solve the challenge.<br/>
