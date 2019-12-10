@@ -463,7 +463,7 @@ The results of running the algorithm is shown in three parts, two plots and one 
 </div><br/><br/>
 
 <div align="center">
-<img align="center" src="./images/truevsfalse.jpg" alt="Output">
+<img align="center" src="./images/truevsfalse.jpg" alt="Output" height="200px">
 <figcaption>Figure 5: A wrong solution (left), a correct solution (right)</figcaption>
 </div>
 
