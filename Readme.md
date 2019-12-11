@@ -52,7 +52,7 @@ Evolutionary algorithms are one of the solutions to solve this challenge. These 
 7. check the stop condition, if not met repeat from step 3
 
 <div align="center" height="200px">
-<img src="./images/Flowchart.png" alt="flowchart">
+<img src="images/Flowchart.png" alt="flowchart">
 <figcaption align="center">Figure 2: The flowchart for evolutionary algorithms</figcaption>
 </div><br/>
 
