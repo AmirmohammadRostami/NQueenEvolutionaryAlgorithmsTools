@@ -37,6 +37,7 @@ drop_down_logs = []
 mutation_options = [
     {'label': 'default', 'value': 0},
     {'label': 'random swap mutation', 'value': 1},
+    {'label': 'insertion mutation', 'value': 2},
 ]
 cross_over_options = [
     {'label': 'default', 'value': 0},
@@ -302,6 +303,15 @@ def mutation_drop_down(input, mutation_prob):
             html.Span('Probability'),
             dcc.Input(id='mutation-probability', value=mutation_prob),
         ]
+    elif input == 2:
+        return [
+            html.Span('Mutation Algorithms'),
+            dcc.Dropdown(id='mutation-dropdown',
+                         options=mutation_options,
+                         value=1),
+            html.Span('Probability'),
+            dcc.Input(id='mutation-probability', value=mutation_prob),
+        ]
 
 
 @app.callback(Output(component_id='stop-condition-div', component_property='children'),
@@ -371,6 +381,8 @@ def run_btn(n_clicks,
             mutation = (default_mutation, {'prob': float(mutation_prob)})
         elif mutation_drop_down == 1:
             mutation = (random_swap_mutation, {'prob': float(mutation_prob)})
+        elif mutation_drop_down == 1:
+            mutation = (insertion_swap_mutation, {'prob': float(mutation_prob)})
 
         # cross over
         if cross_over_drop_down == 0 or cross_over_drop_down is None:
