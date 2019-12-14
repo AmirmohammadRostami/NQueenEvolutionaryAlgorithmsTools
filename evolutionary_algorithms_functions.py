@@ -171,10 +171,26 @@ def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
     """
     if np.random.random() <= parameters['prob']:
         idx = np.random.choice(np.arange(len(chromosome.genotype)), 2, replace=False)
-        chromosome.genotype[idx[0]], chromosome.genotype[idx[1]] = chromosome.genotype[idx[1]], chromosome.genotype[
-            idx[0]]
+        chromosome.genotype[idx[0]], chromosome.genotype[idx[1]] =
+        chromosome.genotype[idx[1]], chromosome.genotype[idx[0]]
     return chromosome
 
+def insertion_swap_mutation(chromosome, parameters={'prob: 0.05'}):
+    """
+    :param chromosome: Chromosome
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param prob: default 0.05, float
+    :return:
+    """
+    if np.random.random() <= parameters['prob']:
+        idx = np.random.choice(np.arange(len(chromosome.genotype)), 2, replace=False)
+
+    # The index has been extracted from the chromosome genotype
+    second = chromosome.genotype[max(idx)]
+
+    # The new genotype is made by remvoving the second index and inserting it
+    #   just after the first index
+    chromosome.genotype = np.insert(np.delete(chromosome.genotype, max(idx)), min(idx)+1, second)
 
 '''
 -------------------------------------
