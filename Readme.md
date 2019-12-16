@@ -8,26 +8,26 @@ In this project, the evolutionary algorithm with various approaches has been imp
 
   <li><b>Introduction</b>
   <ol>
-    <li> [*N queen problem*](#n-queen-problem)</li>
-    <li> [Evolutionary algorithms](#evolutionary-algorithms)</li>
+    <li> [*N queen problem*](#11-n-queen-problem)</li>
+    <li> [Evolutionary algorithms](#12-evolutionary-algorithms)</li>
   </ol>
   </li>
 
   <li><b>Implementation</b>
   <ol>
-    <li>[*evolutionary_algorithms.py*](#evolutionaryalgorithm-class-evolutionary_algorithmspy)</li>
-    <li>[*evolutionary_algorithms_functions.py*](#evolution-algorithm-functions-evolutionary_algorithms_functionspy)</li>
-    <li>[*chromosome.py*](#chromosome-class-chromosomepy)</li>
+    <li>[*evolutionary_algorithms.py*](#21-evolutionaryalgorithm-class-evolutionary_algorithmspy)</li>
+    <li>[*evolutionary_algorithms_functions.py*](#22-evolution-algorithm-functions-evolutionary_algorithms_functionspy)</li>
+    <li>[*chromosome.py*](#23-chromosome-class-chromosomepy)</li>
   </ol>
   </li>
   <li><b>Quick tour</b>
   <ol>
-    <li>[*Installation guide*](#installation-guide)</li>
-    <li>[*Graphical User Interface*](#graphical-user-interface)</li>
-    <li>[*A few words with contributors*](#a-few-words-with-contributors)</li>
+    <li>[*Installation guide*](#31-installation-guide)</li>
+    <li>[*Graphical User Interface*](#32-graphical-user-interface)</li>
+    <li>[*A few words with contributors*](#33-a-few-words-with-contributors)</li>
   </ol>
   </li>
-  <li><b>[contact us](#contact-us)</b>
+  <li><b>[contact us](#4-contact-us)</b>
   </li>
 </ol>
 
