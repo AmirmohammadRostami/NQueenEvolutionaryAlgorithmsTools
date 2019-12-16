@@ -470,7 +470,12 @@ The results of running the algorithm is shown in three parts, two plots and one 
 
 
 ## 3.3. A few words with the contributors
-
+If you are interested in contributing in this project, please follow the below instructions.
+1. The general flow of the implementations have been described in the above documentation. If you want to get familiar with the general prototypes of the functions, refer to it.
+2. Pull the project as described in section 3.1 and add your implementations on the master branch and contact us for double check.
+3. Prepare a documentation of your written functions. A template containing the requirements of your implementations have been prepared in the below file.
+[Template file for documenatation](#https://drive.google.com/file/d/1P6dkJnZ_M1Q4LeOA6gzsOBrw0CVHM2i_/view?usp=sharing)
+4. For any further information, feel free to contact us.
 
 # 4. Contact Us
 ### Supervisor: Prof. Dr. Mohammad Mehdi Ebadzadeh
