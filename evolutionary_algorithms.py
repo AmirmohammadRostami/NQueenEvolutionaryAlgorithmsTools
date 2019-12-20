@@ -2,6 +2,7 @@ import numpy as np
 from chromosome import Chromosome
 import random
 import pickle
+import os
 
 best_chromosome_fitness_in_total = -1
 best_phenotype = [1]
@@ -64,7 +65,7 @@ class EvolutionaryAlgorithm:
             best_chromosome=[1],
             verbose=False,
             save_log=True,
-            save_log_path='./log_files/'):
+            save_log_path='/Users/miladbohlouli/Documents/evolutionary_algorithms_tools_for_n_queen/log_files/'):
         file_name = name
         if verbose:
             print('EA algorithms Running . . . ')

@@ -37,10 +37,14 @@ drop_down_logs = []
 mutation_options = [
     {'label': 'default', 'value': 0},
     {'label': 'random swap mutation', 'value': 1},
+    {'label': 'neighbor based mutation', 'value': 2},
+
 ]
 cross_over_options = [
     {'label': 'default', 'value': 0},
     {'label': 'multi points cross over', 'value': 1},
+    {'label': 'neighbor based cross over', 'value': 2},
+
 ]
 parent_selection_options = [
     {'label': 'uniform', 'value': 0},
@@ -61,7 +65,7 @@ stop_condition_options = [
 
 # read logs
 def read_logs():
-    for i, file in enumerate(os.listdir('./log_files/')):
+    for i, file in enumerate('/Users/miladbohlouli/Documents/evolutionary_algorithms_tools_for_n_queen/log_files/'):
         con = True
         for log in logs:
             if log['name'] == file[:-7]:
@@ -69,7 +73,7 @@ def read_logs():
                 break
         if file.endswith('.pickle') and con:
             # print(file)
-            p = pickle.load(open('./log_files/' + file, 'rb'))
+            p = pickle.load(open(os.getcwd()+'/Users/miladbohlouli/Documents/evolutionary_algorithms_tools_for_n_queen/log_files/' + file, 'rb'))
             var_fit = []
             avg_fit = []
             for data in p:
@@ -268,6 +272,17 @@ def cross_over_drop_down(input, parents_prob, cross_over_points):
             html.Span('Number of Points'),
             dcc.Input(id='cross-over-points-number', value=cross_over_points),
         ]
+    elif input == 2:
+        return [
+            html.Span('Cross over Algorithms'),
+            dcc.Dropdown(id='cross-over-dropdown',
+                         options=cross_over_options,
+                         value=2),
+            html.Span('Probability of which parents', style={'display': 'None'}),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
+            html.Span('Points', style={'display': 'None'}),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
+        ]
 
 
 @app.callback(Output(component_id='mutation-div', component_property='children'),
@@ -299,8 +314,19 @@ def mutation_drop_down(input, mutation_prob):
             dcc.Dropdown(id='mutation-dropdown',
                          options=mutation_options,
                          value=1),
+
             html.Span('Probability'),
             dcc.Input(id='mutation-probability', value=mutation_prob),
+        ]
+    elif input == 2:
+        return [
+            html.Span('Mutation Algorithms'),
+            dcc.Dropdown(id='mutation-dropdown',
+                         options=mutation_options,
+                         value=2),
+
+            html.Span('Probability', style={'display': 'None'}),
+            dcc.Input(id='mutation-probability', value=mutation_prob, style={'display': 'None'}),
         ]
 
 
@@ -328,7 +354,7 @@ def stop_condition_drop_down(input):
 @app.callback(
     Output(component_id='run-btn', component_property='children'),
     [Input(component_id='run-btn', component_property='n_clicks')],
-     [State(component_id='name-input', component_property='value'),
+    [State(component_id='name-input', component_property='value'),
      State(component_id='generation-input', component_property='value'),
      State(component_id='children-input', component_property='value'),
      State(component_id='population-input', component_property='value'),
@@ -371,13 +397,16 @@ def run_btn(n_clicks,
             mutation = (default_mutation, {'prob': float(mutation_prob)})
         elif mutation_drop_down == 1:
             mutation = (random_swap_mutation, {'prob': float(mutation_prob)})
+        elif mutation_drop_down == 2:
+            mutation = (neighbour_based_mutation, None)
 
         # cross over
         if cross_over_drop_down == 0 or cross_over_drop_down is None:
             cross_over = (default_cross_over, {'prob': float(parents_prob)})
         elif cross_over_drop_down == 1:
             cross_over = (multi_points_crossover, {'prob': float(parents_prob), 'points_count': int(cross_over_points)})
-
+        elif cross_over_drop_down == 2:
+            cross_over = (neighbour_based_Cross_Over, None)
         # parents selection
         if parents_selection_drop_down == 0 or parents_selection_drop_down is None:
             parents_selection = (default_parent_selection, None)

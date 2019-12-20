@@ -184,6 +184,29 @@ def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
     return chromosome
 
 
+def neighbour_based_mutation(chromosome, parameters=None):
+    gene = chromosome.genotype.copy()
+    begin_indx, end_indx = np.random.randint(len(gene)), np.random.randint(len(gene))
+    if begin_indx <= end_indx:
+        s = gene[begin_indx:end_indx]
+        s = s[::-1]
+        gene[begin_indx:end_indx] = s
+    else:
+        c = len(gene) - (abs(begin_indx - end_indx))
+        # print(c)
+        for i in range(c):
+            print(end_indx, begin_indx)
+            gene[end_indx] = chromosome.genotype[begin_indx]
+            gene[begin_indx] = chromosome.genotype[end_indx]
+            end_indx = (end_indx - 1) % len(gene)
+            begin_indx = (begin_indx + 1) % len(gene)
+            # print('new b and e =', begin_indx, end_indx)
+
+    chromosome.genotype = gene
+
+    return chromosome
+
+
 '''
 -------------------------------------
 Cross Over  Algorithms, COA
@@ -253,6 +276,156 @@ def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_co
 
     chromosome1, chromosome2 = Chromosome(gen1, 0), Chromosome(gen2, 0)
     return chromosome1, chromosome2
+
+
+def neighbour_based_Cross_Over(parent1, parent2, parameter = None):
+    """
+    :param parent1: First parent chromosome,     Gene, np.array with shape = (1,len(parent))
+    :param parent2: Second parent chromosome, Gene, np.array with shape = (1,len(parent))
+    :return: return two chromosome for each children, Chromosome
+    """
+
+    import copy
+    gen1, gen2 = parent1.genotype, parent2.genotype
+    child1, child2 = np.zeros(len(parent1.genotype)), np.zeros(len(parent1.genotype))
+
+    # find neighbours of a gene
+    def neighbour(arr_1_dim, index):
+        if index == len(arr_1_dim) - 1:
+            return arr_1_dim[index - 1], arr_1_dim[0]
+        if index == 0:
+            return arr_1_dim[-1], arr_1_dim[index + 1]
+        return arr_1_dim[index - 1], arr_1_dim[index + 1]
+
+    def has_superior_neighbour(list):
+        for i in range(len(list)):
+            temp = list.copy()
+            temp.remove(list[i])
+            for j in range(len(temp)):
+                if list[i] in temp:
+                    return True, list[i]
+        else:
+            return False, 'ho ha ha'
+
+    def remover(item, dic):
+        for i in range(len(dic)):
+            if item in dic[i]:
+                dic[i].remove(item)
+                if item in dic[i]:
+                    dic[i].remove(item)
+
+    def string_maker(gen_arr1dim, dict):
+
+        dic = copy.deepcopy(dict)
+        gen_arr1dim[0] = np.random.randint(0, len(gen_arr1dim))
+        # print('orginal dic',dic)
+        # print('orgin gen =',gen_arr1dim)
+        remover(gen_arr1dim[0], dic)
+
+        empty_counter = 0
+        counter = 1
+        for block in range(1, len(gen_arr1dim)):
+
+            counter += 1
+            if counter == 8:
+                index = list(range(-empty_counter, len(gen_arr1dim) - 1 - empty_counter))
+                tt = list(range(len(gen_arr1dim)))
+                for i in range(len(index)):
+                    tt.remove(gen_arr1dim[index[i]])
+                if not len(tt) == 1:
+                    print('error')
+                gen_arr1dim[-empty_counter - 1] = tt[0]
+                continue
+
+            if not empty_counter == 0:
+                block = block - empty_counter
+
+            list_nghrs = dic[gen_arr1dim[block - 1]]
+
+            # print('current gen =',gen_arr1dim)
+            # print('current dic =',dic)
+            # print('in block{}  list nghbrs = {}'.format(block,list_nghrs))
+
+            tf, _ = has_superior_neighbour(list_nghrs)
+            if tf:
+                # print('\n',list_nghrs)
+                # print(gen_arr1dim,'\n')
+                gen_arr1dim[block] = _
+                remover(gen_arr1dim[block], dic)
+                continue
+
+            if len(list_nghrs) == 0:
+                # print('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
+                # print('empty counter = ',empty_counter)
+                # print('block number =',block)
+                index = list(range(-empty_counter, block + empty_counter))
+                # print('index zero nghbrs=',index)
+                tt = list(range(len(gen_arr1dim)))
+                for i in range(len(index)):
+                    tt.remove(gen_arr1dim[index[i]])
+                # print('tt zero nghbrs= ',tt)
+                # print('sexy gen =',gen_arr1dim)
+                gen_arr1dim[block] = np.random.choice(tt)
+                remover(gen_arr1dim[block], dic)
+                continue
+
+            list_len_nghbrs_of_nghbrs = []
+            for p in range(len(list_nghrs)):
+                list_len_nghbrs_of_nghbrs.append(len(set(dic[list_nghrs[p]])))
+            if 0 in list_len_nghbrs_of_nghbrs:
+                empty_counter += 1
+                gen_arr1dim[-empty_counter] = list_nghrs[list_len_nghbrs_of_nghbrs.index(0)]
+                remover(list_nghrs[list_len_nghbrs_of_nghbrs.index(0)], dic)
+                continue
+
+            # print('gen = ',gen_arr1dim)
+            # print('list len neghbrs',list_len_nghbrs_of_nghbrs,'\n')
+
+            c = 0
+            x_list = []
+            x_list.append(list_nghrs[list_len_nghbrs_of_nghbrs.index(min(list_len_nghbrs_of_nghbrs))])
+            for t in range(list_len_nghbrs_of_nghbrs.index(min(list_len_nghbrs_of_nghbrs)) + 1,
+                           len(list_len_nghbrs_of_nghbrs)):
+                if list_len_nghbrs_of_nghbrs[t] == min(list_len_nghbrs_of_nghbrs):
+                    x_list.append(list_nghrs[t])
+                    c += 1
+            same_min_list = x_list
+
+            if c == 0:
+                # print('\n',list_nghrs)
+                # print(gen_arr1dim,'\n')
+                gen_arr1dim[block] = list_nghrs[list_len_nghbrs_of_nghbrs.index(min(list_len_nghbrs_of_nghbrs))]
+                remover(gen_arr1dim[block], dic)
+                continue
+
+            else:
+                # print('\n',list_nghrs)
+                # print(gen_arr1dim,'\n')
+                # print('pekhh',same_min_list)
+                gen_arr1dim[block] = list_nghrs[list_nghrs.index(same_min_list[np.random.randint(len(same_min_list))])]
+                remover(gen_arr1dim[block], dic)
+
+        return gen_arr1dim
+
+    # make a dictionary of the neighbours
+    def dictionary(gen1, gen2):
+        dic = {}
+        for i in range(len(gen1)):
+            dic[i] = []
+        for i in range(len(gen1)):
+            a, b = neighbour(gen1, i)
+            dic[gen1[i]].append(a)
+            dic[gen1[i]].append(b)
+            a, b = neighbour(gen2, i)
+            dic[gen2[i]].append(a)
+            dic[gen2[i]].append(b)
+        return dic
+
+    neighbours_dict = dictionary(gen1, gen2)
+    ch1 = Chromosome(string_maker(child1, neighbours_dict), 0)
+    ch2 = Chromosome(string_maker(child2, neighbours_dict), 0)
+
+    return ch1, ch2
 
 
 '''
