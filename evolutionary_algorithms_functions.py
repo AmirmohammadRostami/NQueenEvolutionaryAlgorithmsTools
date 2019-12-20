@@ -7,10 +7,9 @@ import warnings
 -------------------------------------
 Selection Algorithms, (SA)
 -------------------------------------
-input: parameters (dictionary of algorithm parameterss key: parameters name, value: parameters value)
+input: parameters (dictionary of algorithm parameters key: parameters name, value: parameters value)
 return-> selected items as array
 '''
-
 
 def warning_data_type_check_selection_algorithms(items, probs):
     """
@@ -40,7 +39,6 @@ def warning_data_type_check_selection_algorithms(items, probs):
         probs = probs / np.sum(probs)
     return items, probs
 
-
 def roulette_wheel_selection(items, probs, n):
     """
     :param items:  Items that want to choose from them, np.array or list
@@ -57,7 +55,6 @@ def roulette_wheel_selection(items, probs, n):
     for i, rnd in enumerate(rnds):
         inds[i] = np.argmax(cum_sum >= rnd)
     return items[inds]
-
 
 def stochastic_universal_selection(items, probs, n):
     """
@@ -120,7 +117,6 @@ inputs: number_of_queen (n of n-Queen problem)
 return-> np.array (genotype of chromosome)
 '''
 
-
 def default_random_gene_generator(number_of_queen, parameters=None):
     """
     :param number_of_queen: Number of Queen, Integer
@@ -131,7 +127,6 @@ def default_random_gene_generator(number_of_queen, parameters=None):
     for i in range(number_of_queen):
         gen[i] = np.random.randint(0, number_of_queen, 1)
     return gen
-
 
 def permutation_random_gene_generator(number_of_queen, parameters=None):
     """
@@ -151,7 +146,6 @@ Random Evaluators Algorithms, REA
 inputs: a chromosome
 return-> single float number as fitness of input chromosome
 '''
-
 
 def default_evaluator(chromosome, parameters=None):
     """
@@ -182,7 +176,6 @@ inputs: single chromosome
 return->
 '''
 
-
 def default_mutation(chromosome, parameters={'prob': 0.05}):
     """
     :param chromosome: Chromosome
@@ -197,7 +190,6 @@ def default_mutation(chromosome, parameters={'prob': 0.05}):
             chromosome.genotype[i] = np.random.randint(0, len(chromosome.genotype), 1)
     return chromosome
 
-
 def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
     """
     :param chromosome: Chromosome
@@ -207,10 +199,26 @@ def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
     """
     if np.random.random() <= parameters['prob']:
         idx = np.random.choice(np.arange(len(chromosome.genotype)), 2, replace=False)
-        chromosome.genotype[idx[0]], chromosome.genotype[idx[1]] = chromosome.genotype[idx[1]], chromosome.genotype[
-            idx[0]]
+        chromosome.genotype[idx[0]], chromosome.genotype[idx[1]] = \
+        chromosome.genotype[idx[1]], chromosome.genotype[idx[0]]
     return chromosome
 
+def insertion_swap_mutation(chromosome, parameters={'prob: 0.05'}):
+    """
+    :param chromosome: Chromosome
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param prob: default 0.05, float
+    :return:
+    """
+    if np.random.random() <= parameters['prob']:
+        idx = np.random.choice(np.arange(len(chromosome.genotype)), 2, replace=False)
+
+        # The index has been extracted from the chromosome genotype
+        second = chromosome.genotype[max(idx)]
+
+        # The new genotype is made by remvoving the second index and inserting it
+        #   just after the first index
+        chromosome.genotype = np.insert(np.delete(chromosome.genotype, max(idx)), min(idx)+1, second)
 
 def neighbour_based_mutation(chromosome, parameters=None):
     """
@@ -300,7 +308,6 @@ inputs: parent1, parent2 as two chromosomes and parameters( dictionary of algori
 return-> two chromosomes as childes
 '''
 
-
 def default_cross_over(parent1, parent2, parameters={'prob': 0.4}):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
@@ -324,7 +331,6 @@ def default_cross_over(parent1, parent2, parameters={'prob': 0.4}):
         gen2[idx:] = parent2.genotype[idx:]
     chromosome1, chromosome2 = Chromosome(gen1, 0), Chromosome(gen2, 0)
     return chromosome1, chromosome2
-
 
 def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_count': 'middle'}):
     """
@@ -472,7 +478,7 @@ inputs:  population (current population chromosomes list),
 return-> list of selected chromosomes
 '''
 
-
+# our
 def default_parent_selection(population, n, parameter=None):
     """
     :param parameter: dictionary of parameters that key = parameter name and value = parameter value
@@ -497,7 +503,7 @@ inputs:  parents (list of parents chromosome),
 return-> list of selected
 '''
 
-
+# our
 def default_population_selection(parents, children, n, parameters=None):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
@@ -515,7 +521,7 @@ def default_population_selection(parents, children, n, parameters=None):
             res.append(children[index - len(parents)])
     return res
 
-
+# our
 def fitness_based_population_selection(parents, children, n, parameters=None):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
@@ -567,7 +573,7 @@ input: parameters (dictionary of algorithm parameterss key: parameters name, val
 return-> boolean (True as stop and False as keep on)
 '''
 
-
+# our
 def default_stop_condition(generation, max_generation, parameters=None):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
