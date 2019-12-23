@@ -104,7 +104,7 @@ def q_tournament_selection(items, probs, q, n):
         len_items = len(items)
 
         for i in range(n):
-            indexes = np.random.choice(np.arange(len_items),q,replace = False)
+            indexes = np.random.choice(np.arange(len_items), q, replace = False)
             selected_items.append(items[indexes[np.argmax(probs[indexes])]])
     return np.array(selected_items)
 

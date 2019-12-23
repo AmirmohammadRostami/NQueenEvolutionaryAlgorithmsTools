@@ -251,7 +251,7 @@ def stochastic_universal_selection(items, probs, n):
 **n (Integer)**: number of selected item(s)<br/>
 **return (np.array)**: array of selected Items<br/>
 
-**order:** O(len(probs) + n) where n is quantity of the numbers we want to choose.
+**order**: O(len(probs) + n) where n is quantity of the numbers we want to choose.
 In this function the well-known SUS algorithm has been implemented. In this selection approach, at first, the probs and the items are shuffled with the same manner. Then n (number of the desired selections) numbers will be generated which are linearly selected from [0, 1-(1/n)] and are summed with a bias value which is selected randomly from U(0, (1/n))(uniform distribution). This results in a list of float values which could vary in [0, 1]. The cumulative probability is calculated from the probs parameter, afterwards the cumulative probabilities will be compared with the final generated values. To conduct this operation, a for loop is applied on the generated values where on each iteration one value is chosen from the list and the cumulative probabilities are compared with the selected value. This has been implemented by comparing the probabilities consequently till we reach a higher float compared to the selected value (Because both of the generated values and the cumulative probabilities are incremental, there is no need to reset the comparison on each iteration of the outer loop). <br/>
 For a deeper understanding, read the below numerical example:
 Suppose n is 5, the generated list (which is named as index_of_choose in implementation) is generated as [0.3, 0.4, 0.5, 0.8, 0.9] and the probs parameter is a list of [0.1, 0.2, 0.05, 0.01, 0.05, 0.04, 0.2, 0.06, 0.1, 0.1] (remind that n is not supposedly equal with the size of the items list):
@@ -265,6 +265,18 @@ An iteration is done over the generated values, which has been summarized in the
 |3|0.5|3|4|+ items[4]|
 |4|0.8|4|7|+ items[7]|
 |5|0.9|7|8|+ items[8]|
+
+### q_tournament_selection
+```python
+def q_tournament_selection(items, probs, q, n):
+```
+**items (np.array or list)**:  Items that want we to choose from<br/>
+**probs (np.array or list)**:  Probabilities of each item<br/>
+**n (Integer)**: number of selected item(s)<br/>
+**return (np.array)**: array of selected Items<br/>
+**order**:O(qn) where n is the number of chromosomes we tend to choose and q is the tournament selection parameter
+
+The main idea behind this selection method is to iteratively choose among the given population. initially the populated will be shuffled, afterwards q number of the samples in the given implementation will be chosen without replacement (q unique chromosomes), then the best sample among these q chromosomes will be selected as one of our choices in this loop. This process will be done n times. Finally we will end up with an array of selected items with size of n.
 
 
 ### default_random_gene_generator
@@ -316,6 +328,22 @@ def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
 **chromosome (Chromosome)**: the chromosome that the mutation will be applied on<br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **return (Chromosome)**: The mutated chromosome<br/>
+
+### insertion_swap_mutation
+```python
+def insertion_swap_mutation(chromosome, parameters={'prob: 0.05'}):
+```
+**chromosome (Chromosome)**: the chromosome that the mutation will be applied on<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**return (Chromosome)**: The mutated chromosome<br/>
+
+In the insertion mutation, at first two indexes will be selected randomly, the bigger index will be inserted just after the smaller one. The prob parameter in parameters defines the probability that the mutation will be applied. <br/><br/>
+**Example:**
+input chromosome: [9,8,7,6,5,4,3,2,1]<br/>
+randomly selected indexes: [2, 5]<br/>
+output chromosome after applying mutation:
+[9, 8, 7, 4, 6, 5, 3, 2, 1]<br/>
+
 
 
 ### default_cross_over
@@ -473,9 +501,10 @@ The results of running the algorithm is shown in three parts, two plots and one 
 If you are interested in contributing in this project, please follow the below instructions.
 1. The general flow of the implementations have been described in the above documentation. If you want to get familiar with the general prototypes of the functions, refer to it.
 2. Pull the project as described in section 3.1 and add your implementations on the master branch and contact us for double check.
-3. Prepare a documentation of your written functions. A template containing the requirements of your implementations have been prepared in the below file.
+3. Any functions that you tend to implement has a default version. Use its prototype for your own functions.
+4. Prepare a documentation of your written functions. A template containing the requirements of your implementations have been prepared in the below file.
 [Template file for documenatation](https://drive.google.com/file/d/1P6dkJnZ_M1Q4LeOA6gzsOBrw0CVHM2i_/view?usp=sharing)
-4. For any further information, feel free to contact us.
+5. For any further information, feel free to contact us.
 
 # 4. Contact Us
 ### Supervisor: Prof. Dr. Mohammad Mehdi Ebadzadeh
@@ -494,25 +523,13 @@ If you are interested in contributing in this project, please follow the below i
 - homepage: [*ceit.aut.ac.ir/~bohlouli*](https://ceit.aut.ac.ir/~bohlouli/index.html)
 
 Feel free to contact us for any further information via above channels.
-<!-- ## Cross over methods
-- [x] default cross over
-- [x] multi point cross over
-- [ ] other ideas
-
-## Mutation methods
-- [x] default method
-- [x] swap mutation
-- [ ] other ideas -->
 
 
 
 <!-- # Todo list:
-- [ ] The whole idea behind evolutionary algorithm will be explained
-- [ ] General structure of the main code will be explained
-- [ ] Consequently the prototype of the methods will be discussed and a short description for the given methods
-- [ ] The summary of the implemented methods will be added to the end
-- [ ] Any other useful changes are appreciated. -->
-
+-[] order of the algorithms
+-[] complete the tables
+-[] complete the
 
 
 
