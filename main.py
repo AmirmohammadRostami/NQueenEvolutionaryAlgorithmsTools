@@ -514,7 +514,7 @@ def run_btn(n_clicks,
         print([('mutation', mutation),
                ('cross over', cross_over),
                ('remaining selection', remaining_selection),
-               ('parent selection',parents_selection),
+               ('parent selection', parents_selection),
                ])
         running = True
         ea.run(name,
