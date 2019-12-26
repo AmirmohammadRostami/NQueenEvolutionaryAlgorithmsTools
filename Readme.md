@@ -514,8 +514,8 @@ If you are interested in contributing in this project, please follow the below i
 
 
 ### Amirmohhammad Rostami:
-- email: [*email@gmail.com*](#emailto:email@gmail.com)
-- linkdin: [*linkdin_id*](#linkdin_link)
+- email: [*amirmohammadrostami@yahoo.com*](emailto:amirmohammadrostami@yahoo.com)
+- linkdin: [*amirmohammadrostami*](https://www.linkedin.com/in/amirmohammadrostami/)
 
 ### Milad Bohlouli:
 - email: [*miladbohlouli@gmail.com*](emailto:miladbohlouli@gmail.com)

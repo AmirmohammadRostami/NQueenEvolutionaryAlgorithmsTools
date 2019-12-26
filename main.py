@@ -158,8 +158,7 @@ app.layout = html.Div([
         dcc.Dropdown(
             id='log-dropdown',
             options=drop_down_logs,
-            multi=True,
-            value = 0
+            multi=True
         ),
         html.Div(id='output-container')
         ,
@@ -200,9 +199,8 @@ app.layout = html.Div([
 
 
 @app.callback(Output(component_id='remaining-selection-div', component_property='children'),
-              [Input(component_id='remaining-selection-dropdown', component_property='value'),
-               Input(component_id='remaining_pop_parameter', component_property='value'),
-               ])
+              [Input(component_id='remaining-selection-dropdown', component_property='value'), ],
+              [State(component_id='remaining_pop_parameter', component_property='value'), ])
 def remaining_selection_drop_down(input, param_val):
     if input is None:
         return [
@@ -272,10 +270,9 @@ def parent_selection_drop_down(input):
 
 
 @app.callback(Output(component_id='cross-over-div', component_property='children'),
-              [Input(component_id='cross-over-dropdown', component_property='value'),
-               Input(component_id='parents-probability', component_property='value'),
-               Input(component_id='cross-over-points-number', component_property='value'),
-               ])
+              [Input(component_id='cross-over-dropdown', component_property='value'), ],
+              [State(component_id='parents-probability', component_property='value'),
+               State(component_id='cross-over-points-number', component_property='value'), ])
 def cross_over_drop_down(input, parents_prob, cross_over_points):
     if input is None:
         return [
@@ -335,8 +332,8 @@ def cross_over_drop_down(input, parents_prob, cross_over_points):
 
 
 @app.callback(Output(component_id='mutation-div', component_property='children'),
-              [Input(component_id='mutation-dropdown', component_property='value'),
-               Input(component_id='mutation-probability', component_property='value')])
+              [Input(component_id='mutation-dropdown', component_property='value'), ],
+              [State(component_id='mutation-probability', component_property='value')])
 def mutation_drop_down(input, mutation_prob):
     if input is None:
         return [
@@ -459,14 +456,11 @@ def run_btn(n_clicks,
     global avg_fitness_per_generation, variance_per_generation, best_chromosome, running
     if n_clicks > 0 and not running:
         mutation, cross_over, parents_selection, remaining_selection = None, None, None, None
-        running = True
-        # print(running)
         avg_fitness_per_generation = []
         variance_per_generation = []
         best_chromosome = [[0]]
         if name == '' or name is None:
             name = str(datetime.datetime.now())
-
         # mutation
         if mutation_drop_down == 0 or mutation_drop_down is None:
             mutation = (default_mutation, {'prob': float(mutation_prob)})
@@ -517,6 +511,12 @@ def run_btn(n_clicks,
             m=int(population),
             y=int(children),
         )
+        print([('mutation', mutation),
+               ('cross over', cross_over),
+               ('remaining selection', remaining_selection),
+               ('parent selection',parents_selection),
+               ])
+        running = True
         ea.run(name,
                variance_per_generation,
                avg_fitness_per_generation,
