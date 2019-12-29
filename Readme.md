@@ -71,8 +71,6 @@ This is the main class which handles the evolution process.
 
 ### list of the attributes of the class
 
-<div align="center">
-
 |Attribute name|type|Initial value|description|
 |-|:-:|:-:|:-:|
 |_max_generation|integer|200|Maximum number of steps that the evolution will be progressed|
@@ -94,10 +92,8 @@ This is the main class which handles the evolution process.
 |_evaluator|function|default_evaluator|a function which calculates the fitness|
 |_stop_condition|function|default_stop_condition|responsible for checking the stop condition(returns True if met)|
 |_log|list|[]|To be saved for restoring|
-</div>
 
 ### list of the methods of the class
-<div align="center">
 
 |function name|parameters|returns|description|order|
 |:-----------:|:--------:|:-----:|:---------:|:----------:|
@@ -107,7 +103,6 @@ This is the main class which handles the evolution process.
 |[*_new_children*](#_-new_children)|parents|list|Takes a list of parents and generates a list of children with size of y||
 |[*_best_gen*](#_-best_gen)|-|Chromosome|Returns the best chromosome according to fitness function in the population||
 |[*_initial_population*](#_-initial_population)|-|void|Generates the initial population ||
-</div>
 
 ### __ init __
 
@@ -207,7 +202,6 @@ The population attribute of the EvolutionaryAlgorithm class is initiated in this
 
 ## 2.2. Evolution algorithm functions  (*evolutionary_algorithms_functions.py*)
 
-<div align="center">
 |function name|parameters|returns|description|order|
 |:-:|:-:|:-:|:-:|:-:|
 |[*warning_data_type_check_selection_algorithms*](#warning_data_type_check_selection_algorithms)|items, probs|np.array|Normalizes the input probs and checks for any possible flaws||
@@ -226,8 +220,6 @@ The population attribute of the EvolutionaryAlgorithm class is initiated in this
 |[*default_population_selection*](#default_population_selection])|parents, children, n, parameters=None|list|Select the next population from the parents and children||
 |[*fitness_based_population_selection*](#fitness_based_population_selection)|parents, children, n, parameters=None|list|Selection from population according to fitness values of the chromosomes||
 |[*default_stop_condition*](#default_stop_condition)|generation, max_generation, parameters=None|Boolean|returns whether the stop condition is true or not||
-
-</div>
 
 ### warning_data_type_check_selection_algorithms
 ```python
@@ -437,23 +429,19 @@ The evolution process has to be stopped at one generation. The above function br
 ## 2.3. Chromosome class (*chromosome.py*)
 
 ### List of the attributes of the class
-<div align="center">
 
 |Attribute name|type|initial value|description|
 |:-:|:-:|:-:|:-:|
 |fitness|float|None|The fitness of this chromosome|
 |genotype|list|None|A list containing n (number of queens) in range [1, n]|
 
-</div>
 
 ### list of the methods of the class
-<div align="center">
 
 |function name|parameters|returns|descriptions|order|
 |:-:|:-:|:-:|:-:|:---:|
 |[*__ init__*](#__-init__)|genotype<br/>fitness|void|The constructor function of the Chromosome class||
 |[*get_phenotype*](#get_phenotype)|void|list|returns the phenotype of the chromosome||
-</div>
 
 ### __init__
 ```python
