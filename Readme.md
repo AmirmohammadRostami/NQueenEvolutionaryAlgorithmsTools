@@ -94,14 +94,14 @@ This is the main class which handles the evolution process.
 
 
 ### list of the methods of the class
-|function name|parameters|returns|description|
-|:-----------:|:--------:|:-----:|:---------:|
-|[*__ init __*](#__-init-__) |max_generation=200 <br/>n = 8 <br/> m = 160 <br/> number of population <br/> y = 80 <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |void| Constructor method for evolutionary algorithms class
-|[*run*](#run)|name <br/> variance_per_generation=[] <br/> avg_per_generation=[] <br/> best_chromosome=[1] <br/> verbose=False <br/> save_log=True <br/> save_log_path|void|The main method where the evolutionary algorithm is called|
-|[*_save_current_log*](#_-save_current_log)|avg_fitness_per_generation <br/> variance_per_generation <br/> best_chromosome|dictionary|Method used for saving the recent run's log|
-|[*_new_children*](#_-new_children)|parents|list|Takes a list of parents and generates a list of children with size of y|
-|[*_best_gen*](#_-best_gen)|-|Chromosome|Returns the best chromosome according to fitness function in the population|
-|[*_initial_population*](#_-initial_population)|-|void|Generates the initial population |
+|function name|parameters|returns|description|order|
+|:-----------:|:--------:|:-----:|:---------:|:----------:|
+|[*__ init __*](#__-init-__) |max_generation=200 <br/>n = 8 <br/> m = 160 <br/> number of population <br/> y = 80 <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |void| Constructor method for evolutionary algorithms class||
+|[*run*](#run)|name <br/> variance_per_generation=[] <br/> avg_per_generation=[] <br/> best_chromosome=[1] <br/> verbose=False <br/> save_log=True <br/> save_log_path|void|The main method where the evolutionary algorithm is called||
+|[*_save_current_log*](#_-save_current_log)|avg_fitness_per_generation <br/> variance_per_generation <br/> best_chromosome|dictionary|Method used for saving the recent run's log||
+|[*_new_children*](#_-new_children)|parents|list|Takes a list of parents and generates a list of children with size of y||
+|[*_best_gen*](#_-best_gen)|-|Chromosome|Returns the best chromosome according to fitness function in the population||
+|[*_initial_population*](#_-initial_population)|-|void|Generates the initial population ||
 
 
 ### __ init __
@@ -202,24 +202,24 @@ The population attribute of the EvolutionaryAlgorithm class is initiated in this
 
 ## 2.2. Evolution algorithm functions  (*evolutionary_algorithms_functions.py*)
 
-|function name|parameters|returns|description|
-|:-:|:-:|:-:|:-:|
-|[*warning_data_type_check_selection_algorithms*](#warning_data_type_check_selection_algorithms)|items, probs|np.array|Normalizes the input probs and checks for any possible flaws|
-|[*roulette_wheel_selection*](#roulette_wheel_selection)|items, probs, n|np.array||
-|[*stochastic_universal_selection*](#stochastic_universal_selection)|items, probs, n|np.array|The common SUS seleection method|
-|[*q_tournament_slection*](#stochastic_universal_selection)|items, probs, n, q|np.array|N times selection of the best chromosome from randomly q selected items|
-|[*default_random_gene_generator*](#default_random_gene_generator)|number_of_queen, parameters=None|np.array|The default random generator(not permutation based)|
-|[*permutation_random_gene_generator*](#permutation_random_gene_generator)|number_of_queen, parameters=None|np.array|permutation based random gene generator|
-|[*default_evaluator*](#default_evaluator)|chromosome, parameters=None|float|Returns the fitness value of the input chromosome|
-|[*default_mutation*](#default_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|Default mutation, changing some of the genes of the input chromosome randomly|
-|[*random_swap_mutation*](#random_swap_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|mutation based on swapping the genes of the input chromosome|
-|[*insertion_swap_mutation*](#insertion_swap_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|mutation based on inserting a randomly selected gene just after another randomly selected gene|
-|[*default_cross_over*](#default_cross_over)|parent1, parent2, parameters={'prob': 0.4}|Chromosome(class), Chromosome (class)|The default crossover which combines two chromosomes from middle point with probability of prob|
-|[*multi_points_crossover*](#multi_points_crossover)|parent1, parent2, parameters={'prob': 0.4, 'points_count': 'middle'}|Chromosome(class), Chromosome (class)|???????????????????(Mohammad)|
-|[*default_parent_selection*](#default_parent_selection)|population, n, parameter=None|list|list of the selected parents for Genetic operations|
-|[*default_population_selection*](#default_population_selection])|parents, children, n, parameters=None|list|Select the next population from the parents and children|
-|[*fitness_based_population_selection*](#fitness_based_population_selection)|parents, children, n, parameters=None|list|Selection from population according to fitness values of the chromosomes|
-|[*default_stop_condition*](#default_stop_condition)|generation, max_generation, parameters=None|Boolean|returns whether the stop condition is true or not|
+|function name|parameters|returns|description|order|
+|:-:|:-:|:-:|:-:|:-:|
+|[*warning_data_type_check_selection_algorithms*](#warning_data_type_check_selection_algorithms)|items, probs|np.array|Normalizes the input probs and checks for any possible flaws||
+|[*roulette_wheel_selection*](#roulette_wheel_selection)|items, probs, n|np.array|The common roulette wheel selection method||
+|[*stochastic_universal_selection*](#stochastic_universal_selection)|items, probs, n|np.array|The common SUS selection method||
+|[*q_tournament_slection*](#q_tournament_slection)|items, probs, n, q|np.array|N times selection of the best chromosome from randomly q selected items||
+|[*default_random_gene_generator*](#default_random_gene_generator)|number_of_queen, parameters=None|np.array|The default random generator(not permutation based)||
+|[*permutation_random_gene_generator*](#permutation_random_gene_generator)|number_of_queen, parameters=None|np.array|permutation based random gene generator||
+|[*default_evaluator*](#default_evaluator)|chromosome, parameters=None|float|Returns the fitness value of the input chromosome||
+|[*default_mutation*](#default_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|Default mutation, changing some of the genes of the input chromosome randomly||
+|[*random_swap_mutation*](#random_swap_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|mutation based on swapping the genes of the input chromosome||
+|[*insertion_swap_mutation*](#insertion_swap_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|mutation based on inserting a randomly selected gene just after another randomly selected gene||
+|[*default_cross_over*](#default_cross_over)|parent1, parent2, parameters={'prob': 0.4}|Chromosome(class), Chromosome (class)|The default crossover which combines two chromosomes from middle point with probability of prob||
+|[*multi_points_crossover*](#multi_points_crossover)|parent1, parent2, parameters={'prob': 0.4, 'points_count': 'middle'}|Chromosome(class), Chromosome (class)|???????????????????(Mohammad)||
+|[*default_parent_selection*](#default_parent_selection)|population, n, parameter=None|list|list of the selected parents for Genetic operations||
+|[*default_population_selection*](#default_population_selection])|parents, children, n, parameters=None|list|Select the next population from the parents and children||
+|[*fitness_based_population_selection*](#fitness_based_population_selection)|parents, children, n, parameters=None|list|Selection from population according to fitness values of the chromosomes||
+|[*default_stop_condition*](#default_stop_condition)|generation, max_generation, parameters=None|Boolean|returns whether the stop condition is true or not||
 
 ### warning_data_type_check_selection_algorithms
 ```python
@@ -435,10 +435,10 @@ The evolution process has to be stopped at one generation. The above function br
 |genotype|list|None|A list containing n (number of queens) in range [1, n]|
 
 ### list of the methods of the class
-|function name|parameters|returns|descriptions|
-|:-:|:-:|:-:|:-:|
-|[*__ init__*](#__-init__)|genotype<br/>fitness|void|The constructor function of the Chromosome class|
-|[*get_phenotype*](#get_phenotype)|void|list|returns the phenotype of the chromosome|
+|function name|parameters|returns|descriptions|order|
+|:-:|:-:|:-:|:-:|:---:|
+|[*__ init__*](#__-init__)|genotype<br/>fitness|void|The constructor function of the Chromosome class||
+|[*get_phenotype*](#get_phenotype)|void|list|returns the phenotype of the chromosome||
 
 ### __init__
 ```python
