@@ -213,7 +213,7 @@ def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
     return chromosome
 
 
-def insertion_swap_mutation(chromosome, parameters={'prob: 0.05'}):
+def insertion_swap_mutation(chromosome, parameters={'prob': 0.05}):
     """
     :param chromosome: Chromosome
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
