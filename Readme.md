@@ -224,7 +224,7 @@ The population attribute of the EvolutionaryAlgorithm class is initiated in this
 |[*fitness_based_population_selection*](#fitness_based_population_selection)|parents, children, n, parameters=None|list|Selection from population according to fitness values of the chromosomes||
 |[*default_stop_condition*](#default_stop_condition)|generation, max_generation, parameters=None|Boolean|returns whether the stop condition is true or not||
 
-<div>
+</div>
 
 ### warning_data_type_check_selection_algorithms
 ```python
