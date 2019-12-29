@@ -24,7 +24,7 @@ In this project, the evolutionary algorithm with various approaches has been imp
   <ol>
     <li>[*Installation guide*](#31-installation-guide)</li>
     <li>[*Graphical User Interface*](#32-graphical-user-interface)</li>
-    <li>[*A few words with contributors*](#33-a-few-words-with-contributors)</li>
+    <li>[*A few words with contributors*](#33-a-few-words-with-the-contributors)</li>
   </ol>
   </li>
   <li><b>[contact us](#4-contact-us)</b>
