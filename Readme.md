@@ -439,7 +439,7 @@ The evolution process has to be stopped at one generation. The above function br
 |:-:|:-:|:-:|:-:|
 |fitness|float|None|The fitness of this chromosome|
 |genotype|list|None|A list containing n (number of queens) in range [1, n]|
-<div>
+</div>
 ### list of the methods of the class
 
 <div align="center">
@@ -447,7 +447,7 @@ The evolution process has to be stopped at one generation. The above function br
 |:-:|:-:|:-:|:-:|:---:|
 |[*__ init__*](#__-init__)|genotype<br/>fitness|void|The constructor function of the Chromosome class||
 |[*get_phenotype*](#get_phenotype)|void|list|returns the phenotype of the chromosome||
-<div>
+</div>
 
 ### __init__
 ```python
