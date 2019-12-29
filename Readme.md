@@ -435,14 +435,17 @@ The evolution process has to be stopped at one generation. The above function br
 
 ### List of the attributes of the class
 <div align="center">
+
 |Attribute name|type|initial value|description|
 |:-:|:-:|:-:|:-:|
 |fitness|float|None|The fitness of this chromosome|
 |genotype|list|None|A list containing n (number of queens) in range [1, n]|
-</div>
-### list of the methods of the class
 
+</div>
+
+### list of the methods of the class
 <div align="center">
+
 |function name|parameters|returns|descriptions|order|
 |:-:|:-:|:-:|:-:|:---:|
 |[*__ init__*](#__-init__)|genotype<br/>fitness|void|The constructor function of the Chromosome class||
