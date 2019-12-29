@@ -70,7 +70,9 @@ In order to formulate any problem to be solved using evolutionary algorithms, th
 This is the main class which handles the evolution process.
 
 ### list of the attributes of the class
+
 <div align="center">
+
 |Attribute name|type|Initial value|description|
 |-|:-:|:-:|:-:|
 |_max_generation|integer|200|Maximum number of steps that the evolution will be progressed|
