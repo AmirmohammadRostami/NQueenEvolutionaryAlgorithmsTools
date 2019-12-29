@@ -98,6 +98,7 @@ This is the main class which handles the evolution process.
 
 ### list of the methods of the class
 <div align="center">
+
 |function name|parameters|returns|description|order|
 |:-----------:|:--------:|:-----:|:---------:|:----------:|
 |[*__ init __*](#__-init-__) |max_generation=200 <br/>n = 8 <br/> m = 160 <br/> number of population <br/> y = 80 <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |void| Constructor method for evolutionary algorithms class||
