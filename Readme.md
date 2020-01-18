@@ -97,12 +97,12 @@ This is the main class which handles the evolution process.
 
 |function name|parameters|returns|description|order|
 |:-----------:|:--------:|:-----:|:---------:|:----------:|
-|[*__ init __*](#__-init-__) |max_generation=200 <br/>n = 8 <br/> m = 160 <br/> number of population <br/> y = 80 <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |void| Constructor method for evolutionary algorithms class||
+|[*__ init __*](#__-init-__) |max_generation=200 <br/>n = 8 <br/> m = 160 <br/> number of population <br/> y = 80 <br/> mutation <br/> cross_over <br/> parent_selection <br/> remaining_population_selection <br/> evaluator <br/>  random_gene_generator <br/> stop_condition |void| Constructor method for evolutionary algorithms class|O(1)|
 |[*run*](#run)|name <br/> variance_per_generation=[] <br/> avg_per_generation=[] <br/> best_chromosome=[1] <br/> verbose=False <br/> save_log=True <br/> save_log_path|void|The main method where the evolutionary algorithm is called||
-|[*_save_current_log*](#_-save_current_log)|avg_fitness_per_generation <br/> variance_per_generation <br/> best_chromosome|dictionary|Method used for saving the recent run's log||
-|[*_new_children*](#_-new_children)|parents|list|Takes a list of parents and generates a list of children with size of y||
-|[*_best_gen*](#_-best_gen)|-|Chromosome|Returns the best chromosome according to fitness function in the population||
-|[*_initial_population*](#_-initial_population)|-|void|Generates the initial population ||
+|[*_save_current_log*](#_-save_current_log)|avg_fitness_per_generation <br/> variance_per_generation <br/> best_chromosome|dictionary|Method used for saving the recent run's log|O(m)|
+|[*_new_children*](#_-new_children)|parents|list|Takes a list of parents and generates a list of children with size of y|O(n_children)|
+|[*_best_gen*](#_-best_gen)|-|Chromosome|Returns the best chromosome according to fitness function in the population|O(m)|
+|[*_initial_population*](#_-initial_population)|-|void|Generates the initial population |O(m*n)|
 
 ### __ init __
 
@@ -204,22 +204,22 @@ The population attribute of the EvolutionaryAlgorithm class is initiated in this
 
 |function name|parameters|returns|description|order|
 |:-:|:-:|:-:|:-:|:-:|
-|[*warning_data_type_check_selection_algorithms*](#warning_data_type_check_selection_algorithms)|items, probs|np.array|Normalizes the input probs and checks for any possible flaws||
-|[*roulette_wheel_selection*](#roulette_wheel_selection)|items, probs, n|np.array|The common roulette wheel selection method||
-|[*stochastic_universal_selection*](#stochastic_universal_selection)|items, probs, n|np.array|The common SUS selection method||
-|[*q_tournament_slection*](#q_tournament_slection)|items, probs, n, q|np.array|N times selection of the best chromosome from randomly q selected items||
-|[*default_random_gene_generator*](#default_random_gene_generator)|number_of_queen, parameters=None|np.array|The default random generator(not permutation based)||
-|[*permutation_random_gene_generator*](#permutation_random_gene_generator)|number_of_queen, parameters=None|np.array|permutation based random gene generator||
-|[*default_evaluator*](#default_evaluator)|chromosome, parameters=None|float|Returns the fitness value of the input chromosome||
-|[*default_mutation*](#default_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|Default mutation, changing some of the genes of the input chromosome randomly||
-|[*random_swap_mutation*](#random_swap_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|mutation based on swapping the genes of the input chromosome||
-|[*insertion_swap_mutation*](#insertion_swap_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|mutation based on inserting a randomly selected gene just after another randomly selected gene||
-|[*default_cross_over*](#default_cross_over)|parent1, parent2, parameters={'prob': 0.4}|Chromosome(class), Chromosome (class)|The default crossover which combines two chromosomes from middle point with probability of prob||
-|[*multi_points_crossover*](#multi_points_crossover)|parent1, parent2, parameters={'prob': 0.4, 'points_count': 'middle'}|Chromosome(class), Chromosome (class)|???????????????????(Mohammad)||
-|[*default_parent_selection*](#default_parent_selection)|population, n, parameter=None|list|list of the selected parents for Genetic operations||
-|[*default_population_selection*](#default_population_selection])|parents, children, n, parameters=None|list|Select the next population from the parents and children||
-|[*fitness_based_population_selection*](#fitness_based_population_selection)|parents, children, n, parameters=None|list|Selection from population according to fitness values of the chromosomes||
-|[*default_stop_condition*](#default_stop_condition)|generation, max_generation, parameters=None|Boolean|returns whether the stop condition is true or not||
+|[*warning_data_type_check_selection_algorithms*](#warning_data_type_check_selection_algorithms)|items, probs|np.array|Normalizes the input probs and checks for any possible flaws|O(len(items))|
+|[*roulette_wheel_selection*](#roulette_wheel_selection)|items, probs, n|np.array|The common roulette wheel selection method|O(len(items)+n)|
+|[*stochastic_universal_selection*](#stochastic_universal_selection)|items, probs, n|np.array|The common SUS selection method|O(len(items) + n)|
+|[*q_tournament_slection*](#q_tournament_slection)|items, probs, n, q|np.array|N times selection of the best chromosome from randomly q selected items|O(q*n)|
+|[*default_random_gene_generator*](#default_random_gene_generator)|number_of_queen, parameters=None|np.array|The default random generator(not permutation based)|O(number_of_queen)|
+|[*permutation_random_gene_generator*](#permutation_random_gene_generator)|number_of_queen, parameters=None|np.array|permutation based random gene generator|O(number_of_queen)|
+|[*default_evaluator*](#default_evaluator)|chromosome, parameters=None|float|Returns the fitness value of the input chromosome|O(number_of_queen*number_of_queen)|
+|[*default_mutation*](#default_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|Default mutation, changing some of the genes of the input chromosome randomly|O(number_of_queen)|
+|[*random_swap_mutation*](#random_swap_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|mutation based on swapping the genes of the input chromosome|O(1)|
+|[*insertion_swap_mutation*](#insertion_swap_mutation)|chromosome, parameters={'prob': 0.05}|Chromosome (class)|mutation based on inserting a randomly selected gene just after another randomly selected gene|O(1)|
+|[*default_cross_over*](#default_cross_over)|parent1, parent2, parameters={'prob': 0.4}|Chromosome(class), Chromosome (class)|The default crossover which combines two chromosomes from middle point with probability of prob|O(1)|
+|[*multi_points_crossover*](#multi_points_crossover)|parent1, parent2, parameters={'prob': 0.4, 'points_count': 'middle'}|Chromosome(class), Chromosome (class)|||
+|[*default_parent_selection*](#default_parent_selection)|population, n, parameter=None|list|list of the selected parents for Genetic operations|O(n)|
+|[*default_population_selection*](#default_population_selection])|parents, children, n, parameters=None|list|Select the next population from the parents and children|O(n)||
+|[*fitness_based_population_selection*](#fitness_based_population_selection)|parents, children, n, parameters=None|list|Selection from population according to fitness values of the chromosomes|O(len(parents) + len(children))|
+|[*default_stop_condition*](#default_stop_condition)|generation, max_generation, parameters=None|Boolean|returns whether the stop condition is true or not|O(1)|
 
 ### warning_data_type_check_selection_algorithms
 ```python
@@ -228,6 +228,8 @@ def warning_data_type_check_selection_algorithms(items, probs):
 **param items (np.array or list)**: Items that want to choose from them, np.array or list <br/>
 **param probs (np.array or list)**: Probabilities of each item<br/>
 **returns (np.array)**: fixed items and probs<br/>
+
+**order**: O(len(probs)) 
 The probs is a list of probabilities for the items, in this function the probs are checked to be in the correct format. These features include:
 - checking if the items and the probs have the same size
 - convert the items and the probs to ndarray format
@@ -242,6 +244,9 @@ def roulette_wheel_selection(items, probs, n):
 **probs (np.array or list)**:  Probabilities of each item<br/>
 **n (Integer)**: number of selected item(s)<br/>
 **return (np.array)**: array of selected Items<br/>
+
+**order**: O(n) where n is quantity of the numbers we want to choose.
+
 The main goal of this method is to select n items from a list with specified probabilities. In this method a random list is generated with values in range [0, 1]. The cumulative probability of the probs parameter is calculated afterwards. Using a for loop which iterates over the generated random values, each time the lowest index where the cumulative sum is higher than the generated random value is chosen as an item to return. Eventually a list of the selected indexes is returned (It should be mentioned that the list may contain repetitive values).
 
 ### stochastic_universal_selection
@@ -289,6 +294,8 @@ def default_random_gene_generator(number_of_queen, parameters=None):
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value <br/>
 **returns (np.array)**: ndarray with length of number_of_queen for each row<br/>
 
+**order**:O(number_of_queen) 
+
 This is the default random gene generation method which returns a list of n values in range of [0, n]. You should notice that the numbers inside a list(gene) are not necessarily unique.
 
 ### permutation_random_gene_generator
@@ -298,6 +305,8 @@ def permutation_random_gene_generator(number_of_queen, parameters=None):
 **number_of_queen (integer)**: Number of Queen <br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value <br/>
 **returns (np.array)**: ndarray with length of number_of_queen for each row<br/>
+
+**order**:O(number_of_queen) 
 
 Another method used for gene generation. In this method a list of n numbers from 1 to n are generated, then the generated list is shuffled. The main difference of this method compared top the default_random_gene_generator is the uniqueness of the generated values.
 
@@ -309,6 +318,8 @@ def default_evaluator(chromosome, parameters=None):
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **returns (float)**: fitness of that chromosome which is a value in range [0, 1]<br/>
 
+**order**:O(umber_of_queen*number_of_queen) 
+
 In this function the fitness value of the given chromosome is calculated. As discussed before the fitness value should specify the amount of the similarity of the chromosome to the desired output. In n queen problem this could be defined as the reverse of the number of the threats between the queens (1 / number of threats). As high the number of the threats is, the lower the fitness will be, and the value of the fitness converges to infinite when the threats converge to zero.
 
 ### default_mutation
@@ -318,6 +329,8 @@ def default_mutation(chromosome, parameters={'prob': 0.05}):
 **chromosome (Chromosome)**: the chromosome that the mutation will be applied on<br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **return (Chromosome)**: The mutated chromosome<br/>
+
+**order**:O(number_of_queen) 
 
 One of the fundamental stages in evolutionary algorithms is mutation, which tries to manipulate the given chromosome in a specific manner. This function is the default mutation algorithm which changes some of the genes of the chromosome with probability of prob (defined in the parameters dictionary with initial value of 0.5). As higher the value of the probability, the more chance of changing the genes. Eventually the manipulated chromosome will be returned.
 
@@ -331,6 +344,8 @@ def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **return (Chromosome)**: The mutated chromosome<br/>
 
+**order**:O(1) 
+
 ### insertion_swap_mutation
 ```python
 def insertion_swap_mutation(chromosome, parameters={'prob: 0.05'}):
@@ -338,6 +353,8 @@ def insertion_swap_mutation(chromosome, parameters={'prob: 0.05'}):
 **chromosome (Chromosome)**: the chromosome that the mutation will be applied on<br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **return (Chromosome)**: The mutated chromosome<br/>
+
+**order**:O(1) 
 
 In the insertion mutation, at first two indexes will be selected randomly, the bigger index will be inserted just after the smaller one. The prob parameter in parameters defines the probability that the mutation will be applied. <br/><br/>
 **Example:**
@@ -351,11 +368,13 @@ output chromosome after applying mutation:
 ### default_cross_over
 ```python
 def default_cross_over(parent1, parent2, parameters={'prob': 0.4}):
-```
+```list of the methods of the class
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
+
+**order**:O(1) 
 
 Similar to mutation, cross over is the other fundamental stage in evolutionary algorithms, which tries to combine two chromosomes named as parents in order to generate two children in a specific manner. The above function is a single point cross over, which tries to combine the given chromosomes from the middle point with probability of prob (which is specified in the parameters dictionary with initial value of 0.4). For more understanding read the next numerical example:<br/>
 suppose the number of queens is 4, <br/>
@@ -387,6 +406,8 @@ def default_parent_selection(population, n, parameter=None):
 **n (integer)**: Number of Parents that should be chosen, the value should be less or equal to the length of population<br/>
 **return (list)**: list of selected Parents<br/>
 
+**order**:O(n) 
+
 In order to generate new children, a subset of the parents should be chosen to be mutated and cross-overed (which could also be the whole population). In this function n number of the given population will be chosen and returned to be used in the next stages.
 
 
@@ -401,6 +422,7 @@ def default_population_selection(parents, children, n, parameters=None):
 **n (integer)**: Number of remaining population<br/>
 **returns (list)**: list of remained Chromosomes with size of n<br/>
 
+**order**:O(n) 
 After generating new children from the selected parents, the next population has to be selected from the parents and the new children. The default approach to select the new generation is implemented in the above function which chooses n chromosomes randomly from the list of parents concatenated with children. The returned list will always have a size of n which technically is the size of specified population.
 
 ### fitness_based_population_selection
@@ -413,6 +435,7 @@ def fitness_based_population_selection(parents, children, n, parameters=None):
 **n (integer)**: Number of remaining population<br/>
 **returns (list)**: list of remained Chromosomes with size of n<br/>
 
+**order**:O(len(parents) + len(children)) 
 As discussed in default_population_selection part, population selection is to select n chromosomes among the parents and children to be used as the next generation. In this approach a list of chromosomes with length of n will be returned containing the selected chromosomes. The main idea behind this approach is the [roulette wheel selection](#roulette_wheel_selection) which has been discussed before. Using this approach chromosomes with higher fitness values have higher probabilities to be chosen. This idea is similar to the evolution of the live beings in the nature, where animals with higher abilities have a higher chance of survival.
 
 ### default_stop_condition
@@ -423,6 +446,8 @@ def default_stop_condition(generation, max_generation, parameters=None):
 **generation (integer)**: The step of current generation<br/>
 **max_generation (integer)**: The maximum number of generations that the algorithm may continue<br/>
 **returns (Boolean)**: True if the condition has reached otherwise False<br/>
+
+**order**:O(1) 
 
 The evolution process has to be stopped at one generation. The above function breaks the evolution process when the evolution has been done max_generation times.
 
