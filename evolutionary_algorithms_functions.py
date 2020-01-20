@@ -482,6 +482,36 @@ def edge_crossover(parent1, parent2, parameters=None):
     return ch1, ch2
 
 
+def order_one_crossover(parent1, parent2, parameters=None):
+    """
+    :param parent1: First parent chromosome,     Gene, np.array with shape = (1,len(parent))
+    :param parent2: Second parent chromosome, Gene, np.array with shape = (1,len(parent))
+    :return
+    """
+    parent1 = parent1.genotype()
+    parent2 = parent2.genotype()
+    n = len(parent1.genotype)
+    start_substr = random.randint(0, n - 2)
+    end_substr = random.randint(start_substr + 1, n)
+    child1 = parent1.copy()
+    child2 = parent2.copy()
+    j = end_substr
+    i = end_substr
+    while j != start_substr:
+        if not parent1[i] in child2[start_substr:end_substr]:
+            child2[j] = parent1[i]
+            j = (j + 1) % n
+        i = (i + 1) % n
+    j = end_substr
+    i = end_substr
+    while j != start_substr:
+        if not parent2[i] in child1[start_substr:end_substr]:
+            child1[j] = parent2[i]
+            j = (j + 1) % n
+        i = (i + 1) % n
+    return Chromosome(child1, 0), Chromosome(child2, 0)
+
+
 '''
 -------------------------------------
 Parent Selection Algorithms, PaSA

@@ -48,6 +48,7 @@ cross_over_options = [
     {'label': 'Multi points cross over', 'value': 1},
     {'label': 'UPMX cross over', 'value': 2},
     {'label': 'Edge cross over', 'value': 3},
+    {'label': 'Order one cross over', 'value': 4},
 ]
 parent_selection_options = [
     {'label': 'Uniform', 'value': 0},
@@ -329,6 +330,17 @@ def cross_over_drop_down(input, parents_prob, cross_over_points):
             html.Span('Number of Points', style={'display': 'None'}),
             dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
         ]
+    elif input == 4:
+        return [
+            html.Span('Cross over Algorithms'),
+            dcc.Dropdown(id='cross-over-dropdown',
+                         options=cross_over_options,
+                         value=4),
+            html.Span('Probability of which parents', style={'display': 'None'}),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
+            html.Span('Number of Points', style={'display': 'None'}),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
+        ]
 
 
 @app.callback(Output(component_id='mutation-div', component_property='children'),
@@ -484,6 +496,8 @@ def run_btn(n_clicks,
             cross_over = (upmx_crossover, {'prob': float(parents_prob)})
         elif cross_over_drop_down == 3:
             cross_over = (edge_crossover, None)
+        elif cross_over_drop_down == 4:
+            cross_over = (order_one_crossover, None)
 
         # parents selection
         if parents_selection_drop_down == 0 or parents_selection_drop_down is None:
