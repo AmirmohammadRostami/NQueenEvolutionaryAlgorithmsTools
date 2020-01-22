@@ -65,7 +65,8 @@ evaluation_options = [
 ]
 
 stop_condition_options = [
-    {'label': 'Default', 'value': 0},
+    {'label': 'Max generation', 'value': 0},
+    {'label': 'Max evaluation', 'value': 1},
 ]
 
 
@@ -167,7 +168,7 @@ app.layout = html.Div([
     ),
 
     html.Div([
-        html.Span('Generation'),
+        html.Span('Generation/Evaluation'),
         dcc.Input(id='generation-input', value='750'),
         html.Span('Population'),
         dcc.Input(id='population-input', value='500'),
@@ -419,6 +420,14 @@ def stop_condition_drop_down(input):
                          value=0),
 
         ]
+    elif input == 1:
+        return [
+            html.Span('Stop condition'),
+            dcc.Dropdown(id='stop-condition-dropdown',
+                         options=stop_condition_options,
+                         value=1),
+
+        ]
 
 
 @app.callback(
@@ -437,6 +446,7 @@ def stop_condition_drop_down(input):
      State(component_id='cross-over-dropdown', component_property='value'),
      State(component_id='parents-selection-dropdown', component_property='value'),
      State(component_id='remaining-selection-dropdown', component_property='value'),
+     State(component_id='stop-condition-dropdown', component_property='value'),
      ],
 )
 def run_btn(n_clicks,
@@ -452,7 +462,8 @@ def run_btn(n_clicks,
             mutation_drop_down,
             cross_over_drop_down,
             parents_selection_drop_down,
-            remaining_selection_drop_down):
+            remaining_selection_drop_down,\
+            stop_condition_dropdown):
     global avg_fitness_per_generation, variance_per_generation, best_chromosome, running
     if n_clicks > 0 and not running:
         mutation, cross_over, parents_selection, remaining_selection = None, None, None, None
@@ -498,6 +509,14 @@ def run_btn(n_clicks,
             remaining_selection = (boltzmann_population_selection, {'T': remai_pop_param})
         elif remaining_selection_drop_down == 3:
             remaining_selection = (q_tornoment_based_population_selection, None)
+
+        #stop Conditions
+        stop_condition = ''
+        if stop_condition_dropdown == 0 or stop_condition_dropdown == None:
+            stop_condition = (default_stop_condition, {'max_generation':int(generation)})
+        elif stop_condition_dropdown == 1:
+            stop_condition = (evaluation_count_stop_condition, {'max_evaluation_count':int(generation)})
+
         ea = evolutionary_algorithms.EvolutionaryAlgorithm(
             mutation=mutation,
             cross_over=cross_over,
@@ -505,7 +524,7 @@ def run_btn(n_clicks,
             remaining_population_selection=remaining_selection,
             evaluator=default_evaluator,
             gene_generator=permutation_random_gene_generator,
-            stop_condition=default_stop_condition,
+            stop_condition=stop_condition,
             max_generation=int(generation),
             n=int(queen_number),
             m=int(population),

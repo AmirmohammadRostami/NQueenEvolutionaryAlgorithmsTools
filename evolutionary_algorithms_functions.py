@@ -11,7 +11,6 @@ input: parameters (dictionary of algorithm parameters key: parameters name, valu
 return-> selected items as array
 '''
 
-
 def warning_data_type_check_selection_algorithms(items, probs):
     """
     :param items: (for check) Items that want to choose from them, np.array or list
@@ -493,7 +492,6 @@ return-> list of selected chromosomes
 '''
 
 
-# our
 def default_parent_selection(population, n, parameter=None):
     """
     :param parameter: dictionary of parameters that key = parameter name and value = parameter value
@@ -519,7 +517,6 @@ return-> list of selected
 '''
 
 
-# our
 def default_population_selection(parents, children, n, parameters=None):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
@@ -591,19 +588,31 @@ input: parameters (dictionary of algorithm parameterss key: parameters name, val
 return-> boolean (True as stop and False as keep on)
 '''
 
-
-# our
-def default_stop_condition(generation, max_generation, parameters=None):
+def default_stop_condition(generation, evaluation_count, parameters=None):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
     :param generation: current generation, Integer
+    :param evaluation_count: number of evaluation at this generation, Integer
     :param max_generation: Maximum generation, Integer
     :return: Boolean as continue (False) and stop (True)
     """
+    max_generation = parameters['max_generation']
     if generation < max_generation:
         return False
     return True
 
+def evaluation_count_stop_condition(generation, evaluation_count, parameters=None):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param generation: current generation, Integer
+    :param evaluation_count: number of evaluation at this generation, Integer
+    :param max_generation: Maximum generation, Integer
+    :return: Boolean as continue (False) and stop (True)
+    """
+    max_evaluation_count = parameters['max_evaluation_count']
+    if evaluation_count < max_evaluation_count:
+        return False
+    return True
 
 if __name__ == '__main__':
     # items = ['a', 'b', 'c', 'd', 'e']
