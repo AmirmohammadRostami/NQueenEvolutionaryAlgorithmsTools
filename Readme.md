@@ -333,9 +333,9 @@ def default_mutation(chromosome, parameters={'prob': 0.05}):
 
 One of the fundamental stages in evolutionary algorithms is mutation, which tries to manipulate the given chromosome in a specific manner. This function is the default mutation algorithm which changes some of the genes of the chromosome with probability of prob (defined in the parameters dictionary with initial value of 0.5). As higher the value of the probability, the more chance of changing the genes. Eventually the manipulated chromosome will be returned.
 
+### random_swap_mutation
 > Author: mohammad Tavakkoli, will be completed
 
-### random_swap_mutation
 ```python
 def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
 ```
@@ -362,6 +362,7 @@ output chromosome after applying mutation:
 
 ### reverse_sequence_mutation
 > Author: Nayereh Kholdi Nasab (email)
+
 ```python
 def reverse_sequence_mutation(chromosome, parameters={'prob': 0.05}):
 ```
@@ -372,14 +373,15 @@ def reverse_sequence_mutation(chromosome, parameters={'prob': 0.05}):
 
 In the reverse sequence mutation operator, we take a sequence S limited by two position i and j randomly chosen , such that i<j. The gene order in this sequence will be reversed by the same way as what has been covered in the previous operation.
 
+
 ### default_cross_over
 ```python
 def default_cross_over(parent1, parent2, parameters={'prob': 0.4}):
 ```
 list of the methods of the class
-**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
 **order**:O(1)
 
@@ -397,28 +399,77 @@ chromosome2: [1, 2, 2, 1]<br/>
 ```python
 def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_count': 'middle'}):
 ```
-**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
 
 
 ### position_based_crossover
 > Author: Nayereh Kholdi Nasab (email)
+
 ```python
-def position_based_crossover(parent1, parent2, parameters=None):
+def position_based_crossover(parent1, parent2, parameters={'prob': 0.4}):
 ```
-**parameter (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
-**population (list)**: list of current population Chromosomes<br/>
-**n (integer)**: Number of Parents that should be chosen, the value should be less or equal to the length of population<br/>
-**return (list)**: list of selected Parents<br/>
-**order**:O(n^2) where n is the number of chromosomes we tend to choose
+**parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
+**Order**: O(n^2)
 
 The position-based crossover operator (POS), which was also suggested in connection with schedule problems, is a second modification of the OX1 operator. It also starts with selecting a random set of positions in the parent strings. However, this operator imposes the position of the selected elements on the corresponding elements of the other parent and inserts them in two child . Then It finds a cycle between remain elements of first parent and second parent. For each remain elements of a parent, if there exists in correspondent child, it checks a cycle and finds first element that doesn’t conflict.<br/><br/>
 
 **Example**:
 Consider the parents (1 2 3 4 5 6 7 8) and (2 4 6 8 7 5 3 1), and suppose that the second, third and sixth positions are selected. This leads to the following offspring: (1 4 6 2 3 5 7 8) and (4 2 3 8 7 6 5 1).
 
+### masked_crossover
+> Author: Maryam Mousavian (mousavian12@gmail.com)
+
+```python
+def masked_crossover(parent1, parent2, parameters={'prob': 0.4}):
+```
+
+**parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
+**Order**: O(n) where n is the number of queens<br/>
+
+The Masked Crossover (MkX) technique was first proposed by Louis and Rawlins in 1991 as a crossover operator which would efficiently operate in the combinatorial logic design problem area rather than as a combinatorial optimization technique. MkX attempts to impart loci information from parent to offspring in a more effective manner than previous crossover methods. Louis and Rawlins state that MkX tries to preserve schemas identified by the masks and they identify this as one of their key goals. The MkX operator assigns each parent a mask that biases crossover. Once these masks have been positioned then the operation is as following:
+1. Copy Parent1 to Offspring1 and Parent2 to Offspring2 2. For (i from 1 to string-length)
+if Mask2i = 1 and Mask1i = 0
+3. Copy the ith bit from Parent2 to Offspring1
+if Mask1i = 1 and Mask2i = 0
+4. Copy the ith bit from Parent1 to Offspring2
+The offspring of MkX also require masks, should they be selected to be parents in another generation. The masks are normally provided to the offspring by the parents. Typically the parent that is designated the dominant parent is called Parent1 the dominant parent with respect to Offspring1 as Offspring1 inherits Parent1’s bits unless Parent2 feels strongly (Mask2i = 1) and Parent1 does not (Mask1i = 0). A number of mask rules are also defined by Louis and Rawlins. Two of which are used when the simple rule of assigning masks from dominant parent to offspring don’t apply.<br/><br/>
+
+**Example**:
+the MkX is an ineffective crossover operator for the TSP as it fails to preserve the ordering of the solutions. Validity of solution is problematic and (in conjunction with the selected mutation operator) typically involves a repair or penalty function.<br/><br/>
+
+**Analysis**:
+the MkX is an ineffective crossover operator for the TSP as it fails to preserve the ordering of the solutions. Validity of solution is problematic and (in conjunction with the selected mutation operator) typically involves a repair or penalty function.
+
+### Maximal preservation crossover(MPX)
+> Author: Maryam Mousavian(mousavian12@gmail.com)
+
+```python
+def masked_crossover(parent1, parent2, parameters={'prob': 0.4}):
+```
+**parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
+**Order**: O(1)<br/>
+
+The MPX operator was developed by Gorges-Schleuter and Mülhelenbein in 1988 specifically for the TSP. It is closely related to the PMX crossover operator. MPX operates by initially selecting a random substring (the TSP this is a subtler) from the first parent (called the donor). This subtour is usually defined as being a tour with string length less than or equal to the TSP problem size n divided by 2. A minimum subtour length is also set, typically at 10 elements (unless the TSP problem size is very small), as substrings that are very short are ineffective and substrings that are too large do not allow for meaningful variation. Selecting appropriate sized substrings provides a suitable means for parents to transmit significant loci information to the offspring. The second stage of MPX is to remove the elements currently in the offspring from the second parent. Then the remaining elements are inserted into the offspring, the first parent’s substring having been placed at the start of the offspring and the remaining free elements of the offspring being filled by the clean parent 2 strings.<br/><br/>
+
+**Example**:
+This three stage operation of MPX is illustrated in following example:
+Parent 1 - (1 4 3 5 2 6)
+Parent 2 - (1 2 4 3 5 6) Offspring (1 4 3 x x x) Cleaned Parent 2 - ( - 2 - - 5 6) Offspring (1 4 3 2 5 6)<br/><br/>
+
+**Analysis**:
+With regard to the MPX and its application to the TSP, although the MPX prevents invalid tour generation in the offspring, they are liable to be produced with few building blocks being inherited from both parents due to the cleaning of the second parent’s string prior to completing the offspring strings.
 
 ### default_parent_selection
 ```python
@@ -431,8 +482,6 @@ def default_parent_selection(population, n, parameter=None):
 **order**:O(n) where n is the number of chromosomes we tend to choose
 
 In order to generate new children, a subset of the parents should be chosen to be mutated and cross-overed (which could also be the whole population). In this function n number of the given population will be chosen and returned to be used in the next stages.
-
-
 
 ### default_population_selection
 ```python
