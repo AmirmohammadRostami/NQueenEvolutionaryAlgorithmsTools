@@ -312,6 +312,29 @@ def insertion_swap_mutation(chromosome, parameters={'prob: 0.05'}):
     return chromosome
 
 
+def reverse_sequence_mutation(chromosome, parameters={'prob': 0.05}):
+    """
+       :param chromosome: Chromosome
+       :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+       :param prob: default 0.05, float
+       :return:
+    """
+
+    if np.random.random() <= parameters['prob']:
+        chr_length = len(chromosome.genotype)
+
+        # Two random points is selected to change values of interval
+        ind_1 = np.random.randint(chr_length - 1)
+        ind_2 = np.random.randint(ind_1, chr_length)
+
+        while ind_1 < ind_2:
+            chromosome.genotype[ind_1], chromosome.genotype[ind_2] = chromosome.genotype[ind_2], chromosome.genotype[
+                ind_1]
+            ind_1 += 1
+            ind_2 -= 1
+    return chromosome
+
+
 '''
 -------------------------------------
 Cross Over  Algorithms, COA
@@ -510,6 +533,113 @@ def order_one_crossover(parent1, parent2, parameters=None):
             j = (j + 1) % n
         i = (i + 1) % n
     return Chromosome(child1, 0), Chromosome(child2, 0)
+
+
+def masked_crossover(parent1, parent2, parameters=None):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parent1: First parent chromosome, Gene, np.array with shape (1, _n)
+    :param parent2: Second parent chromosome, Gene, np.array with shape (1, _n)
+    :return: return two chromosome for each children, Chromosome
+    """
+    mask1 = np.random.randint(2, size=len(parent1.genotype))
+    mask2 = np.random.randint(2, size=len(parent2.genotype))
+    child1, child2 = np.zeros(len(parent1.genotype)), np.zeros(len(parent1.genotype))
+    for i in range(len(mask1)):
+        if mask1[i] == 0:
+            child1[i] = parent1.genotype[i]
+        if mask2[i] == 0:
+            child2[i] = parent2.genotype[i]
+    for i in range(len(parent1.genotype)):
+        if mask1[i] and not mask2[i] and parent2.genotype[i] not in child1:
+            child1[i] = parent2.genotype[i]
+        if mask2[i] and not mask1[i] and parent1.genotype[i] not in child2:
+            child2[i] = parent1.genotype[i]
+    chromosome1, chromosome2 = Chromosome(child1, 0), Chromosome(child2, 0)
+    return child1, child2
+
+
+def maximal_preservation_crossover(parent1, parent2, parameters=None):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parent1: First parent chromosome, Gene, np.array with shape (1, _n)
+    :param parent2: Second parent chromosome, Gene, np.array with shape (1, _n)
+    :return: return two chromosome for each children, Chromosome
+    """
+    from copy import deepcopy
+
+    rand_len = random.choice(list(range(2, len(parent1.genotype) // 2)))
+    rand_start_index = random.choice(list(range(0, len(parent1.genotype) - 2)))
+    child1, child2 = deepcopy(parent1), deepcopy(parent2)
+
+    # if (len(np.unique(child1.genotype)) == len(child1.genotype)) and (
+    #         len(np.unique(child2.genotype)) == len(child2.genotype)):
+    child1.genotype[0: rand_len] = parent1.genotype[rand_start_index: rand_start_index + rand_len]
+    child1.genotype[rand_len:] = np.delete(parent2.genotype,
+                                           np.where(np.isin(parent2.genotype, child1.genotype[0: rand_len])))
+    child2.genotype[0: rand_len] = parent2.genotype[rand_start_index: rand_start_index + rand_len]
+    child2.genotype[rand_len:] = np.delete(parent1.genotype,
+                                           np.where(np.isin(parent1.genotype, child2.genotype[0: rand_len])))
+    return child1, child2
+
+
+def position_based_crossover(parent1, parent2, parameters=None):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parent1: First parent chromosome, Gene, np.array with size [1,n]
+    :param parent2: Second parent chromosome, Gene, np.array with size [1,n]
+    :return: return two chromosome for each children, Chromosome
+    """
+
+    def find_cycle(parent1, parent2, cycle, first):
+
+        ind = np.where(parent2 == cycle[-1])[0][0]
+        cycle.append(parent1[ind])
+        if parent1[ind] == first:
+            return cycle
+        return find_cycle(parent1, parent2, cycle, first)
+
+    par_size = len(parent1.genotype)
+
+    points = np.random.choice(par_size, 3, replace=False)
+
+    gen1, gen2 = np.zeros(par_size, dtype=np.int), np.zeros(par_size, dtype=np.int)
+    for i in range(len(points)):
+        gen1[points[i]], gen2[points[i]] = parent2.genotype[points[i]], parent1.genotype[points[i]]
+    cycle_index = []
+    for i in range(par_size):
+        if i not in points:
+            cycle = [parent2.genotype[i]]
+            cycle_index.append(find_cycle(parent1.genotype, parent2.genotype, cycle, parent2.genotype[i]))
+        else:
+            cycle_index.append([])
+
+    for i in range(par_size):
+        if i not in points:
+            cycle = cycle_index[i]
+            for j in range(1, len(cycle)):
+                if cycle[j] not in gen1:
+                    gen1[i] = cycle[j]
+                    break
+
+    cycle_index = []
+    for i in range(par_size):
+        if i not in points:
+            cycle = [parent1.genotype[i]]
+            cycle_index.append(find_cycle(parent2.genotype, parent1.genotype, cycle, parent1.genotype[i]))
+        else:
+            cycle_index.append([])
+    for i in range(par_size):
+        if i not in points:
+            cycle = cycle_index[i]
+            for j in range(1, len(cycle)):
+                if cycle[j] not in gen2:
+                    gen2[i] = cycle[j]
+                    break
+
+    chromosome1, chromosome2 = Chromosome(gen1, 0), Chromosome(gen2, 0)
+
+    return chromosome1, chromosome2
 
 
 '''
