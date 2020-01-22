@@ -41,13 +41,19 @@ mutation_options = [
     {'label': 'Neighbor based mutation', 'value': 3},
     {'label': 'Scramble mutation', 'value': 4},
     {'label': 'Insertion mutation', 'value': 5},
+    {'label': 'Reverse mutation', 'value': 6},
 
 ]
 cross_over_options = [
     {'label': 'Default', 'value': 0},
-    {'label': 'Multi points cross over', 'value': 1},
-    {'label': 'UPMX cross over', 'value': 2},
-    {'label': 'Edge cross over', 'value': 3},
+    {'label': 'Multi points crossover', 'value': 1},
+    {'label': 'UPMX crossover', 'value': 2},
+    {'label': 'Edge crossover', 'value': 3},
+    {'label': 'Order one crossover', 'value': 4},
+    {'label': 'Masked crossover crossover', 'value': 5},
+    {'label': 'Maximal preservation crossover', 'value': 6},
+    {'label': 'Position based crossover', 'value': 7},
+
 ]
 parent_selection_options = [
     {'label': 'Uniform', 'value': 0},
@@ -330,6 +336,50 @@ def cross_over_drop_down(input, parents_prob, cross_over_points):
             html.Span('Number of Points', style={'display': 'None'}),
             dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
         ]
+    elif input == 4:
+        return [
+            html.Span('Cross over Algorithms'),
+            dcc.Dropdown(id='cross-over-dropdown',
+                         options=cross_over_options,
+                         value=4),
+            html.Span('Probability of which parents', style={'display': 'None'}),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
+            html.Span('Number of Points', style={'display': 'None'}),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
+        ]
+    elif input == 5:
+        return [
+            html.Span('Cross over Algorithms'),
+            dcc.Dropdown(id='cross-over-dropdown',
+                         options=cross_over_options,
+                         value=5),
+            html.Span('Probability of which parents', style={'display': 'None'}),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
+            html.Span('Number of Points', style={'display': 'None'}),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
+        ]
+    elif input == 6:
+        return [
+            html.Span('Cross over Algorithms'),
+            dcc.Dropdown(id='cross-over-dropdown',
+                         options=cross_over_options,
+                         value=6),
+            html.Span('Probability of which parents', style={'display': 'None'}),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
+            html.Span('Number of Points', style={'display': 'None'}),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
+        ]
+    elif input == 7:
+        return [
+            html.Span('Cross over Algorithms'),
+            dcc.Dropdown(id='cross-over-dropdown',
+                         options=cross_over_options,
+                         value=7),
+            html.Span('Probability of which parents', style={'display': 'None'}),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
+            html.Span('Number of Points', style={'display': 'None'}),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
+        ]
 
 
 @app.callback(Output(component_id='mutation-div', component_property='children'),
@@ -396,6 +446,15 @@ def mutation_drop_down(input, mutation_prob):
             dcc.Dropdown(id='mutation-dropdown',
                          options=mutation_options,
                          value=5),
+            html.Span('Probability'),
+            dcc.Input(id='mutation-probability', value=mutation_prob),
+        ]
+    elif input == 6:
+        return [
+            html.Span('Mutation Algorithms'),
+            dcc.Dropdown(id='mutation-dropdown',
+                         options=mutation_options,
+                         value=6),
             html.Span('Probability'),
             dcc.Input(id='mutation-probability', value=mutation_prob),
         ]
@@ -485,6 +544,8 @@ def run_btn(n_clicks,
             mutation = (scramble_mutation, None)
         elif mutation_drop_down == 5:
             mutation = (insertion_swap_mutation, {'prob': float(mutation_prob)})
+        elif mutation_drop_down == 6:
+            mutation = (reverse_sequence_mutation, {'prob': float(mutation_prob)})
 
         # cross over
         if cross_over_drop_down == 0 or cross_over_drop_down is None:
@@ -495,6 +556,14 @@ def run_btn(n_clicks,
             cross_over = (upmx_crossover, {'prob': float(parents_prob)})
         elif cross_over_drop_down == 3:
             cross_over = (edge_crossover, None)
+        elif cross_over_drop_down == 4:
+            cross_over = (order_one_crossover, None)
+        elif cross_over_drop_down == 5:
+            cross_over = (masked_crossover, None)
+        elif cross_over_drop_down == 6:
+            cross_over = (maximal_preservation_crossover, None)
+        elif cross_over_drop_down == 7:
+            cross_over = (position_based_crossover, None)
 
         # parents selection
         if parents_selection_drop_down == 0 or parents_selection_drop_down is None:

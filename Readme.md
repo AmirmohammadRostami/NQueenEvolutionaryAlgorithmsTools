@@ -487,6 +487,11 @@ In order to run the project the following packages need to be installed:
 2. dash
 3. pickle
 
+In order to install all packages, using bellow command:
+ ```
+ pip install -r requirement.txt
+ ```
+
 After installing the above packages, you should clone the project into a directory. In order to clone, you should have git installed. Using the bellow command you can clone the project:
 ```
 git clone https://gitlab.com/reflax/evolutionary_algorithms_tools_for_n_queen.git
