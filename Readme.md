@@ -132,7 +132,7 @@ def __init__(mutation,
 **random_gene_generator (Function)**: Random algorithm for initial population <br/>
 **stop_condition (Function)**: Stop condition function<br/>
 **returns ()**:<br/>
-**order**: O(1) 
+**order**: O(1)
 
 ### run
 ```python
@@ -195,7 +195,7 @@ This function is the main kernel of the evolutionary algorithm since the cross o
 def _best_gen(self):
 ```
 In the above function the best chromosome in the current population is found according to their fitness values.
-**order**: O(n_children) 
+**order**: O(n_children)
 
 #### _ initial_population
 
@@ -232,7 +232,7 @@ def warning_data_type_check_selection_algorithms(items, probs):
 **param items (np.array or list)**: Items that want to choose from them, np.array or list <br/>
 **param probs (np.array or list)**: Probabilities of each item<br/>
 **returns (np.array)**: fixed items and probs<br/>
-**order**: O(len(items)) 
+**order**: O(len(items))
 
 The probs is a list of probabilities for the items, in this function the probs are checked to be in the correct format. These features include:
 - checking if the items and the probs have the same size
@@ -296,7 +296,7 @@ def default_random_gene_generator(number_of_queen, parameters=None):
 **number_of_queen (integer)**: Number of Queen <br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value <br/>
 **returns (np.array)**: ndarray with length of number_of_queen for each row<br/>
-**order**:O(number_of_queen) 
+**order**:O(number_of_queen)
 
 This is the default random gene generation method which returns a list of n values in range of [0, n]. You should notice that the numbers inside a list(gene) are not necessarily unique.
 
@@ -307,7 +307,7 @@ def permutation_random_gene_generator(number_of_queen, parameters=None):
 **number_of_queen (integer)**: Number of Queen <br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value <br/>
 **returns (np.array)**: ndarray with length of number_of_queen for each row<br/>
-**order**:O(number_of_queen) 
+**order**:O(number_of_queen)
 
 Another method used for gene generation. In this method a list of n numbers from 1 to n are generated, then the generated list is shuffled. The main difference of this method compared top the default_random_gene_generator is the uniqueness of the generated values.
 
@@ -318,7 +318,7 @@ def default_evaluator(chromosome, parameters=None):
 **chromosome (Chromosome)**: The specified chromosome to calculate the fitness for<br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **returns (float)**: fitness of that chromosome which is a value in range [0, 1]<br/>
-**order**:O(number_of_queen*number_of_queen) 
+**order**:O(number_of_queen*number_of_queen)
 
 In this function the fitness value of the given chromosome is calculated. As discussed before the fitness value should specify the amount of the similarity of the chromosome to the desired output. In n queen problem this could be defined as the reverse of the number of the threats between the queens (1 / number of threats). As high the number of the threats is, the lower the fitness will be, and the value of the fitness converges to infinite when the threats converge to zero.
 
@@ -329,7 +329,7 @@ def default_mutation(chromosome, parameters={'prob': 0.05}):
 **chromosome (Chromosome)**: the chromosome that the mutation will be applied on<br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **return (Chromosome)**: The mutated chromosome<br/>
-**order**:O(number_of_queen) 
+**order**:O(number_of_queen)
 
 One of the fundamental stages in evolutionary algorithms is mutation, which tries to manipulate the given chromosome in a specific manner. This function is the default mutation algorithm which changes some of the genes of the chromosome with probability of prob (defined in the parameters dictionary with initial value of 0.5). As higher the value of the probability, the more chance of changing the genes. Eventually the manipulated chromosome will be returned.
 
@@ -342,7 +342,7 @@ def random_swap_mutation(chromosome, parameters={'prob': 0.05}):
 **chromosome (Chromosome)**: the chromosome that the mutation will be applied on<br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **return (Chromosome)**: The mutated chromosome<br/>
-**order**:O(1) 
+**order**:O(1)
 
 ### insertion_swap_mutation
 ```python
@@ -351,7 +351,7 @@ def insertion_swap_mutation(chromosome, parameters={'prob: 0.05'}):
 **chromosome (Chromosome)**: the chromosome that the mutation will be applied on<br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **return (Chromosome)**: The mutated chromosome<br/>
-**order**:O(1) 
+**order**:O(1)
 
 In the insertion mutation, at first two indexes will be selected randomly, the bigger index will be inserted just after the smaller one. The prob parameter in parameters defines the probability that the mutation will be applied. <br/><br/>
 **Example:**
@@ -360,17 +360,28 @@ randomly selected indexes: [2, 5]<br/>
 output chromosome after applying mutation:
 [9, 8, 7, 4, 6, 5, 3, 2, 1]<br/>
 
+### reverse_sequence_mutation
+> Author: Nayereh Kholdi Nasab (email)
+```python
+def reverse_sequence_mutation(chromosome, parameters={'prob': 0.05}):
+```
+**chromosome (Chromosome)**: the chromosome that the mutation will be applied on <br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**return (Chromosome)**: The mutated chromosome<br/>
+**order**: O(n = number_of_queen)<br/>
 
+In the reverse sequence mutation operator, we take a sequence S limited by two position i and j randomly chosen , such that i<j. The gene order in this sequence will be reversed by the same way as what has been covered in the previous operation.
 
 ### default_cross_over
 ```python
 def default_cross_over(parent1, parent2, parameters={'prob': 0.4}):
-```list of the methods of the class
+```
+list of the methods of the class
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
-**order**:O(1) 
+**order**:O(1)
 
 Similar to mutation, cross over is the other fundamental stage in evolutionary algorithms, which tries to combine two chromosomes named as parents in order to generate two children in a specific manner. The above function is a single point cross over, which tries to combine the given chromosomes from the middle point with probability of prob (which is specified in the parameters dictionary with initial value of 0.4). For more understanding read the next numerical example:<br/>
 suppose the number of queens is 4, <br/>
@@ -380,9 +391,9 @@ With a probability of probe, the cross over operation will be applied between th
 chromosome1: [4, 3, 3, 4]<br/>
 chromosome2: [1, 2, 2, 1]<br/>
 
-
-
 ### multi_points_crossover
+> Author: mohammad Tavakkoli, will be completed(email)
+
 ```python
 def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_count': 'middle'}):
 ```
@@ -391,7 +402,23 @@ def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_co
 **parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
 
-> Author: mohammad Tavakkoli, will be completed
+
+### position_based_crossover
+> Author: Nayereh Kholdi Nasab (email)
+```python
+def position_based_crossover(parent1, parent2, parameters=None):
+```
+**parameter (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**population (list)**: list of current population Chromosomes<br/>
+**n (integer)**: Number of Parents that should be chosen, the value should be less or equal to the length of population<br/>
+**return (list)**: list of selected Parents<br/>
+**order**:O(n^2) where n is the number of chromosomes we tend to choose
+
+The position-based crossover operator (POS), which was also suggested in connection with schedule problems, is a second modification of the OX1 operator. It also starts with selecting a random set of positions in the parent strings. However, this operator imposes the position of the selected elements on the corresponding elements of the other parent and inserts them in two child . Then It finds a cycle between remain elements of first parent and second parent. For each remain elements of a parent, if there exists in correspondent child, it checks a cycle and finds first element that doesn’t conflict.<br/><br/>
+
+**Example**:
+Consider the parents (1 2 3 4 5 6 7 8) and (2 4 6 8 7 5 3 1), and suppose that the second, third and sixth positions are selected. This leads to the following offspring: (1 4 6 2 3 5 7 8) and (4 2 3 8 7 6 5 1).
+
 
 ### default_parent_selection
 ```python
@@ -441,7 +468,7 @@ def default_stop_condition(generation, max_generation, parameters=None):
 **generation (integer)**: The step of current generation<br/>
 **max_generation (integer)**: The maximum number of generations that the algorithm may continue<br/>
 **returns (Boolean)**: True if the condition has reached otherwise False<br/>
-**order**:O(1) 
+**order**:O(1)
 
 The evolution process has to be stopped at one generation. The above function breaks the evolution process when the evolution has been done max_generation times.
 
