@@ -511,6 +511,34 @@ The following example demonstrate this method: consider the parents (1 2 3 4 5 6
 **Analysis**:
 Increasing number of crossover points will change the algorithm from local search to global search.
 
+### Order_1_Crossover
+> Author:Fatemeh Sadat Tabatabaei Far(tabatabaeifateme@gmail.com)
+
+```python
+def order_one_crossover(parent1, parent2, parameters=None):
+```
+**parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**points_count(Integer)**: number of crossover points<br/>
+**returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
+**Order**: O(n*log(n) + n) where n is number of crossover points(points_count)<br/>
+
+Order 1 Crossover is a fairly simple permutation crossover. Basically, a swath of consecutive alleles from parent 1 drops down, and remaining values are placed in the child in the order which they appear in parent 2.<br/><br/>
+**Step 1**: Select a random swath of consecutive alleles from parent 1.<br/>
+**Step 2**: Drop the swath down to Child 1 and mark out these alleles in Parent 2.<br/>
+**Step 3**: Starting on the right side of the swath, grab alleles from parent 2 and insert them in Child 1 at the right edge of the swath. Since 8 is in that position in Parent 2, it is inserted into Child 1 first at the right edge of the swath. Notice that alleles 1, 2 and 3 are skipped because they are marked out and 4 is inserted into the 2nd spot in Child 1.<br/>
+**Step 4**: If you desire a second child from the two parents, flip Parent 1 and Parent 2 and go back to Step 1.
+
+**Example**:
+<div align="center">
+<img align="center" src="./images/order1.png" alt="5 queen problem" width=200px>
+</div><br/>
+
+**Anaysis**:
+Order 1 crossover is perhaps the fastest of all crossover operators because it requires virtually no overhead operations. On a generation by generation basis, edge recombination typically outperforms Order 1, but the fact that Order 1 runs between 100 and 1000 times faster usually allows the processing of more generations in a given time period.
+
+
+
 
 ### default_parent_selection
 ```python
@@ -549,6 +577,30 @@ def fitness_based_population_selection(parents, children, n, parameters=None):
 **order**:O(len(parents) + len(children))  where len(parents) is  number of parents and len(children) is number of children
 
 As discussed in default_population_selection part, population selection is to select n chromosomes among the parents and children to be used as the next generation. In this approach a list of chromosomes with length of n will be returned containing the selected chromosomes. The main idea behind this approach is the [roulette wheel selection](#roulette_wheel_selection) which has been discussed before. Using this approach chromosomes with higher fitness values have higher probabilities to be chosen. This idea is similar to the evolution of the live beings in the nature, where animals with higher abilities have a higher chance of survival.
+
+
+### Boltzmann_selection approache
+> Author: Fatemeh Sadat Tabatabaei Far(tabatabaeifateme@gmail.com)
+
+```python
+def boltzmann_population_selection(parents, children, n, parameters={'T': 1}):
+```
+**parents (list)**: list of Parents of current Generation<br/>
+**children (list)**: list of new children of current Generation<br/>
+**n (integer)**: Number of remaining population<br/>
+**T**: Temperature<br/>
+**returns (list)**: list of remained Chromosomes with size of n<br/>
+**order**:O(len(parents) + len(children))  where len(parents) is  number of parents and len(children) is number of children<br/>
+
+In Boltzmann selection, the rate of selection is controlled by a continuously varying temperature. Initially the temperature is high and selection pressure is inversely proportional to temperature. So selection pressure is low initially. The temperature is decreased gradually which increases the selection pressure. This results in narrowing of search space along with maintaining the diversity in population. The selection of an individual is done with Boltzmann probability which is given by,
+
+<div align="center">
+<img align="center" src="./images/boltzmann.png" alt="5 queen problem" width=150px>
+</div><br/>
+
+
+**Analysis**:
+In Boltzmann selection, the probability of selecting best string for mating is very high. Execution time of this technique is also very less. However by using this technique, certain information may be lost during mutation stage. But this can be prevented through elitism.
 
 ### default_stop_condition
 ```python
