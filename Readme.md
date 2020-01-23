@@ -361,7 +361,7 @@ output chromosome after applying mutation:
 [9, 8, 7, 4, 6, 5, 3, 2, 1]<br/>
 
 ### reverse_sequence_mutation
-> Author: Nayereh Kholdi Nasab (email)
+> Author: Nayereh Kholdi Nasab (Nk94.kholdi@gmail.com)
 
 ```python
 def reverse_sequence_mutation(chromosome, parameters={'prob': 0.05}):
@@ -373,12 +373,30 @@ def reverse_sequence_mutation(chromosome, parameters={'prob': 0.05}):
 
 In the reverse sequence mutation operator, we take a sequence S limited by two position i and j randomly chosen , such that i<j. The gene order in this sequence will be reversed by the same way as what has been covered in the previous operation.
 
+### Thrors mutation
+> Author: Mahsa Baharlou (baharlo.mahsa@gmail.com)
+
+```python
+def thrors_mutation(chromosome, parameters={'prob': 0.05}):
+```
+**chromosome (Chromosome)**: the chromosome that the mutation will be applied on <br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
+**return (Chromosome)**: The mutated chromosome<br/>
+**order**: O(1)<br/>
+
+Three genes are chosen randomly which shall take the different positions not necessarily successive i < j < k. the gene of the position i becomes in the position j and the one which was at this position will take the position k and the gene that has held this position takes the position i.
+
+**Example**:
+parent: (1 2 3 4 5 6) => child: (1 6 3 2 5 4)
+
+**Analysis**:
+Increasing probability of mutation will increase diversity in generation.
+
 
 ### default_cross_over
 ```python
 def default_cross_over(parent1, parent2, parameters={'prob': 0.4}):
 ```
-list of the methods of the class
 **parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
 **parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
@@ -406,7 +424,7 @@ def multi_points_crossover(parent1, parent2, parameters={'prob': 0.4, 'points_co
 
 
 ### position_based_crossover
-> Author: Nayereh Kholdi Nasab (email)
+> Author: Nayereh Kholdi Nasab (Nk94.kholdi@gmail.com)
 
 ```python
 def position_based_crossover(parent1, parent2, parameters={'prob': 0.4}):
@@ -471,13 +489,36 @@ Parent 2 - (1 2 4 3 5 6) Offspring (1 4 3 x x x) Cleaned Parent 2 - ( - 2 - - 5 
 **Analysis**:
 With regard to the MPX and its application to the TSP, although the MPX prevents invalid tour generation in the offspring, they are liable to be produced with few building blocks being inherited from both parents due to the cleaning of the second parent’s string prior to completing the offspring strings.
 
+
+### Order-based Crossover(OX2)
+> Author: Mahsa Baharlou (baharlo.mahsa@gmail.com)
+
+```python
+def order_based_crossover(parent1, parent2, parameters={'points_count': 3}):
+```
+
+**parent1 (Chromosome)**: First parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**parent2 (Chromosome)**: Second parent chromosome, Gene, np.array with len [n^2,1]<br/>
+**points_count(Integer)**: number of crossover points<br/>
+**returns (Chromosome, Chromosome)**: return two chromosome for each children, Chromosome<br/>
+**Order**: O(n*log(n) + n) where n is number of crossover points(points_count)
+
+OX2 was suggested in connection with schedule problems. It is a modification of the OX1 operator. The OX2 operator selects at random several positions(points_count) in a parent string, and then the order of the elements in the selected positions of this parent is imposed on the other parent.
+
+**Example**:
+The following example demonstrate this method: consider the parents (1 2 3 4 5 6 7 8) and (2 4 6 8 7 5 3 1), and suppose that in the second parent, the second, third and sixth positions are selected. The elements in these positions are 4, 6 and 5 respectively. In the first parent, these elements are present at the fourth, fifth and sixth positions. Now the offspring are equal to parent 1 except in the fourth, fifth and sixth positions: (1 2 3 * * * 7 8). We add the missing elements to the offspring in the same order in which they appear in the second parent. This results in (1 2 3 4 6 5 7 8). Exchanging the role of the first parent and the second parent gives, using the same selected positions, (2 4 3 8 7 5 6 1)
+
+**Analysis**:
+Increasing number of crossover points will change the algorithm from local search to global search.
+
+
 ### default_parent_selection
 ```python
 def default_parent_selection(population, n, parameter=None):
 ```
-**parameter (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **population (list)**: list of current population Chromosomes<br/>
 **n (integer)**: Number of Parents that should be chosen, the value should be less or equal to the length of population<br/>
+**parameter (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **return (list)**: list of selected Parents<br/>
 **order**:O(n) where n is the number of chromosomes we tend to choose
 
@@ -487,10 +528,10 @@ In order to generate new children, a subset of the parents should be chosen to b
 ```python
 def default_population_selection(parents, children, n, parameters=None):
 ```
-**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **parents (list)**: list of Parents of current Generation<br/>
 **children (list)**: list of new children of current Generation<br/>
 **n (integer)**: Number of remaining population<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **returns (list)**: list of remained Chromosomes with size of n<br/>
 **order**:O(n) where n is the number of chromosomes we tend to choose
 
@@ -500,10 +541,10 @@ After generating new children from the selected parents, the next population has
 ```python
 def fitness_based_population_selection(parents, children, n, parameters=None):
 ```
-**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **parents (list)**: list of Parents of current Generation<br/>
 **children (list)**: list of new children of current Generation<br/>
 **n (integer)**: Number of remaining population<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **returns (list)**: list of remained Chromosomes with size of n<br/>
 **order**:O(len(parents) + len(children))  where len(parents) is  number of parents and len(children) is number of children
 
@@ -513,9 +554,9 @@ As discussed in default_population_selection part, population selection is to se
 ```python
 def default_stop_condition(generation, max_generation, parameters=None):
 ```
-**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **generation (integer)**: The step of current generation<br/>
 **max_generation (integer)**: The maximum number of generations that the algorithm may continue<br/>
+**parameters (dictionary)**: dictionary of parameters that key = parameter name and value = parameter value<br/>
 **returns (Boolean)**: True if the condition has reached otherwise False<br/>
 **order**:O(1)
 
