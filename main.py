@@ -42,7 +42,7 @@ mutation_options = [
     {'label': 'Scramble mutation', 'value': 4},
     {'label': 'Insertion mutation', 'value': 5},
     {'label': 'Reverse mutation', 'value': 6},
-
+    {'label': 'Thrors mutation', 'value': 7}
 ]
 cross_over_options = [
     {'label': 'Default', 'value': 0},
@@ -53,6 +53,7 @@ cross_over_options = [
     {'label': 'Masked crossover crossover', 'value': 5},
     {'label': 'Maximal preservation crossover', 'value': 6},
     {'label': 'Position based crossover', 'value': 7},
+    {'label': 'Order Based based crossover', 'value': 8},
 
 ]
 parent_selection_options = [
@@ -380,6 +381,17 @@ def cross_over_drop_down(input, parents_prob, cross_over_points):
             html.Span('Number of Points', style={'display': 'None'}),
             dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
         ]
+    elif input == 8:
+        return [
+            html.Span('Cross over Algorithms'),
+            dcc.Dropdown(id='cross-over-dropdown',
+                         options=cross_over_options,
+                         value=8),
+            html.Span('Probability of which parents', style={'display': 'None'}),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
+            html.Span('Number of Points'),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points),
+        ]
 
 
 @app.callback(Output(component_id='mutation-div', component_property='children'),
@@ -458,6 +470,15 @@ def mutation_drop_down(input, mutation_prob):
             html.Span('Probability'),
             dcc.Input(id='mutation-probability', value=mutation_prob),
         ]
+    elif input == 7:
+        return [
+            html.Span('Mutation Algorithms'),
+            dcc.Dropdown(id='mutation-dropdown',
+                         options=mutation_options,
+                         value=7),
+            html.Span('Probability'),
+            dcc.Input(id='mutation-probability', value=mutation_prob),
+        ]
 
 
 @app.callback(Output(component_id='stop-condition-div', component_property='children'),
@@ -521,7 +542,7 @@ def run_btn(n_clicks,
             mutation_drop_down,
             cross_over_drop_down,
             parents_selection_drop_down,
-            remaining_selection_drop_down,\
+            remaining_selection_drop_down, \
             stop_condition_dropdown):
     global avg_fitness_per_generation, variance_per_generation, best_chromosome, running
     if n_clicks > 0 and not running:
@@ -546,6 +567,8 @@ def run_btn(n_clicks,
             mutation = (insertion_swap_mutation, {'prob': float(mutation_prob)})
         elif mutation_drop_down == 6:
             mutation = (reverse_sequence_mutation, {'prob': float(mutation_prob)})
+        elif mutation_drop_down == 7:
+            mutation = (thrors_mutation, {'prob': float(mutation_prob)})
 
         # cross over
         if cross_over_drop_down == 0 or cross_over_drop_down is None:
@@ -564,6 +587,8 @@ def run_btn(n_clicks,
             cross_over = (maximal_preservation_crossover, None)
         elif cross_over_drop_down == 7:
             cross_over = (position_based_crossover, None)
+        elif cross_over_drop_down == 8:
+            cross_over = (order_based_crossover, {'points_count': int(cross_over_points)})
 
         # parents selection
         if parents_selection_drop_down == 0 or parents_selection_drop_down is None:
@@ -579,12 +604,12 @@ def run_btn(n_clicks,
         elif remaining_selection_drop_down == 3:
             remaining_selection = (q_tornoment_based_population_selection, None)
 
-        #stop Conditions
+        # stop Conditions
         stop_condition = ''
         if stop_condition_dropdown == 0 or stop_condition_dropdown == None:
-            stop_condition = (default_stop_condition, {'max_generation':int(generation)})
+            stop_condition = (default_stop_condition, {'max_generation': int(generation)})
         elif stop_condition_dropdown == 1:
-            stop_condition = (evaluation_count_stop_condition, {'max_evaluation_count':int(generation)})
+            stop_condition = (evaluation_count_stop_condition, {'max_evaluation_count': int(generation)})
 
         ea = evolutionary_algorithms.EvolutionaryAlgorithm(
             mutation=mutation,

@@ -11,6 +11,7 @@ input: parameters (dictionary of algorithm parameters key: parameters name, valu
 return-> selected items as array
 '''
 
+
 def warning_data_type_check_selection_algorithms(items, probs):
     """
     :param items: (for check) Items that want to choose from them, np.array or list
@@ -142,6 +143,29 @@ def permutation_random_gene_generator(number_of_queen, parameters=None):
     gen = np.arange(0, number_of_queen)
     np.random.shuffle(gen)
     return gen
+
+
+def thrors_mutation(chromosome, parameters={'prob: 0.05'}):
+    """
+    :param chromosome: Chromosome
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param prob: default 0.05, float
+    :return: return mutated chromosome , Gene, np.array with shape = (1,len(parent))
+    """
+    if np.random.random() <= parameters['prob']:
+        idx = np.random.choice(len(chromosome.genotype), 3, replace=False)
+        idx_sorted = np.sort(idx)
+
+        # tmp = np.zeros(len(chromosome.genotype))
+        tmp = chromosome.genotype.copy()
+        val_2 = tmp[idx_sorted[2]]
+
+        tmp[idx_sorted[2]] = chromosome.genotype[idx_sorted[1]]
+        tmp[idx_sorted[1]] = chromosome.genotype[idx_sorted[0]]
+        tmp[idx_sorted[0]] = val_2
+
+        chromosome.genotype = tmp
+    return chromosome
 
 
 '''
@@ -543,19 +567,24 @@ def masked_crossover(parent1, parent2, parameters=None):
     """
     mask1 = np.random.randint(2, size=len(parent1.genotype))
     mask2 = np.random.randint(2, size=len(parent2.genotype))
-    child1, child2 = np.zeros(len(parent1.genotype)), np.zeros(len(parent1.genotype))
+    child1, child2 = np.full(len(parent1.genotype), np.inf), np.full(len(parent2.genotype), np.inf)
+    child1, child2 = Chromosome(child1, 0), Chromosome(child2, 0)
+
     for i in range(len(mask1)):
-        if mask1[i] == 0:
-            child1[i] = parent1.genotype[i]
-        if mask2[i] == 0:
-            child2[i] = parent2.genotype[i]
-    for i in range(len(parent1.genotype)):
-        if mask1[i] and not mask2[i] and parent2.genotype[i] not in child1:
-            child1[i] = parent2.genotype[i]
-        if mask2[i] and not mask1[i] and parent1.genotype[i] not in child2:
-            child2[i] = parent1.genotype[i]
-    chromosome1, chromosome2 = Chromosome(child1, 0), Chromosome(child2, 0)
-    return child1, child2
+        if mask2[i] and not mask1[i]:
+            child1.genotype[i] = parent2.genotype[i]
+        if mask1[i] and not mask2[i]:
+            child2.genotype[i] = parent1.genotype[i]
+
+    for i in range(len(child1.genotype)):
+        if child1.genotype[i] == np.inf and parent1.genotype[i] not in child1.genotype:
+            child1.genotype[i] = parent1.genotype[i]
+        if child2.genotype[i] == np.inf and parent2.genotype[i] not in child2.genotype:
+            child2.genotype[i] = parent2.genotype[i]
+
+    not_exist_genotype_in_child1 = list(set(np.array(range(0, len(parent1.genotype)))) - set(child1.genotype))
+    not_exist_genotype_in_child2 = list(set(np.array(range(0, len(parent2.genotype)))) - set(child2.genotype))
+    return Chromosome(np.array(not_exist_genotype_in_child1), 0), Chromosome(np.array(not_exist_genotype_in_child2), 0)
 
 
 def maximal_preservation_crossover(parent1, parent2, parameters=None):
@@ -581,6 +610,44 @@ def maximal_preservation_crossover(parent1, parent2, parameters=None):
                                            np.where(np.isin(parent1.genotype, child2.genotype[0: rand_len])))
     return child1, child2
 
+
+def order_based_crossover(parent1, parent2, parameters={'points_count': 3}):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parent1: First parent chromosome, Gene, np.array with len(parent1)
+    :param parent2: Second parent chromosome, Gene, np.array with len(parent2)
+    :return: return two chromosome for each children, Chromosome
+    """
+
+    choice_num = parameters['points_count']
+
+    def find_indx(chromosome, val):
+        indx = 0
+        for i in range(0, len(chromosome.genotype)):
+            if chromosome.genotype[i] == val:
+                indx = i
+        return indx
+
+    idx = np.random.choice(len(parent1.genotype), choice_num, replace=False)
+
+    gen1_val = [parent1.genotype[idx[i]] for i in range(0, choice_num)]
+    gen2_val = [parent2.genotype[idx[i]] for i in range(0, choice_num)]
+
+    gen1_indx = [find_indx(parent1, gen2_val[i]) for i in range(0, choice_num)]
+    gen2_indx = [find_indx(parent2, gen1_val[i]) for i in range(0, choice_num)]
+
+    gen1_indx = np.sort(gen1_indx)
+    gen2_indx = np.sort(gen2_indx)
+
+    gen1 = [parent1.genotype[i] for i in range(0, len(parent1.genotype))]
+    gen2 = [parent2.genotype[i] for i in range(0, len(parent1.genotype))]
+
+    for i in range(0, choice_num):
+        gen1[gen1_indx[i]] = gen2_val[i]
+        gen2[gen2_indx[i]] = gen1_val[i]
+
+    chromosome1, chromosome2 = Chromosome(gen1, 0), Chromosome(gen2, 0)
+    return chromosome1, chromosome2
 
 def position_based_crossover(parent1, parent2, parameters=None):
     """
@@ -748,6 +815,7 @@ input: parameters (dictionary of algorithm parameterss key: parameters name, val
 return-> boolean (True as stop and False as keep on)
 '''
 
+
 def default_stop_condition(generation, evaluation_count, parameters=None):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
@@ -761,6 +829,7 @@ def default_stop_condition(generation, evaluation_count, parameters=None):
         return False
     return True
 
+
 def evaluation_count_stop_condition(generation, evaluation_count, parameters=None):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
@@ -773,6 +842,7 @@ def evaluation_count_stop_condition(generation, evaluation_count, parameters=Non
     if evaluation_count < max_evaluation_count:
         return False
     return True
+
 
 if __name__ == '__main__':
     # items = ['a', 'b', 'c', 'd', 'e']
