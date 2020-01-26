@@ -2,6 +2,7 @@ import random
 import numpy as np
 from chromosome import Chromosome
 import warnings
+import copy
 
 '''
 -------------------------------------
@@ -358,6 +359,23 @@ def reverse_sequence_mutation(chromosome, parameters={'prob': 0.05}):
     return chromosome
 
 
+def twors_mutation(chromosome, parameters={'prob: 0.05'}):
+    """
+    :param chromosome: Chromosome
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param prob: default 0.05, float
+    :return:
+    """
+    if np.random.random() <= parameters['prob']:
+        first_index = int(np.random.uniform(0, 1) * len(chromosome.genotype))
+        second_index = int(np.random.uniform(0, 1) * len(chromosome.genotype))
+        temp = chromosome.genotype[first_index]
+        # The new genotype is made by swapping two random indexes of chromosome
+        chromosome.genotype[first_index] = chromosome.genotype[second_index]
+        chromosome.genotype[second_index] = temp
+    return chromosome
+
+
 '''
 -------------------------------------
 Cross Over  Algorithms, COA
@@ -459,8 +477,6 @@ def edge_crossover(parent1, parent2, parameters=None):
     :param parent2: Second parent chromosome, Gene, np.array with shape = (1,len(parent))
     :return: return two chromosome for each children, Chromosome
     """
-
-    import copy
 
     first_chromosome, second_chromosome = parent1.genotype, parent2.genotype
     child1, child2 = np.zeros(len(parent1.genotype)), np.zeros(len(parent1.genotype))
@@ -649,6 +665,7 @@ def order_based_crossover(parent1, parent2, parameters={'points_count': 3}):
     chromosome1, chromosome2 = Chromosome(gen1, 0), Chromosome(gen2, 0)
     return chromosome1, chromosome2
 
+
 def position_based_crossover(parent1, parent2, parameters=None):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
@@ -704,6 +721,39 @@ def position_based_crossover(parent1, parent2, parameters=None):
                     break
 
     chromosome1, chromosome2 = Chromosome(gen1, 0), Chromosome(gen2, 0)
+
+    return chromosome1, chromosome2
+
+
+def ap_crossover(parent1, parent2, parameters={'prob': 0.33}):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parent1: First parent chromosome, Gene, np.array with len [n^2,1]
+    :param parent2: Second parent chromosome, Gene, np.array with len [n^2,1]
+    :return: return two chromosome for each children, Chromosome
+    References for crossover UPMX --> https://arxiv.org/pdf/1203.3097.pdf
+    """
+    prob = parameters['prob']
+
+    chromosome1, chromosome2 = copy.deepcopy(parent1), copy.deepcopy(parent2)
+    for i in range(len(chromosome1.genotype)):
+        chromosome1.genotype[i] = -1
+        chromosome2.genotype[i] = -1
+    first_index = 0
+    second_index = 0
+    for i in range(len(parent1.genotype)):
+        if len([j for j in chromosome1.genotype if j == parent1.genotype[i]]) == 0:
+            chromosome1.genotype[first_index] = parent1.genotype[i]
+            first_index += 1
+        if len([j for j in chromosome1.genotype if j == parent2.genotype[i]]) == 0:
+            chromosome1.genotype[first_index] = parent2.genotype[i]
+            first_index += 1
+        if len([j for j in chromosome2.genotype if j == parent2.genotype[i]]) == 0:
+            chromosome2.genotype[second_index] = parent2.genotype[i]
+            second_index += 1
+        if len([j for j in chromosome2.genotype if j == parent1.genotype[i]]) == 0:
+            chromosome2.genotype[second_index] = parent1.genotype[i]
+            second_index += 1
 
     return chromosome1, chromosome2
 
