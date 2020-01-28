@@ -438,6 +438,43 @@ def center_inverse_mutation(chromosome, parameters=None):
     return chromosome
 
 
+def inversion_mutation(chromosome, parameters=None):
+    """
+    Inversion mutation (IVM) (Fogel 1990, 1993)
+    :param chromosome: Chromosome
+    :return:
+    """
+    cut_points = np.sort(
+        np.random.choice(np.arange(len(chromosome.genotype)), replace=False, size=2))
+
+    tmp_gen = np.concatenate((chromosome.genotype[:cut_points[0]],
+                              chromosome.genotype[cut_points[1] + 1:]))
+
+    insert_point = np.random.choice(np.arange(len(tmp_gen) + 1), size=1)[0]
+    cut = chromosome.genotype[cut_points[0]:cut_points[1] + 1]
+    reversed_cut = cut[::-1]
+
+    chromosome.genotype = np.concatenate((tmp_gen[:insert_point],
+                                          reversed_cut,
+                                          tmp_gen[insert_point:]))
+
+    return chromosome
+
+
+def throas_mutation(chromosome, parameters):
+    """
+    Throas Mutation
+    :param chromosome: Chromosome
+    :return:
+    """
+    sel_point = np.random.choice(np.arange(len(chromosome.genotype) - 2), size=1)[0]
+    chromosome.genotype = np.concatenate((chromosome.genotype[:sel_point],
+                                          chromosome.genotype[sel_point + 2:sel_point + 3],
+                                          chromosome.genotype[sel_point:sel_point + 2],
+                                          chromosome.genotype[sel_point + 3:]))
+
+    return chromosome
+
 '''
 -------------------------------------
 Cross Over  Algorithms, COA
@@ -902,11 +939,49 @@ def rank_parents_selection(population, n, parameter=None):
     if n > len(population):
         print('n should be less or equal than len parents list')
         return -1
-    fitness_arr= [];
+    fitness_arr = [];
     for p in population:
-		fitness_arr.append(p.fitness)
-
+        fitness_arr.append(p.fitness)
     return rank_selection(population, fitness_arr, n)
+
+
+def linear_rank_based_population_selection(parents, children, n, parameters={'SP': 1.2}):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parents: list of Parents of current Generation, List
+    :param children: list of new children of current Generation, List
+    :param n: Number of remaining population, Integer
+    :return: list of remained Chromosomes
+    """
+    sp = float(parameters['SP'])
+    population = parents + children
+    sorted_population = sorted(population, key=lambda x: x.fitness)
+    mu = n  # len(parents)
+    N = len(population)
+    p = np.array(
+        [(((sp / mu) - (1 / N)) * (2 * (i + 1) - N - 1) / (N - 1) + (1 / N)) for i in range(len(sorted_population))])
+    return stochastic_universal_selection(sorted_population, p, n)
+
+
+def nonlinear_rank_based_population_selection(parents, children, n, parameters={'b': 1}):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parents: list of Parents of current Generation, List
+    :param children: list of new children of current Generation, List
+    :param n: Number of remaining population, Integer
+    :return: list of remained Chromosomes
+    """
+    # sp= float(parameters['SP'])
+    b = float(parameters['b'])
+    population = parents + children
+    sorted_population = sorted(population, key=lambda x: x.fitness)
+    # mu = n#len(parents)
+    # N = len(population)
+    # b = np.log(sp /mu) / N
+    # b = 1.2
+    p = np.array([np.exp(b * i) for i in range(len(sorted_population))])
+    p /= np.sum(p)
+    return stochastic_universal_selection(sorted_population, p, n)
 
 
 '''
@@ -997,6 +1072,41 @@ def q_tornoment_based_population_selection(parents, children, n, parameters=None
     fitness_arr = np.array([x.fitness for x in population])
     fitness_arr = fitness_arr / np.sum(fitness_arr)
     return q_tournament_selection(population, fitness_arr, n)
+
+
+def linear_fitness_based_population_selection(parents, children, n, parameters={'SP': 1.2}):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parents: list of Parents of current Generation, List
+    :param children: list of new children of current Generation, List
+    :param n: Number of remaining population, Integer
+    :return: list of remained Chromosomes
+    """
+    sp = float(parameters['SP'])
+    population = parents + children
+    fitness = np.array([x.fitness for x in population])
+    fb = np.max(fitness)
+    f_mean = np.mean(fitness)
+    mu = n  # len(parents)
+    nn = len(population)
+    p = np.array([(((sp / mu) - (1 / nn)) * (fi - f_mean) / (fb - f_mean) + (1 / nn)) for fi in fitness])
+    p = np.heaviside(p, 0) * p
+    return stochastic_universal_selection(population, p, n)
+
+
+def nonlinear_fitness_based_population_selection(parents, children, n, parameters={'b': 1}):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parents: list of Parents of current Generation, List
+    :param children: list of new children of current Generation, List
+    :param n: Number of remaining population, Integer
+    :return: list of remained Chromosomes
+    """
+    b = float(parameters['b'])
+    population = parents + children
+    p = np.array([np.exp(b * x.fitness) for x in population])
+    p /= np.sum(p)
+    return stochastic_universal_selection(population, p, n)
 
 
 '''
