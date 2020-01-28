@@ -113,6 +113,32 @@ def q_tournament_selection(items, probs, q, n):
     return np.array(selected_items)
 
 
+def rank_selection(items, probs, n):
+    """
+    :param items:  Items that want to choose from them, np.array or list
+    :param probs:  Probabilities of each item, np.array or list
+    :param n: number of selected item(s), Integer
+    :return: array of selected Items, np.array
+    """
+    if n == 0:
+        return np.array([])
+
+    arg_sort = np.argsort(probs)
+    sorted_items = []
+    for index in arg_sort:
+        sorted_items.append(items[index])
+    N = len(items)
+    rank = np.arange(start=1, stop=N + 1)
+    prob_new = 2 * rank / (N * (N + 1))
+
+    rnds = np.random.random(size=n)
+    inds = np.zeros(n, dtype=np.int)
+    cum_sum = np.cumsum(prob_new)
+    for i, rnd in enumerate(rnds):
+        inds[i] = np.argmax(cum_sum >= rnd)
+    return np.array(sorted_items)[inds]
+
+
 '''
 -------------------------------------
 Random Gene Generator Algorithms, RGGA
@@ -820,6 +846,28 @@ def nwox_crossover(parent1, parent2, parameters=None):
     return chromosome1, chromosome2
 
 
+def uniform_cross_over(parent1, parent2, parameters={'prob': 0.4}):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parent1: First parent chromosome, Gene, np.array with len [n^2,1]
+    :param parent2: Second parent chromosome, Gene, np.array with len [n^2,1]
+    :return: return two chromosome for each children, Chromosome
+    """
+    gen1, gen2 = np.zeros(len(parent1.genotype)), np.zeros(len(parent1.genotype))
+    prob = parameters['prob']
+    for i in range(len(parent1.genotype)):
+        rand = np.random.random()
+        if rand < prob:
+            gen1[i] = parent1.genotype[i]
+            gen2[i] = parent2.genotype[i]
+        else:
+            gen1[i] = parent2.genotype[i]
+            gen2[i] = parent1.genotype[i]
+
+    chromosome1, chromosome2 = Chromosome(gen1, 0), Chromosome(gen2, 0)
+    return chromosome1, chromosome2
+
+
 '''
 -------------------------------------
 Parent Selection Algorithms, PaSA
@@ -842,6 +890,23 @@ def default_parent_selection(population, n, parameter=None):
         print('n should be less or equal than len parents list')
         return -1
     return np.random.choice(population, size=n)
+
+
+def rank_parents_selection(population, n, parameter=None):
+    """
+    :param parameter: dictionary of parameters that key = parameter name and value = parameter value
+    :param population: list of current population Chromosomes, List
+    :param n: Number of Parents that should choose, Integer and less or equal than len parents list
+    :return: list of selected Parents
+    """
+    if n > len(population):
+        print('n should be less or equal than len parents list')
+        return -1
+    fitness_arr= [];
+    for p in population:
+		fitness_arr.append(p.fitness)
+
+    return rank_selection(population, fitness_arr, n)
 
 
 '''
@@ -872,6 +937,21 @@ def default_population_selection(parents, children, n, parameters=None):
         else:
             res.append(children[index - len(parents)])
     return res
+
+
+def rank_population_selection(parents, children, n, parameters=None):
+    """
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parents: list of Parents of current Generation, List
+    :param children: list of new children of current Generation, List
+    :param n: Number of remaining population, Integer
+    :return: list of remained Chromosomes
+    """
+
+    population = parents + children
+    fitness_arr = np.array([x.fitness for x in population])
+    fitness_arr = fitness_arr / np.sum(fitness_arr)
+    return rank_selection(population, fitness_arr, n)
 
 
 # our
