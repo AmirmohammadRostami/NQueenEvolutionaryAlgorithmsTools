@@ -43,7 +43,10 @@ mutation_options = [
     {'label': 'Insertion mutation', 'value': 5},
     {'label': 'Reverse mutation', 'value': 6},
     {'label': 'Thrors mutation', 'value': 7},
-    {'label': 'Twors mutation', 'value': 8}
+    {'label': 'Twors mutation', 'value': 8},
+    {'label': 'Displacement mutation', 'value': 9},
+    {'label': 'Center inverse mutation', 'value': 10},
+
 ]
 cross_over_options = [
     {'label': 'Default', 'value': 0},
@@ -55,7 +58,8 @@ cross_over_options = [
     {'label': 'Maximal preservation crossover', 'value': 6},
     {'label': 'Position based crossover', 'value': 7},
     {'label': 'Order Based based crossover', 'value': 8},
-    {'label': ' alternating-position crossover operator (AP)', 'value': 9},
+    {'label': 'Alternating-position crossover operator (AP)', 'value': 9},
+    {'label': 'Non-Wrapping Order Crossover (NWOX)', 'value': 10},
 
 ]
 parent_selection_options = [
@@ -401,7 +405,18 @@ def cross_over_drop_down(input, parents_prob, cross_over_points):
                          options=cross_over_options,
                          value=9),
             html.Span('Probability of which parents', style={'display': 'None'}),
-            dcc.Input(id='parents-probability', value=parents_prob),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
+            html.Span('Number of Points', style={'display': 'None'}),
+            dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
+        ]
+    elif input == 10:
+        return [
+            html.Span('Cross over Algorithms'),
+            dcc.Dropdown(id='cross-over-dropdown',
+                         options=cross_over_options,
+                         value=10),
+            html.Span('Probability of which parents', style={'display': 'None'}),
+            dcc.Input(id='parents-probability', value=parents_prob, style={'display': 'None'}),
             html.Span('Number of Points', style={'display': 'None'}),
             dcc.Input(id='cross-over-points-number', value=cross_over_points, style={'display': 'None'}),
         ]
@@ -501,7 +516,24 @@ def mutation_drop_down(input, mutation_prob):
             html.Span('Probability'),
             dcc.Input(id='mutation-probability', value=mutation_prob),
         ]
-
+    elif input == 9:
+        return [
+            html.Span('Mutation Algorithms'),
+            dcc.Dropdown(id='mutation-dropdown',
+                         options=mutation_options,
+                         value=9),
+            html.Span('Probability', style={'display': 'None'}),
+            dcc.Input(id='mutation-probability', value=mutation_prob, style={'display': 'None'}),
+        ]
+    elif input == 10:
+        return [
+            html.Span('Mutation Algorithms'),
+            dcc.Dropdown(id='mutation-dropdown',
+                         options=mutation_options,
+                         value=10),
+            html.Span('Probability', style={'display': 'None'}),
+            dcc.Input(id='mutation-probability', value=mutation_prob, style={'display': 'None'}),
+        ]
 
 @app.callback(Output(component_id='stop-condition-div', component_property='children'),
               [Input(component_id='stop-condition-dropdown', component_property='value')])
@@ -593,6 +625,10 @@ def run_btn(n_clicks,
             mutation = (thrors_mutation, {'prob': float(mutation_prob)})
         elif mutation_drop_down == 8:
             mutation = (twors_mutation, {'prob': float(mutation_prob)})
+        elif mutation_drop_down == 9:
+            mutation = (displacement_mutation, None)
+        elif mutation_drop_down == 10:
+            mutation = (center_inverse_mutation, None)
 
         # cross over
         if cross_over_drop_down == 0 or cross_over_drop_down is None:
@@ -615,6 +651,8 @@ def run_btn(n_clicks,
             cross_over = (order_based_crossover, {'points_count': int(cross_over_points)})
         elif cross_over_drop_down == 9:
             cross_over = (ap_crossover, {'prob': float(parents_prob)})
+        elif cross_over_drop_down == 10:
+            cross_over = (nwox_crossover, None)
 
         # parents selection
         if parents_selection_drop_down == 0 or parents_selection_drop_down is None:

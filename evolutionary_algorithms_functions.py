@@ -146,29 +146,6 @@ def permutation_random_gene_generator(number_of_queen, parameters=None):
     return gen
 
 
-def thrors_mutation(chromosome, parameters={'prob: 0.05'}):
-    """
-    :param chromosome: Chromosome
-    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
-    :param prob: default 0.05, float
-    :return: return mutated chromosome , Gene, np.array with shape = (1,len(parent))
-    """
-    if np.random.random() <= parameters['prob']:
-        idx = np.random.choice(len(chromosome.genotype), 3, replace=False)
-        idx_sorted = np.sort(idx)
-
-        # tmp = np.zeros(len(chromosome.genotype))
-        tmp = chromosome.genotype.copy()
-        val_2 = tmp[idx_sorted[2]]
-
-        tmp[idx_sorted[2]] = chromosome.genotype[idx_sorted[1]]
-        tmp[idx_sorted[1]] = chromosome.genotype[idx_sorted[0]]
-        tmp[idx_sorted[0]] = val_2
-
-        chromosome.genotype = tmp
-    return chromosome
-
-
 '''
 -------------------------------------
 Random Evaluators Algorithms, REA
@@ -373,6 +350,65 @@ def twors_mutation(chromosome, parameters={'prob: 0.05'}):
         # The new genotype is made by swapping two random indexes of chromosome
         chromosome.genotype[first_index] = chromosome.genotype[second_index]
         chromosome.genotype[second_index] = temp
+    return chromosome
+
+
+def thrors_mutation(chromosome, parameters={'prob: 0.05'}):
+    """
+    :param chromosome: Chromosome
+    :param parameters: dictionary of parameters that key = parameter name and value = parameter value
+    :param parameters: default 0.05, float
+    :return: return mutated chromosome , Gene, np.array with shape = (1,len(parent))
+    """
+    if np.random.random() <= parameters['prob']:
+        idx = np.random.choice(len(chromosome.genotype), 3, replace=False)
+        idx_sorted = np.sort(idx)
+
+        # tmp = np.zeros(len(chromosome.genotype))
+        tmp = chromosome.genotype.copy()
+        val_2 = tmp[idx_sorted[2]]
+
+        tmp[idx_sorted[2]] = chromosome.genotype[idx_sorted[1]]
+        tmp[idx_sorted[1]] = chromosome.genotype[idx_sorted[0]]
+        tmp[idx_sorted[0]] = val_2
+
+        chromosome.genotype = tmp
+    return chromosome
+
+
+def displacement_mutation(chromosome, parameters=None):
+    """
+    Displacement mutation operator - (Michalewicz 1992)
+    Displacement mutation is also called 'cut mutation' (Banzhaf 1990)
+    :param chromosome: Chromosome
+    :return:
+    """
+    cut_points = np.sort(
+        np.random.choice(np.arange(len(chromosome.genotype)), replace=False, size=2))
+
+    tmp_gen = np.concatenate((chromosome.genotype[:cut_points[0]],
+                              chromosome.genotype[cut_points[1] + 1:]))
+
+    insert_point = np.random.choice(np.arange(len(tmp_gen) + 1), size=1)[0]
+
+    chromosome.genotype = np.concatenate((tmp_gen[:insert_point],
+                                          chromosome.genotype[cut_points[0]:cut_points[1] + 1],
+                                          tmp_gen[insert_point:]))
+
+    return chromosome
+
+
+def center_inverse_mutation(chromosome, parameters=None):
+    """
+    Centre inverse mutation (CIM)
+    :param chromosome: Chromosome
+    :return:
+    """
+    cut_point = np.random.choice(np.arange(len(chromosome.genotype) + 1), size=1)[0]
+
+    chromosome.genotype = np.concatenate((chromosome.genotype[:cut_point][::-1],
+                                          chromosome.genotype[cut_point:][::-1]))
+
     return chromosome
 
 
@@ -725,7 +761,7 @@ def position_based_crossover(parent1, parent2, parameters=None):
     return chromosome1, chromosome2
 
 
-def ap_crossover(parent1, parent2, parameters={'prob': 0.33}):
+def ap_crossover(parent1, parent2, parameters=None):
     """
     :param parameters: dictionary of parameters that key = parameter name and value = parameter value
     :param parent1: First parent chromosome, Gene, np.array with len [n^2,1]
@@ -733,7 +769,6 @@ def ap_crossover(parent1, parent2, parameters={'prob': 0.33}):
     :return: return two chromosome for each children, Chromosome
     References for crossover UPMX --> https://arxiv.org/pdf/1203.3097.pdf
     """
-    prob = parameters['prob']
 
     chromosome1, chromosome2 = copy.deepcopy(parent1), copy.deepcopy(parent2)
     for i in range(len(chromosome1.genotype)):
@@ -755,6 +790,33 @@ def ap_crossover(parent1, parent2, parameters={'prob': 0.33}):
             chromosome2.genotype[second_index] = parent1.genotype[i]
             second_index += 1
 
+    return chromosome1, chromosome2
+
+
+def nwox_crossover(parent1, parent2, parameters=None):
+    """
+    Non-Wrapping Order Crossover (NWOX) - (Cicirello 2006)
+    :param parent1: First parent chromosome, Gene, np.array with len [n^2,1]
+    :param parent2: Second parent chromosome, Gene, np.array with len [n^2,1]
+    :return: return two chromosome for each children, Chromosome
+    """
+    crossover_points = np.sort(np.random.choice(np.arange(len(parent1.genotype)), replace=False, size=2))
+
+    gen1, gen2 = np.copy(parent1.genotype), np.copy(parent2.genotype)
+
+    # First, all those bits are left as hole which are presenting within the cut-points in other parent
+    gen1 = np.setdiff1d(gen1, parent2.genotype[crossover_points[0]: crossover_points[1] + 1], assume_unique=True)
+    gen2 = np.setdiff1d(gen2, parent1.genotype[crossover_points[0]: crossover_points[1] + 1], assume_unique=True)
+
+    gen1 = np.concatenate((gen1[:crossover_points[0]],
+                           parent2.genotype[crossover_points[0]: crossover_points[1] + 1],
+                           gen1[crossover_points[0]:]))
+
+    gen2 = np.concatenate((gen2[:crossover_points[0]],
+                           parent1.genotype[crossover_points[0]: crossover_points[1] + 1],
+                           gen2[crossover_points[0]:]))
+
+    chromosome1, chromosome2 = Chromosome(gen1, 0), Chromosome(gen2, 0)
     return chromosome1, chromosome2
 
 
