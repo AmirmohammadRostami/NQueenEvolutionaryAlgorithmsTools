@@ -106,7 +106,7 @@ class EvolutionaryAlgorithm:
         avg_fitness_per_generation.append(avg_fitness)
         variance_per_generation.append(var_fitness)
         global best_chromosome_fitness_in_total, best_phenotype
-        if self._population[best_phenotype_index].fitness > best_chromosome_fitness_in_total:
+        if self._population[best_phenotype_index].fitness >= best_chromosome_fitness_in_total:
             best_chromosome_fitness_in_total = self._population[best_phenotype_index].fitness
             best_phenotype = self._population[best_phenotype_index].get_phenotype()
         best_chromosome[-1] = best_phenotype
