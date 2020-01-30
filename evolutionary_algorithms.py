@@ -38,6 +38,7 @@ class EvolutionaryAlgorithm:
         global best_phenotype
         self._max_generation = max_generation
         self._generation_counter = 0
+        self._evaluation_counter =  0
         self._population = []
         self._m = m
         self._n = n
@@ -53,7 +54,9 @@ class EvolutionaryAlgorithm:
         self._parent_selection_params = parent_selection[1]
         self._random_gene_generator = gene_generator
         self._evaluator = evaluator
-        self._stop_condition = stop_condition
+        print(type(stop_condition[0]),stop_condition[0])
+        self._stop_condition = stop_condition[0]
+        self._stop_condition_param = stop_condition[1]
         self._log = []
         best_chromosome_fitness_in_total = -1
         best_phenotype = [1]
@@ -74,7 +77,8 @@ class EvolutionaryAlgorithm:
         self._log.append(self._save_current_log(avg_per_generation, variance_per_generation, best_chromosome))
         if verbose:
             print(self._log[-1])
-        while not self._stop_condition(self._generation_counter, self._max_generation):
+        print(type(self._stop_condition),self._stop_condition)
+        while not self._stop_condition(self._generation_counter,self._evaluation_counter, self._stop_condition_param):
             self._generation_counter += 1
             if verbose:
                 print(self._generation_counter)
@@ -126,7 +130,9 @@ class EvolutionaryAlgorithm:
             chromosome1 = self._mutation(chromosome1, self._mutation_params)
             chromosome2 = self._mutation(chromosome2, self._mutation_params)
             chromosome1.fitness = self._evaluator(chromosome1)
+            self._evaluation_counter += 1
             chromosome2.fitness = self._evaluator(chromosome2)
+            self._evaluation_counter += 1
             children += [chromosome1, chromosome2]
             if len(children) >= self._y:
                 break
@@ -144,6 +150,7 @@ class EvolutionaryAlgorithm:
             random_gene = self._random_gene_generator(self._n)
             chromosome = Chromosome(random_gene, 0)
             chromosome.fitness = self._evaluator(chromosome)
+            self._evaluation_counter += 1
             self._population.append(chromosome)
 
 
