@@ -7,7 +7,7 @@ In this project, the evolutionary algorithm with various approaches has been imp
 
   1. <b>Introduction</b><br/>
     1. [*N queen problem*](#11-n-queen-problem)<br/>
-    2. [Evolutionary algorithms](#12-evolutionary-algorithms)<br/>
+    2. [*Evolutionary algorithms*](#12-evolutionary-algorithms)<br/>
 
   2. <b>Implementation</b><br/>
     1. [*evolutionary_algorithms.py*](#21-evolutionaryalgorithm-class-evolutionary_algorithmspy)<br/>
