@@ -3,35 +3,23 @@
 In this project, the evolutionary algorithm with various approaches has been implemented and applied on the n queen problem. In the Introduction section the well-known n queen problem and the general overview of evolutionary algorithms will be discussed. Afterwards, in the implementation section we will go into the details of evolutionary algorithm's implementation. A quick installation guide and the procedure of running and analyzing the results have been described in section 3. Eventually, if you want to contribute in the project, see the final part of section 3 which covers the rules you have to follow. For any further information, feel free to contact us using the information given at section 4.
 
 
-
-
 # Table of contents
-<ol>
 
-  <li><b>Introduction</b>
-  <ol>
-    <li> [*N queen problem*](#11-n-queen-problem)</li>
-    <li> [Evolutionary algorithms](#12-evolutionary-algorithms)</li>
-  </ol>
-  </li>
+  1. <b>Introduction</b>
+    1. [*N queen problem*](#11-n-queen-problem)
+    2. [Evolutionary algorithms](#12-evolutionary-algorithms)
 
-  <li><b>Implementation</b>
-  <ol>
-    <li>[*evolutionary_algorithms.py*](#21-evolutionaryalgorithm-class-evolutionary_algorithmspy)</li>
-    <li>[*evolutionary_algorithms_functions.py*](#22-evolution-algorithm-functions-evolutionary_algorithms_functionspy)</li>
-    <li>[*chromosome.py*](#23-chromosome-class-chromosomepy)</li>
-  </ol>
-  </li>
-  <li><b>Quick tour</b>
-  <ol>
-    <li>[*Installation guide*](#31-installation-guide)</li>
-    <li>[*Graphical User Interface*](#32-graphical-user-interface)</li>
-    <li>[*A few words with contributors*](#33-a-few-words-with-the-contributors)</li>
-  </ol>
-  </li>
-  <li><b>[contact us](#4-contact-us)</b>
-  </li>
-</ol>
+  2. <b>Implementation</b>
+    1. [*evolutionary_algorithms.py*](#21-evolutionaryalgorithm-class-evolutionary_algorithmspy)
+    2. [*evolutionary_algorithms_functions.py*](#22-evolution-algorithm-functions-evolutionary_algorithms_functionspy)
+    3. [*chromosome.py*](#23-chromosome-class-chromosomepy)
+
+  3. <b>Quick tour</b>
+    1. [*Installation guide*](#31-installation-guide)
+    2. [*Graphical User Interface*](#32-graphical-user-interface)
+    3. [*A few words with contributors*](#33-a-few-words-with-the-contributors)
+
+  4. <b>[contact us](#4-contact-us)</b>
 
 # 1. Introduction
 
