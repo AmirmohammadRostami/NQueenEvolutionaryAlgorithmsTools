@@ -710,35 +710,6 @@ If you are interested in contributing in this project, please follow the below i
 ### Milad Bohlouli:
 - email: [*miladbohlouli@gmail.com*](emailto:miladbohlouli@gmail.com)
 - linkdin: [*milad_bohlouli*](https://www.linkedin.com/in/milad-bohlouli-536011163)
-- homepage: [*ceit.aut.ac.ir/~bohlouli*](https://ceit.aut.ac.ir/~bohlouli/index.html)
+- homepage: [*milad.bohlouli.com*](https://milad.bohlouli.com)
 
 Feel free to contact us for any further information via above channels.
-
-
-
-<!-- # Todo list:
--[] order of the algorithms
--[] complete the tables
--[] complete the
-
-
-
-<!--
-> This is simply to emphasize a paragraph
-
-______
-
-|title1|title2|Title3|
-|-----|:------:|-------:|
-|This is case one |This |asdlasjd|
-|*asdajsdhk*|asdasd|asdasd|
-|asdajsdhk|`asdasd`|asdasd|
-|asdajsdhk|asdasd|asdasd|
-
-[This is the link](https:www.google.com)
-
-```python
-import numpy as np
-
-
-``` -->
