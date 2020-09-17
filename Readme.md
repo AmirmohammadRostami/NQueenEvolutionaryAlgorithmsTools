@@ -28,7 +28,7 @@ N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then 
 The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
 
 <div align="center">
-<img align="center" src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=400px>
+<img align="center" src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=400px><br/>
 <figcaption>Figure 1: one solution for 4 queen problem</figcaption>
 </div>
 
@@ -681,7 +681,7 @@ The results of running the algorithm is shown in three parts, two plots and one 
 </div><br/><br/>
 
 <div align="center">
-  <img align="center" src="./images/truevsfalse.jpg" alt="Output" height="300px">
+  <img align="center" src="./images/truevsfalse.jpg" alt="Output" height="300px"><br/>
   <figcaption>Figure 5: A wrong solution (left), a correct solution (right)
   </figcaption>
 </div>
