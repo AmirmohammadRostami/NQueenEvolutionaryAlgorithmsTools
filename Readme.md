@@ -28,7 +28,7 @@ N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then 
 The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
 
 <div align="center">
-<img align="center" src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=200px>
+<img align="center" src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=400px>
 <figcaption>Figure 1: one solution for 4 queen problem</figcaption>
 </div>
 
@@ -675,13 +675,15 @@ The graphical environment of is depicted in figure 3. You just have to select th
 The results of running the algorithm is shown in three parts, two plots and one chessboard. The vertical axis in the plots show the fitness variance and the average fitness, but the horizontal axis specify the number of generation. This shown how the average fitness and variance change as the generation progresses. The other part shown the chessboard which shows the best found solution for the problem. The queens have been specified with green and dark red colors. The green colored grids show safe queens while the dark red colored images show the queens which threaten each other. This has been compared in Figure 5.
 
 <div align="center">
-<img align="center" src="./images/Output.png" alt="Output">
-<figcaption>Figure 4: The output of running the evolutionary algorithm</figcaption>
+  <img align="center" src="./images/Output.png" alt="Output">
+  <figcaption>Figure 4: The output of running the evolutionary algorithm
+  </figcaption>
 </div><br/><br/>
 
 <div align="center">
-<img align="center" src="./images/truevsfalse.jpg" alt="Output" height="200px">
-<figcaption>Figure 5: A wrong solution (left), a correct solution (right)</figcaption>
+  <img align="center" src="./images/truevsfalse.jpg" alt="Output" height="300px">
+  <figcaption>Figure 5: A wrong solution (left), a correct solution (right)
+  </figcaption>
 </div>
 
 
