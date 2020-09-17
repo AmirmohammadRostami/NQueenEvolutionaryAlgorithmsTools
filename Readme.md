@@ -4,32 +4,22 @@ In this project, the evolutionary algorithm with various approaches has been imp
 
 
 # Table of contents
-<ol>
 
-  <li><b>Introduction</b>
-  <ol>
-    <li> [*N queen problem*](#11-n-queen-problem)</li>
-    <li> [Evolutionary algorithms](#12-evolutionary-algorithms)</li>
-  </ol>
-  </li>
+  1. <b>Introduction</b><br/>
+    1. [*N queen problem*](#11-n-queen-problem)<br/>
+    2. [*Evolutionary algorithms*](#12-evolutionary-algorithms)<br/>
 
-  <li><b>Implementation</b>
-  <ol>
-    <li>[*evolutionary_algorithms.py*](#21-evolutionaryalgorithm-class-evolutionary_algorithmspy)</li>
-    <li>[*evolutionary_algorithms_functions.py*](#22-evolution-algorithm-functions-evolutionary_algorithms_functionspy)</li>
-    <li>[*chromosome.py*](#23-chromosome-class-chromosomepy)</li>
-  </ol>
-  </li>
-  <li><b>Quick tour</b>
-  <ol>
-    <li>[*Installation guide*](#31-installation-guide)</li>
-    <li>[*Graphical User Interface*](#32-graphical-user-interface)</li>
-    <li>[*A few words with contributors*](#33-a-few-words-with-the-contributors)</li>
-  </ol>
-  </li>
-  <li><b>[contact us](#4-contact-us)</b>
-  </li>
-</ol>
+  2. <b>Implementation</b><br/>
+    1. [*evolutionary_algorithms.py*](#21-evolutionaryalgorithm-class-evolutionary_algorithmspy)<br/>
+    2. [*evolutionary_algorithms_functions.py*](#22-evolution-algorithm-functions-evolutionary_algorithms_functionspy)<br/>
+    3. [*chromosome.py*](#23-chromosome-class-chromosomepy)<br/>
+
+  3. <b>Quick tour</b><br/>
+    1. [*Installation guide*](#31-installation-guide)<br/>
+    2. [*Graphical User Interface*](#32-graphical-user-interface)<br/>
+    3. [*A few words with contributors*](#33-a-few-words-with-the-contributors)<br/>
+
+  4. <b>[Contact us](#4-contact-us)</b>
 
 # 1. Introduction
 
@@ -38,7 +28,7 @@ N queen problem was invented by chess composer, Max Bezzel, in 1848. Since then 
 The whole idea pf the challenge is *to place n queens on a nxn chessboard in a way that not any couple of queens threaten each other*. Figure 1 shows the case where n is 4. It can be seen in this figure that none of the queens threaten each other.<br/><br/>
 
 <div align="center">
-<img align="center" src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=200px>
+<img align="center" src="./images/N_Queen_Problem.jpg" alt="5 queen problem" width=400px><br/>
 <figcaption>Figure 1: one solution for 4 queen problem</figcaption>
 </div>
 
@@ -685,13 +675,15 @@ The graphical environment of is depicted in figure 3. You just have to select th
 The results of running the algorithm is shown in three parts, two plots and one chessboard. The vertical axis in the plots show the fitness variance and the average fitness, but the horizontal axis specify the number of generation. This shown how the average fitness and variance change as the generation progresses. The other part shown the chessboard which shows the best found solution for the problem. The queens have been specified with green and dark red colors. The green colored grids show safe queens while the dark red colored images show the queens which threaten each other. This has been compared in Figure 5.
 
 <div align="center">
-<img align="center" src="./images/Output.png" alt="Output">
-<figcaption>Figure 4: The output of running the evolutionary algorithm</figcaption>
+  <img align="center" src="./images/Output.png" alt="Output">
+  <figcaption>Figure 4: The output of running the evolutionary algorithm
+  </figcaption>
 </div><br/><br/>
 
 <div align="center">
-<img align="center" src="./images/truevsfalse.jpg" alt="Output" height="200px">
-<figcaption>Figure 5: A wrong solution (left), a correct solution (right)</figcaption>
+  <img align="center" src="./images/truevsfalse.jpg" alt="Output" height="300px"><br/>
+  <figcaption>Figure 5: A wrong solution (left), a correct solution (right)
+  </figcaption>
 </div>
 
 
@@ -718,35 +710,6 @@ If you are interested in contributing in this project, please follow the below i
 ### Milad Bohlouli:
 - email: [*miladbohlouli@gmail.com*](emailto:miladbohlouli@gmail.com)
 - linkdin: [*milad_bohlouli*](https://www.linkedin.com/in/milad-bohlouli-536011163)
-- homepage: [*ceit.aut.ac.ir/~bohlouli*](https://ceit.aut.ac.ir/~bohlouli/index.html)
+- homepage: [*milad.bohlouli.com*](https://milad.bohlouli.com)
 
 Feel free to contact us for any further information via above channels.
-
-
-
-<!-- # Todo list:
--[] order of the algorithms
--[] complete the tables
--[] complete the
-
-
-
-<!--
-> This is simply to emphasize a paragraph
-
-______
-
-|title1|title2|Title3|
-|-----|:------:|-------:|
-|This is case one |This |asdlasjd|
-|*asdajsdhk*|asdasd|asdasd|
-|asdajsdhk|`asdasd`|asdasd|
-|asdajsdhk|asdasd|asdasd|
-
-[This is the link](https:www.google.com)
-
-```python
-import numpy as np
-
-
-``` -->
